@@ -10,7 +10,7 @@ Implementieren Sie eine Applikation auf Basis JavaFX gemäss der Aufgabenbeschre
  - Vorname Nachname
 
 ## Abgabe
-- Donnerstag, 11.1.2018, 18:00 Uhr
+- Freitag, 12.1.2018, 18:00 Uhr
 - Die Abgabe erfolgt durch ein "Push" auf den Master-Branch in Ihrem GitHub-Repository.
 
 ## Bitte beachten Sie:
