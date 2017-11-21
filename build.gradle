@@ -1,12 +1,28 @@
 group 'ch.fhnw'
-version '0.1-SNAPSHOT'
+version '0.1'
+
+repositories {
+	mavenLocal()
+	jcenter()
+	mavenCentral()
+}
+
+buildscript {
+	repositories {
+		jcenter()
+	}
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
+    }
+}
 
 apply plugin: 'java'
+apply plugin: 'com.github.johnrengelman.shadow'
 
 sourceCompatibility = 1.8
 
-repositories {
-    mavenCentral()
+compileJava {
+   options.encoding = "UTF-8"
 }
 
 sourceSets {
@@ -19,4 +35,15 @@ sourceSets {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+jar {
+    manifest {
+        attributes("Main-Class": "ch.fhnw.oop2.electriccarsfx.ElectricCarsApp")
+    }
+}
+
+shadowJar {
+   baseName = 'ElectricCarsFX'
+   classifier = null
 }

@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 import ch.fhnw.oop2.electriccarsfx.presentationmodel.PresentationModel;
 import ch.fhnw.oop2.electriccarsfx.view.ApplicationUI;
 
-public class AppStarter extends Application {
+public class ElectricCarsApp extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
