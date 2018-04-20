@@ -1,28 +1,21 @@
 group 'ch.fhnw'
-version '0.1'
+version '0.1-SNAPSHOT'
 
-repositories {
-	mavenLocal()
-	jcenter()
-	mavenCentral()
-}
+apply plugin: 'java'
 
 buildscript {
 	repositories {
-		jcenter()
+		mavenCentral()
 	}
-    dependencies {
-        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
-    }
+	dependencies {
+		classpath 'org.junit.platform:junit-platform-gradle-plugin:1.0.3'
+	}
 }
 
-apply plugin: 'java'
-apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'org.junit.platform.gradle.plugin'
 
-sourceCompatibility = 1.8
-
-compileJava {
-   options.encoding = "UTF-8"
+repositories {
+    mavenCentral()
 }
 
 sourceSets {
@@ -33,17 +26,30 @@ sourceSets {
     }
 }
 
+compileJava {
+	options.encoding = 'UTF-8'
+}
+
+
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+	testCompile("org.junit.jupiter:junit-jupiter-api:5.0.3")
+	testRuntime("org.junit.jupiter:junit-jupiter-engine:5.0.3")
 }
 
-jar {
-    manifest {
-        attributes("Main-Class": "ch.fhnw.oop2.electriccarsfx.ElectricCarsApp")
-    }
-}
-
-shadowJar {
-   baseName = 'ElectricCarsFX'
-   classifier = null
+junitPlatform {
+	// platformVersion '1.0.3'
+	filters {
+		engines {
+			// include 'junit-jupiter', 'junit-vintage'
+			// exclude 'custom-engine'
+		}
+		tags {
+			// include 'fast'
+			exclude 'slow'
+		}
+		// includeClassNamePattern '.*Test'
+	}
+	// enableStandardTestTask true
+	// reportsDir file('build/test-results/junit-platform') // this is the default
+	logManager 'org.apache.logging.log4j.jul.LogManager'
 }
