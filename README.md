@@ -40,9 +40,9 @@ Die dort vorhandene Beschreibung ist massgebend, hier die wichtigsten Punkte:
  - Die Bewertungskriterien sind ebenfalls in dem pdf-File auf dem AD enthalten.
    - die dort definierten Bewertungskriterien sind massgebend
    - nicht compilierbarer Code wird mit einer 1.0 gewertet
-   - nicht selbständig bearbeitete Projekte werden ebenfalls mit 1.0 gewertet
+   - snicht selbstständig bearbeitete Projekte führen zu einem deutlichen Notenabzug
    
- - im Projekt enthalten sind zwei Daten-Files
+ - Im Projekt enthalten sind zwei Daten-Files
    - `HYDRO_POWERSTATION.csv` enthält die anzuzeigenden Daten der Wasserkraftwerke
    - `cantons.csv` enthält Informationen über die Schweizer Kantone. Diese Daten sind für die Umsetzung der Basis-Features nicht unbedingt notwendig.
  
