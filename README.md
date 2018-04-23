@@ -1,8 +1,8 @@
 # OOP2 Programmierprojekt 2Ibb/2iCbb FS18
 
 ## Bearbeitet von
- - Vorname Nachname
-
+- Marco Romanutti
+- Malte Gerboth
 ## Abgabe
 - Mittwoch, 6.6.2018, 18:00 Uhr
 - Die Abgabe erfolgt durch ein "Push" auf den Master-Branch in Ihrem GitHub-Repository.
