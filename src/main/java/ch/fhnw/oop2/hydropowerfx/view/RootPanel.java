@@ -1,11 +1,12 @@
 package ch.fhnw.oop2.hydropowerfx.view;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.SplitPane;
 import javafx.scene.layout.StackPane;
 
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 
-public class RootPanel extends StackPane implements ViewMixin {
+public class RootPanel extends SplitPane implements ViewMixin {
     private final RootPM rootPM;
 
     private Button button;
