@@ -10,7 +10,11 @@ import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 public class RootPanel extends StackPane implements ViewMixin {
     private final RootPM rootPM;
 
-    private Button button1;
+    private  Button button1;
+    private SplitPane horizontal;
+    private SplitPane vertical;
+    private CantonList cantonList;
+
 
     public RootPanel(RootPM model) {
         this.rootPM = model;
@@ -29,15 +33,18 @@ public class RootPanel extends StackPane implements ViewMixin {
 
     @Override
     public void initializeControls() {
-        Details tmp = new Details();
-        button1 = new Button();
-
+        horizontal.getItems().add(vertical);
+        horizontal.getItems().add(cantonList);
+        this.getChildren().add(horizontal);
     }
 
     @Override
     public void layoutControls() {
 
         getChildren().add(button1);
+        horizontal = new SplitPane();
+        vertical = new SplitPane();
+        cantonList = new CantonList();
 
     }
 
