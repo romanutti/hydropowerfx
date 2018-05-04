@@ -2,9 +2,9 @@ package ch.fhnw.oop2.hydropowerfx.view;
 
 import javafx.scene.layout.StackPane;
 
-public class CantonList extends StackPane {
+public class CantonOverview extends StackPane {
 
-    public CantonList(){
+    public CantonOverview(){
         initializeSelf();
         layoutControls();
         initializeControls();

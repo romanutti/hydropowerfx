@@ -1,6 +1,5 @@
 package ch.fhnw.oop2.hydropowerfx.view;
 
-import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.StackPane;
@@ -13,7 +12,7 @@ public class RootPanel extends StackPane implements ViewMixin {
     private  Button button1;
     private SplitPane horizontal;
     private SplitPane vertical;
-    private CantonList cantonList;
+    private CantonOverview cantonList;
 
 
     public RootPanel(RootPM model) {
@@ -44,7 +43,7 @@ public class RootPanel extends StackPane implements ViewMixin {
         getChildren().add(button1);
         horizontal = new SplitPane();
         vertical = new SplitPane();
-        cantonList = new CantonList();
+        cantonList = new CantonOverview();
 
     }
 
