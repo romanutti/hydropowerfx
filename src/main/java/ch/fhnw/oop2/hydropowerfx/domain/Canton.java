@@ -7,8 +7,19 @@ public enum Canton {
     UR("Uri"),
     SZ("Schwyz"),
     OW("Obwalden"),
-    NW("Nidwalden");
-    // TODO: Liste abschliessen
+    NW("Nidwalden"),
+    GL("Glarus"),
+    ZG("Zug"),
+    FR("Freburg"),
+    BS("Basel-Stadt"),
+    BL("Basel-Landschaft"),
+    SH("Schaffhausen"),
+    AR("Appenzell Ausserrhoden"),
+    AI("Appenzell Inerrhoden"),
+    SG("St. Gallen"),
+    TI("Tessin"),
+    GE("Genf"),
+    JU("Jura");
 
     private final String name;
 

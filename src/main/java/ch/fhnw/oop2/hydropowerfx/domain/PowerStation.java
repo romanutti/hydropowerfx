@@ -2,7 +2,8 @@ package ch.fhnw.oop2.hydropowerfx.domain;
 
 public class PowerStation {
 
-    enum Type {L, P, S, U}
+    // TODO: Enum als eigene Klasse, da in PowerStationDetailPM benötigt?
+    public enum Type {L, P, S, U}
 
     private int id;
     private String name;
@@ -15,11 +16,12 @@ public class PowerStation {
     private double startOfOperationLast;
     private double latitude;
     private double longitude;
-    private double status;
+    // TODO: Status als Enum?
+    private String status;
     private double waterbodies;
-    private double imageUrl;
+    private String imageUrl;
 
-    public PowerStation(int id, String name, Type type, String site, Canton canton, Double maxWaterVolume, Double maxPowerMw, Double startOfOperationFirst, Double startOfOperationLast, Double latitude, Double longitude, Double status, Double waterbodies, Double imageUrl) {
+    public PowerStation(int id, String name, Type type, String site, Canton canton, double maxWaterVolume, double maxPowerMw, double startOfOperationFirst, double startOfOperationLast, double latitude, double longitude, String status, double waterbodies, String imageUrl) {
         this.id = id;
         this.name = name;
         this.type = type;
@@ -124,11 +126,11 @@ public class PowerStation {
         this.longitude = longitude;
     }
 
-    public double getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(double status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -140,11 +142,11 @@ public class PowerStation {
         this.waterbodies = waterbodies;
     }
 
-    public double getImageUrl() {
+    public String getImageUrl() {
         return imageUrl;
     }
 
-    public void setImageUrl(double imageUrl) {
+    public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
     }
 }
