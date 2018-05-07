@@ -83,7 +83,7 @@ public class RootPM implements PowerStationOverviewPM, PowerStationDetailPM, Can
 
     @Override
     public StringProperty getName() {
-        return null;
+        return new SimpleStringProperty("Test");
     }
 
     @Override
