@@ -50,6 +50,6 @@ public class RootPanel extends StackPane implements ViewMixin {
 
     @Override
     public void setupBindings() {
-        button1.textProperty().bind(rootPM.getName());
+        //button1.textProperty().bind(rootPM.getName());
     }
 }

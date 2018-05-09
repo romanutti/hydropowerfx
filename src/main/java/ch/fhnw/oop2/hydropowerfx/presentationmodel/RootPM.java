@@ -3,20 +3,67 @@ package ch.fhnw.oop2.hydropowerfx.presentationmodel;
 import ch.fhnw.oop2.hydropowerfx.domain.Canton;
 import ch.fhnw.oop2.hydropowerfx.domain.PowerStation;
 import javafx.beans.property.*;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
-import java.util.ArrayList;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-public class RootPM implements PowerStationOverviewPM, PowerStationDetailPM, CantonOverviewPM {
+public class RootPM implements PowerStationOverviewPM, CantonOverviewPM {
+    // TODO: Datenfile in anderen Folder
+    // TODO: PowersStations ohne Kanton (bisher einfach gelöscht in Liste)
+    private static final String FILE_NAME = "HYDRO_POWERSTATION.csv";
+    private static final String DELIMITER = ";";
+
     private final StringProperty applicationTitle = new SimpleStringProperty("HydroPowerFX");
-    private final StringProperty greeting         = new SimpleStringProperty("Hello World!");
+    private final StringProperty greeting = new SimpleStringProperty("Hello World!");
+    private final ObservableList<PowerStation> allPowerStations = FXCollections.observableArrayList();
 
-    private List<PowerStation> allPowerStations = new ArrayList<>();
     private int currentPowerStationId;
 
-    public RootPM(List<PowerStation> data) {
-        this.allPowerStations = data;
+
+    public RootPM() {
+        allPowerStations.addAll(readFromFile());
+        currentPowerStationId = 0;
+    }
+
+    private Path getPath(String fileName) {
+        try {
+            return Paths.get(getClass().getResource(fileName).toURI());
+        } catch (URISyntaxException e) {
+            throw new IllegalArgumentException(e);
+        }
+    }
+
+    private Stream<String> getStreamOfLines(String fileName) {
+        try {
+            return Files.lines(getPath(fileName), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    private List<PowerStation> readFromFile() {
+        try (Stream<String> stream = getStreamOfLines(FILE_NAME)) {
+            return stream.skip(1)
+                    .map(line -> new PowerStation(line.split(DELIMITER, 22)))
+                    .collect(Collectors.toList());
+        }
+    }
+
+    public void save() {
+        //TODO
+    }
+
+    public ObservableList<PowerStation> getAllPowerStations() {
+        return allPowerStations;
     }
 
     // all getters and setters
@@ -53,7 +100,7 @@ public class RootPM implements PowerStationOverviewPM, PowerStationDetailPM, Can
 
     @Override
     public void setCurrentPowerStation(int currentPowerStationIndex) {
-        this.currentPowerStationId=currentPowerStationIndex;
+        this.currentPowerStationId = currentPowerStationIndex;
     }
 
     @Override
@@ -67,9 +114,9 @@ public class RootPM implements PowerStationOverviewPM, PowerStationDetailPM, Can
     }
 
     @Override
-    public PowerStation getCurrentPowerStation(){
+    public PowerStation getCurrentPowerStation() {
         return allPowerStations.stream()
-                .filter(powerStation -> powerStation.getId()==this.currentPowerStationId)
+                .filter(powerStation -> powerStation.getId() == this.currentPowerStationId)
                 .findFirst()
                 .orElse(null);
     }
@@ -79,149 +126,17 @@ public class RootPM implements PowerStationOverviewPM, PowerStationDetailPM, Can
         return new SimpleIntegerProperty(allPowerStations.size());
     }
 
-    //powerstationdetailpm
-
-    @Override
-    public StringProperty getName() {
-        return new SimpleStringProperty("Test");
-    }
-
-    @Override
-    public void setName(StringProperty name) {
-
-    }
-
-    @Override
-    public ObjectProperty<PowerStation.Type> getType() {
-        return null;
-    }
-
-    @Override
-    public void setType(ObjectProperty<PowerStation.Type> type) {
-
-    }
-
-    @Override
-    public StringProperty getSite() {
-        return null;
-    }
-
-    @Override
-    public void setSite(StringProperty site) {
-
-    }
-
-    @Override
-    public ObjectProperty<Canton> getCanton() {
-        return null;
-    }
-
-    @Override
-    public void setCanton(Canton canton) {
-
-    }
-
-    @Override
-    public DoubleProperty getMaxWaterVolume() {
-        return null;
-    }
-
-    @Override
-    public void setMaxWaterVolume(DoubleProperty maxWaterVolume) {
-
-    }
-
-    @Override
-    public DoubleProperty getMaxPowerMw() {
-        return null;
-    }
-
-    @Override
-    public void setMaxPowerMw(DoubleProperty maxPowerMw) {
-
-    }
-
-    @Override
-    public DoubleProperty getStartOfOperationFirst() {
-        return null;
-    }
-
-    @Override
-    public void setStartOfOperationFirst(DoubleProperty startOfOperationFirst) {
-
-    }
-
-    @Override
-    public DoubleProperty getStartOfOperationLast() {
-        return null;
-    }
-
-    @Override
-    public void setStartOfOperationLast(DoubleProperty startOfOperationLast) {
-
-    }
-
-    @Override
-    public DoubleProperty getLatitude() {
-        return null;
-    }
-
-    @Override
-    public void setLatitude(DoubleProperty latitude) {
-
-    }
-
-    @Override
-    public DoubleProperty getLongitude() {
-        return null;
-    }
-
-    @Override
-    public void setLongitude(DoubleProperty longitude) {
-
-    }
-
-    @Override
-    public StringProperty getStatus() {
-        return null;
-    }
-
-    @Override
-    public void setStatus(StringProperty status) {
-
-    }
-
-    @Override
-    public DoubleProperty getWaterbodies() {
-        return null;
-    }
-
-    @Override
-    public void setWaterbodies(DoubleProperty waterbodies) {
-
-    }
-
-    @Override
-    public StringProperty getImageUrl() {
-        return null;
-    }
-
-    @Override
-    public void setImageUrl(StringProperty imageUrl) {
-
-    }
-
     //cantonoverviewpm
     @Override
     public DoubleProperty getTotalPower(Canton canton) {
         double result = allPowerStations.stream()
                 .filter(powerStation -> powerStation.getCanton().equals(canton))
                 .collect(Collectors.summingDouble(PowerStation::getMaxPowerMw));
-         return new SimpleDoubleProperty(result);
-     }
+        return new SimpleDoubleProperty(result);
+    }
 
     @Override
-     public IntegerProperty getPowerStationCount(Canton canton) {
+    public IntegerProperty getPowerStationCount(Canton canton) {
         int result = (int) allPowerStations.stream()
                 .filter(powerStation -> powerStation.getCanton().equals(canton))
                 .count();

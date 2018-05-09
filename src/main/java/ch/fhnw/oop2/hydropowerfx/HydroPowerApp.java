@@ -18,11 +18,7 @@ public class HydroPowerApp extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 
-		PowerStation powerStation = new PowerStation(1, "Test", PowerStation.Type.L, "Zürich", Canton.ZH, 1.1, 2.2, 3.3, 4.4, 5.5,6.6, "In Betrieb", 7.7,"www.fhnw.ch/images");
-		List<PowerStation> data = new ArrayList<>();
-		data.add(powerStation);
-
-		RootPM rootPM    = new RootPM(data);
+		RootPM rootPM    = new RootPM();
 		Parent rootPanel = new RootPanel(rootPM);
 
 		Scene scene = new Scene(rootPanel);
