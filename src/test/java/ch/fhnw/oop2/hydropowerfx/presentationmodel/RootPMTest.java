@@ -1,6 +1,9 @@
 package ch.fhnw.oop2.hydropowerfx.presentationmodel;
 
+import ch.fhnw.oop2.hydropowerfx.domain.Canton;
 import ch.fhnw.oop2.hydropowerfx.domain.PowerStation;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.ObservableList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,7 +27,11 @@ class RootPMTest {
     }
 
     @Test
-    void testGetAllPowerStations() {
+    void save() {
+    }
+
+    @Test
+    void getAllPowerStations() {
         //given
         ObservableList<PowerStation> allPowerStations = sut.getAllPowerStations();
 
@@ -34,5 +41,134 @@ class RootPMTest {
         assertEquals(900200, allPowerStations.get(allPowerStations.size() - 1).getId());
     }
 
+    @Test
+    void getApplicationTitle() {
+        //given
 
+        //when
+
+        //then
+        assertEquals("HydroPowerFX", sut.getApplicationTitle());
+    }
+
+
+    @Test
+    void setApplicationTitle() {
+        //given
+        String title = "TefalPower";
+
+        //when
+        sut.setApplicationTitle(title);
+
+        //then
+        assertEquals(title, sut.getApplicationTitle());
+    }
+
+    @Test
+    void getCurrentPowerStationIndex() {
+        //given
+
+        //when
+
+        //then
+        assertEquals(0, sut.getCurrentPowerStationIndex());
+    }
+
+    @Test
+    void setCurrentPowerStation() {
+        //given
+        int index = 500200;
+
+        //when
+        sut.setCurrentPowerStation(index);
+
+        //then
+        assertEquals(index, sut.getCurrentPowerStationIndex());
+
+        //TODO: Nicht-vorhandene ID setzen
+    }
+
+    @Test
+    void addPowerStation() {
+        //before
+        String line[] = new String[]{"999999", "Val Giuf", "L", "Rueras", "BS", "0.43", "1.42", "1979", "1979", "46.4374", "8.75072906", "im Normalbetrieb", "Aua da Tefal", "www.hydro.ch/images"};
+        PowerStation ps = new PowerStation(line);
+        int size = sut.getAllPowerStations().size();
+
+        //when
+        sut.addPowerStation(ps);
+
+        //then
+        assertTrue(sut.getAllPowerStations().contains(ps));
+        assertEquals(size + 1, sut.getAllPowerStations().size());
+    }
+
+    @Test
+    void removePowerStation() {
+        //before
+        String line[] = new String[]{"999999", "Val Giuf", "L", "Rueras", "BS", "0.43", "1.42", "1979", "1979", "46.4374", "8.75072906", "im Normalbetrieb", "Aua da Tefal", "www.hydro.ch/images"};
+        PowerStation ps = new PowerStation(line);
+        int size = sut.getAllPowerStations().size();
+        sut.addPowerStation(ps);
+
+        //when
+        sut.removePowerStation(ps);
+
+        //then
+        assertFalse(sut.getAllPowerStations().contains(ps));
+        assertEquals(size, sut.getAllPowerStations().size());
+    }
+
+    @Test
+    void getCurrentPowerStation() {
+        //given
+        String line[] = new String[]{"999999", "Val Giuf", "L", "Rueras", "BS", "0.43", "1.42", "1979", "1979", "46.4374", "8.75072906", "im Normalbetrieb", "Aua da Tefal", "www.hydro.ch/images"};
+        PowerStation ps = new PowerStation(line);
+        int index = ps.getId();
+        sut.addPowerStation(ps);
+        sut.setCurrentPowerStation(index);
+
+        //when
+        PowerStation pt = sut.getCurrentPowerStation();
+
+        //then
+        assertEquals(ps.getId(), pt.getId());
+    }
+
+    @Test
+    void size() {
+        //given
+        int size = 656;
+
+        //when
+
+        //then
+        assertEquals(sut.size().intValue(), size);
+    }
+
+    @Test
+    void getTotalPower() {
+        //given
+        double sumZh = 104.07;
+        double sumAg = 482.67;
+
+        //when
+
+        //then
+        assertEquals(sumZh, sut.getTotalPower(Canton.ZH).doubleValue(), 0.01);
+        assertEquals(sumAg, sut.getTotalPower(Canton.AG).doubleValue(),0.01);
+    }
+
+    @Test
+    void getPowerStationCount() {
+        //given
+        int countZh = 14;
+        int countAg = 29;
+
+        //when
+
+        //then
+        assertEquals(countZh, sut.getPowerStationCount(Canton.ZH).intValue());
+        assertEquals(countAg, sut.getPowerStationCount(Canton.AG).intValue());
+    }
 }

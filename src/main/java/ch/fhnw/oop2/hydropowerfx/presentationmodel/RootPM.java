@@ -100,6 +100,7 @@ public class RootPM implements PowerStationOverviewPM, CantonOverviewPM {
 
     @Override
     public void setCurrentPowerStation(int currentPowerStationIndex) {
+        // TODO: check if id exists
         this.currentPowerStationId = currentPowerStationIndex;
     }
 
