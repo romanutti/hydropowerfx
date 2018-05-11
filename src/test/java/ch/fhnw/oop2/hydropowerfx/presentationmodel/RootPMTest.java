@@ -27,7 +27,23 @@ class RootPMTest {
     }
 
     @Test
-    void save() {
+    void testSave() {
+        //when
+        sut.getAllPowerStations().get(0).setName("NNN");
+        sut.save();
+        RootPM secondPM = new RootPM();
+
+        //then
+        assertEquals(sut.getAllPowerStations().size(), secondPM.getAllPowerStations().size());
+        assertEquals("NNN", secondPM.getAllPowerStations().get(0).getName());
+        for (int i = 0; i < sut.getAllPowerStations().size(); i++) {
+            assertEquals(sut.getAllPowerStations().get(i).getName(),
+                    secondPM.getAllPowerStations().get(i).getName());
+        }
+
+        //after
+        sut.getAllPowerStations().get(0).setName("Val Giuf");
+        sut.save();
     }
 
     @Test
@@ -156,7 +172,7 @@ class RootPMTest {
 
         //then
         assertEquals(sumZh, sut.getTotalPower(Canton.ZH).doubleValue(), 0.01);
-        assertEquals(sumAg, sut.getTotalPower(Canton.AG).doubleValue(),0.01);
+        assertEquals(sumAg, sut.getTotalPower(Canton.AG).doubleValue(), 0.01);
     }
 
     @Test

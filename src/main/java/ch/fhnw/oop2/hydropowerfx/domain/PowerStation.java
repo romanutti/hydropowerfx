@@ -11,7 +11,7 @@ public class PowerStation {
     private final ObjectProperty<Type> type = new SimpleObjectProperty<>();
     private final StringProperty site = new SimpleStringProperty();
     private final ObjectProperty<Canton> canton = new SimpleObjectProperty<>();
-    private final DoubleProperty maxWaterVolume= new SimpleDoubleProperty();
+    private final DoubleProperty maxWaterVolume = new SimpleDoubleProperty();
     private final DoubleProperty maxPowerMw = new SimpleDoubleProperty();
     private final DoubleProperty startOfOperationFirst = new SimpleDoubleProperty();
     private final DoubleProperty startOfOperationLast = new SimpleDoubleProperty();
@@ -39,9 +39,23 @@ public class PowerStation {
         setImageUrl(line[13]);
     }
 
-    // TODO: Methode infoAsLine
     public String infoAsLine(String delimiter) {
-        return null;
+        return String.join(delimiter,
+                Integer.toString(getId()),
+                getName(),
+                getType().name(),
+                getSite(),
+                getCanton().name(),
+                Double.toString(getMaxWaterVolume()),
+                Double.toString(getMaxPowerMw()),
+                Double.toString(getStartOfOperationFirst()),
+                Double.toString(getStartOfOperationLast()),
+                Double.toString(getLatitude()),
+                Double.toString(getLongitude()),
+                getStatus(),
+                getWaterbodies(),
+                getImageUrl()
+        );
     }
 
     //getters and setters

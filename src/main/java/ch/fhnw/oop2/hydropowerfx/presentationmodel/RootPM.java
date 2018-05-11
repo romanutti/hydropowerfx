@@ -6,6 +6,7 @@ import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
@@ -59,7 +60,22 @@ public class RootPM implements PowerStationOverviewPM, CantonOverviewPM {
     }
 
     public void save() {
-        //TODO
+        try (BufferedWriter writer = Files.newBufferedWriter(getPath(FILE_NAME))) {
+            writer.write("ENTITY_ID;NAME;TYPE;SITE;CANTON;MAX_WATER_VOLUME_M3_S;MAX_POWER_MW;START_OF_OPERATION_FIRST;START_OF_OPERATION_LAST;LATITUDE;LONGITUDE;STATUS;WATERBODIES;IMAGE_URL");
+            writer.newLine();
+            allPowerStations.stream()
+                    .map(powerStation -> powerStation.infoAsLine(DELIMITER))
+                    .forEach(line -> {
+                        try {
+                            writer.write(line);
+                            writer.newLine();
+                        } catch (IOException e) {
+                            throw new IllegalStateException(e);
+                        }
+                    });
+        } catch (IOException e) {
+            throw new IllegalStateException("save failed");
+        }
     }
 
     public ObservableList<PowerStation> getAllPowerStations() {
