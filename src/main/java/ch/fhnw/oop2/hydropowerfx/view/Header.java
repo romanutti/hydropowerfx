@@ -1,9 +1,9 @@
 package ch.fhnw.oop2.hydropowerfx.view;
 
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.HBox;
 
-public class Header extends VBox implements ViewMixin {
+public class Header extends HBox implements ViewMixin {
     private final RootPM rootPM;
 
     public Header(RootPM rootPM) {

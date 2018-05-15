@@ -3,6 +3,7 @@ package ch.fhnw.oop2.hydropowerfx.view;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 
 public class SelectorBar extends HBox implements ViewMixin {
@@ -14,6 +15,7 @@ public class SelectorBar extends HBox implements ViewMixin {
     private Button deleteButton;
     private Button undoButton;
     private Button redoButton;
+    private TextField searchField;
 
     public SelectorBar(RootPM rootPM) {
         this.rootPM = rootPM;
@@ -32,6 +34,8 @@ public class SelectorBar extends HBox implements ViewMixin {
         deleteButton = new Button ("delete");
         undoButton = new Button ("undo");
         redoButton = new Button ("redo");
+
+        searchField = new TextField("search");
     }
 
     @Override
@@ -42,16 +46,23 @@ public class SelectorBar extends HBox implements ViewMixin {
         undoButton.setMaxWidth(Double.MAX_VALUE);
         redoButton.setMaxWidth(Double.MAX_VALUE);
 
+        searchField.setMaxWidth(Double.MAX_VALUE);
+
+        // margin
         setMargin(saveButton, new Insets(1));
         setMargin(createButton, new Insets(1));
         setMargin(deleteButton, new Insets(1));
         setMargin(undoButton, new Insets(1));
         setMargin(redoButton, new Insets(1));
 
-        setPadding(new Insets((1)));
-        setSpacing(1);
+        setMargin(searchField, new Insets(1));
 
-        getChildren().addAll(saveButton, createButton, deleteButton, undoButton, redoButton);
+        // padding
+        setPadding(new Insets(5));
+        setSpacing(5);
+
+        // right alligment
+        getChildren().addAll(saveButton, createButton, deleteButton, undoButton, redoButton, searchField);
 
     }
 }
