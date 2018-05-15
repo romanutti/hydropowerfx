@@ -1,7 +1,5 @@
 package ch.fhnw.oop2.hydropowerfx.presentationmodel;
 
-import ch.fhnw.oop2.hydropowerfx.domain.Canton;
-import ch.fhnw.oop2.hydropowerfx.domain.PowerStationPM;
 import javafx.collections.ObservableList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,7 +18,7 @@ class RootPMTest {
 
         //then
         assertTrue(sut.getAllPowerStations().size() > 0);
-        assertEquals(sut.getCurrentPowerStationIndex(), 0);
+        assertEquals(sut.getSelectedId(), 0);
 
     }
 
@@ -85,7 +83,7 @@ class RootPMTest {
         //when
 
         //then
-        assertEquals(0, sut.getCurrentPowerStationIndex());
+        assertEquals(0, sut.getSelectedId());
     }
 
     @Test
@@ -94,10 +92,10 @@ class RootPMTest {
         int index = 500200;
 
         //when
-        sut.setCurrentPowerStation(index);
+        sut.setSelectedId(index);
 
         //then
-        assertEquals(index, sut.getCurrentPowerStationIndex());
+        assertEquals(index, sut.getSelectedId());
 
         //TODO: Nicht-vorhandene ID setzen
     }
@@ -140,10 +138,10 @@ class RootPMTest {
         PowerStationPM ps = new PowerStationPM(line);
         int index = ps.getId();
         sut.addPowerStation(ps);
-        sut.setCurrentPowerStation(index);
+        sut.setSelectedId(index);
 
         //when
-        PowerStationPM pt = sut.getCurrentPowerStation();
+        PowerStationPM pt = sut.getPowerStation(sut.getSelectedId());
 
         //then
         assertEquals(ps.getId(), pt.getId());

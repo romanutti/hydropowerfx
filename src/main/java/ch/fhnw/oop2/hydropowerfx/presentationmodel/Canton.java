@@ -1,4 +1,4 @@
-package ch.fhnw.oop2.hydropowerfx.domain;
+package ch.fhnw.oop2.hydropowerfx.presentationmodel;
 
 public enum Canton {
     ZH("Zürich"),

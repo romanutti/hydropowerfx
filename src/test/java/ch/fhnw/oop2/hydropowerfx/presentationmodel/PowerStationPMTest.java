@@ -1,10 +1,12 @@
-package ch.fhnw.oop2.hydropowerfx.domain;
+package ch.fhnw.oop2.hydropowerfx.presentationmodel;
 
+import ch.fhnw.oop2.hydropowerfx.presentationmodel.Canton;
+import ch.fhnw.oop2.hydropowerfx.presentationmodel.PowerStationPM;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class PowerStationTest {
+class PowerStationPMTest {
     private PowerStationPM ps;
 
     @BeforeEach

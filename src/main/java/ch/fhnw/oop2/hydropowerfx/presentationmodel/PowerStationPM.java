@@ -1,8 +1,8 @@
-package ch.fhnw.oop2.hydropowerfx.domain;
+package ch.fhnw.oop2.hydropowerfx.presentationmodel;
 
 import javafx.beans.property.*;
 
-public class PowerStation {
+public class PowerStationPM {
 
     public enum Type {L, P, S, U}
 
@@ -17,12 +17,12 @@ public class PowerStation {
     private final DoubleProperty startOfOperationLast = new SimpleDoubleProperty();
     private final DoubleProperty latitude = new SimpleDoubleProperty();
     private final DoubleProperty longitude = new SimpleDoubleProperty();
-    // TODO: Status als Enum?
+    // TODO: Attribut status als Enum?
     private final StringProperty status = new SimpleStringProperty();
     private final StringProperty waterbodies = new SimpleStringProperty();
     private final StringProperty imageUrl = new SimpleStringProperty();
 
-    public PowerStation(String[] line) {
+    public PowerStationPM(String[] line) {
         setId(Integer.parseInt(line[0]));
         setName(line[1]);
         setType(Type.valueOf(line[2]));

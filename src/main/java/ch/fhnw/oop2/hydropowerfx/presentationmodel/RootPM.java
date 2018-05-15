@@ -1,7 +1,6 @@
 package ch.fhnw.oop2.hydropowerfx.presentationmodel;
 
-import ch.fhnw.oop2.hydropowerfx.domain.Canton;
-import ch.fhnw.oop2.hydropowerfx.domain.PowerStationPM;
+import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,22 +16,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class RootPM implements PowerStationOverviewPM, CantonOverviewPM {
-    // TODO: PowersStations ohne Kanton (bisher einfach gelöscht in Liste)
+public class RootPM {
+    // TODO: Wie Powerstations ohne Kanton behandeln?
     private static final String FILE_NAME = "/data/HYDRO_POWERSTATION.csv";
     private static final String DELIMITER = ";";
 
     private final StringProperty applicationTitle = new SimpleStringProperty("HydroPowerFX");
-    private final StringProperty greeting = new SimpleStringProperty("Hello World!");
     private final ObservableList<PowerStationPM> allPowerStations = FXCollections.observableArrayList();
-
-    private int currentPowerStationId;
-
+    private final IntegerProperty selectedId = new SimpleIntegerProperty();
 
     public RootPM() {
         allPowerStations.addAll(readFromFile());
-        // TODO: Nicht hardcodieren
-        currentPowerStationId = 100100;
+        // TODO: Prüfen, ob Wert vorhanden
+        //Platform.runLater(() -> setSelectedId(100100));
     }
 
     private Path getPath(String fileName) {
@@ -95,56 +91,40 @@ public class RootPM implements PowerStationOverviewPM, CantonOverviewPM {
         this.applicationTitle.set(applicationTitle);
     }
 
-
-    public String getGreeting() {
-        return greeting.get();
+    public int getSelectedId() {
+        return selectedId.get();
     }
 
-    public StringProperty greetingProperty() {
-        return greeting;
+    public IntegerProperty selectedIdProperty() {
+        return selectedId;
     }
 
-    public void setGreeting(String greeting) {
-        this.greeting.set(greeting);
+    public void setSelectedId(int selectedPowerStationId) {
+        this.selectedId.set(selectedPowerStationId);
     }
 
-    // powerstationoverviewpm methods
-    @Override
-    public int getCurrentPowerStationIndex() {
-        return currentPowerStationId;
-    }
-
-    @Override
-    public void setCurrentPowerStation(int currentPowerStationIndex) {
-        // TODO: check if id exists
-        this.currentPowerStationId = currentPowerStationIndex;
-    }
-
-    @Override
+    // overview methods
     public void addPowerStation(PowerStationPM powerStation) {
         allPowerStations.add(powerStation);
     }
 
-    @Override
+
     public void removePowerStation(PowerStationPM powerStation) {
         allPowerStations.remove(powerStation);
     }
 
-    @Override
-    public PowerStationPM getCurrentPowerStation() {
+    public PowerStationPM getPowerStation(int id) {
         return allPowerStations.stream()
-                .filter(powerStation -> powerStation.getId() == this.currentPowerStationId)
+                .filter(powerStation -> powerStation.getId() == id)
                 .findFirst()
                 .orElse(null);
     }
 
-    @Override
     public IntegerProperty size() {
         return new SimpleIntegerProperty(allPowerStations.size());
     }
 
-    //cantonoverviewpm
-    @Override
+    // footer methods
     public DoubleProperty getTotalPower(Canton canton) {
         double result = allPowerStations.stream()
                 .filter(powerStation -> powerStation.getCanton().equals(canton))
@@ -152,13 +132,11 @@ public class RootPM implements PowerStationOverviewPM, CantonOverviewPM {
         return new SimpleDoubleProperty(result);
     }
 
-    @Override
     public IntegerProperty getPowerStationCount(Canton canton) {
         int result = (int) allPowerStations.stream()
                 .filter(powerStation -> powerStation.getCanton().equals(canton))
                 .count();
         return new SimpleIntegerProperty(result);
     }
-
 
 }

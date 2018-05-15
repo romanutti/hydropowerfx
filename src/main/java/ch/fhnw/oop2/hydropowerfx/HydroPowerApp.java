@@ -6,7 +6,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
-import ch.fhnw.oop2.hydropowerfx.view.RootPanel;
+import ch.fhnw.oop2.hydropowerfx.view.ApplicationUI;
 
 public class HydroPowerApp extends Application {
 
@@ -14,7 +14,7 @@ public class HydroPowerApp extends Application {
 	public void start(Stage primaryStage) {
 
 		RootPM model    = new RootPM();
-		Parent rootPanel = new RootPanel(model);
+		Parent rootPanel = new ApplicationUI(model);
 
 		Scene scene = new Scene(rootPanel);
 
