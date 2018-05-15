@@ -54,6 +54,16 @@ class RootPMTest {
     }
 
     @Test
+    void getAllCantonss() {
+        //given
+        ObservableList<Canton> allCantons = sut.getAllCantons();
+
+        //then
+        assertTrue(allCantons.size() > 1);
+        assertEquals(Canton.values().length - 1, allCantons.size());
+    }
+
+    @Test
     void getApplicationTitle() {
         //given
 

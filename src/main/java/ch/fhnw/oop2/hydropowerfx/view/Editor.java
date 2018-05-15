@@ -2,7 +2,6 @@ package ch.fhnw.oop2.hydropowerfx.view;
 
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 
 public class Editor extends GridPane implements ViewMixin {
     private final RootPM rootPM;

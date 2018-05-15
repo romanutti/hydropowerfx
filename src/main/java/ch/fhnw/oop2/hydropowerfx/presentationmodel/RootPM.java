@@ -1,6 +1,5 @@
 package ch.fhnw.oop2.hydropowerfx.presentationmodel;
 
-import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -125,6 +124,12 @@ public class RootPM {
     }
 
     // footer methods
+    public ObservableList<Canton> getAllCantons(){
+        return FXCollections.observableArrayList(allPowerStations.stream()
+                .map(powerStationPM -> powerStationPM.getCanton())
+                .distinct()
+                .collect(Collectors.toList()));    }
+
     public DoubleProperty getTotalPower(Canton canton) {
         double result = allPowerStations.stream()
                 .filter(powerStation -> powerStation.getCanton().equals(canton))
