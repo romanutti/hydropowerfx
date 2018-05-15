@@ -1,6 +1,6 @@
 package ch.fhnw.oop2.hydropowerfx.presentationmodel;
 
-import ch.fhnw.oop2.hydropowerfx.domain.PowerStation;
+import ch.fhnw.oop2.hydropowerfx.domain.PowerStationPM;
 import javafx.beans.property.IntegerProperty;
 
 public interface PowerStationOverviewPM {
@@ -9,11 +9,11 @@ public interface PowerStationOverviewPM {
 
     void setCurrentPowerStation(int currentPowerStationIndex);
 
-    void addPowerStation(PowerStation powerStation);
+    void addPowerStation(PowerStationPM powerStation);
 
-    void removePowerStation(PowerStation powerStation);
+    void removePowerStation(PowerStationPM powerStation);
 
-    PowerStation getCurrentPowerStation();
+    PowerStationPM getCurrentPowerStation();
 
     IntegerProperty size();
 

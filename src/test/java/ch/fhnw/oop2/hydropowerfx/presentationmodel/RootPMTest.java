@@ -1,9 +1,7 @@
 package ch.fhnw.oop2.hydropowerfx.presentationmodel;
 
 import ch.fhnw.oop2.hydropowerfx.domain.Canton;
-import ch.fhnw.oop2.hydropowerfx.domain.PowerStation;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import ch.fhnw.oop2.hydropowerfx.domain.PowerStationPM;
 import javafx.collections.ObservableList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -49,7 +47,7 @@ class RootPMTest {
     @Test
     void getAllPowerStations() {
         //given
-        ObservableList<PowerStation> allPowerStations = sut.getAllPowerStations();
+        ObservableList<PowerStationPM> allPowerStations = sut.getAllPowerStations();
 
         //then
         assertTrue(allPowerStations.size() > 1);
@@ -108,7 +106,7 @@ class RootPMTest {
     void addPowerStation() {
         //before
         String line[] = new String[]{"999999", "Val Giuf", "L", "Rueras", "BS", "0.43", "1.42", "1979", "1979", "46.4374", "8.75072906", "im Normalbetrieb", "Aua da Tefal", "www.hydro.ch/images"};
-        PowerStation ps = new PowerStation(line);
+        PowerStationPM ps = new PowerStationPM(line);
         int size = sut.getAllPowerStations().size();
 
         //when
@@ -123,7 +121,7 @@ class RootPMTest {
     void removePowerStation() {
         //before
         String line[] = new String[]{"999999", "Val Giuf", "L", "Rueras", "BS", "0.43", "1.42", "1979", "1979", "46.4374", "8.75072906", "im Normalbetrieb", "Aua da Tefal", "www.hydro.ch/images"};
-        PowerStation ps = new PowerStation(line);
+        PowerStationPM ps = new PowerStationPM(line);
         int size = sut.getAllPowerStations().size();
         sut.addPowerStation(ps);
 
@@ -139,13 +137,13 @@ class RootPMTest {
     void getCurrentPowerStation() {
         //given
         String line[] = new String[]{"999999", "Val Giuf", "L", "Rueras", "BS", "0.43", "1.42", "1979", "1979", "46.4374", "8.75072906", "im Normalbetrieb", "Aua da Tefal", "www.hydro.ch/images"};
-        PowerStation ps = new PowerStation(line);
+        PowerStationPM ps = new PowerStationPM(line);
         int index = ps.getId();
         sut.addPowerStation(ps);
         sut.setCurrentPowerStation(index);
 
         //when
-        PowerStation pt = sut.getCurrentPowerStation();
+        PowerStationPM pt = sut.getCurrentPowerStation();
 
         //then
         assertEquals(ps.getId(), pt.getId());

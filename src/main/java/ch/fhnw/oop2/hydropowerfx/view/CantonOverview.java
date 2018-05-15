@@ -1,10 +1,19 @@
 package ch.fhnw.oop2.hydropowerfx.view;
 
+import ch.fhnw.oop2.hydropowerfx.domain.PowerStationPM;
+import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.StackPane;
 
 public class CantonOverview extends StackPane {
 
-    public CantonOverview(){
+    private final RootPM model;
+    private TableView<PowerStationPM> cantonOverview;
+
+    public CantonOverview(RootPM model){
+        this.model = model;
         initializeSelf();
         layoutControls();
         initializeControls();
@@ -16,12 +25,14 @@ public class CantonOverview extends StackPane {
         getStylesheets().add(stylesheet);
     }
 
-    private void layoutControls() {
-
+    private void initializeControls() {
+        cantonOverview = new TableView<>(model.getAllPowerStations());
     }
 
-    private void initializeControls() {
-
+    private void layoutControls() {
+        TableColumn<PowerStationPM, String> nameColumn = new TableColumn<>("Test");
+        cantonOverview.getColumns().addAll(nameColumn);
+        nameColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().cantonProperty().toString()));
     }
 
     public void setupBindings() {

@@ -1,7 +1,7 @@
 package ch.fhnw.oop2.hydropowerfx.presentationmodel;
 
 import ch.fhnw.oop2.hydropowerfx.domain.Canton;
-import ch.fhnw.oop2.hydropowerfx.domain.PowerStation;
+import ch.fhnw.oop2.hydropowerfx.domain.PowerStationPM;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,21 +18,21 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class RootPM implements PowerStationOverviewPM, CantonOverviewPM {
-    // TODO: Datenfile in anderen Folder
     // TODO: PowersStations ohne Kanton (bisher einfach gelöscht in Liste)
-    private static final String FILE_NAME = "HYDRO_POWERSTATION.csv";
+    private static final String FILE_NAME = "/data/HYDRO_POWERSTATION.csv";
     private static final String DELIMITER = ";";
 
     private final StringProperty applicationTitle = new SimpleStringProperty("HydroPowerFX");
     private final StringProperty greeting = new SimpleStringProperty("Hello World!");
-    private final ObservableList<PowerStation> allPowerStations = FXCollections.observableArrayList();
+    private final ObservableList<PowerStationPM> allPowerStations = FXCollections.observableArrayList();
 
     private int currentPowerStationId;
 
 
     public RootPM() {
         allPowerStations.addAll(readFromFile());
-        currentPowerStationId = 0;
+        // TODO: Nicht hardcodieren
+        currentPowerStationId = 100100;
     }
 
     private Path getPath(String fileName) {
@@ -51,10 +51,10 @@ public class RootPM implements PowerStationOverviewPM, CantonOverviewPM {
         }
     }
 
-    private List<PowerStation> readFromFile() {
+    private List<PowerStationPM> readFromFile() {
         try (Stream<String> stream = getStreamOfLines(FILE_NAME)) {
             return stream.skip(1)
-                    .map(line -> new PowerStation(line.split(DELIMITER, 22)))
+                    .map(line -> new PowerStationPM(line.split(DELIMITER, 22)))
                     .collect(Collectors.toList());
         }
     }
@@ -78,7 +78,7 @@ public class RootPM implements PowerStationOverviewPM, CantonOverviewPM {
         }
     }
 
-    public ObservableList<PowerStation> getAllPowerStations() {
+    public ObservableList<PowerStationPM> getAllPowerStations() {
         return allPowerStations;
     }
 
@@ -121,17 +121,17 @@ public class RootPM implements PowerStationOverviewPM, CantonOverviewPM {
     }
 
     @Override
-    public void addPowerStation(PowerStation powerStation) {
+    public void addPowerStation(PowerStationPM powerStation) {
         allPowerStations.add(powerStation);
     }
 
     @Override
-    public void removePowerStation(PowerStation powerStation) {
+    public void removePowerStation(PowerStationPM powerStation) {
         allPowerStations.remove(powerStation);
     }
 
     @Override
-    public PowerStation getCurrentPowerStation() {
+    public PowerStationPM getCurrentPowerStation() {
         return allPowerStations.stream()
                 .filter(powerStation -> powerStation.getId() == this.currentPowerStationId)
                 .findFirst()
@@ -148,7 +148,7 @@ public class RootPM implements PowerStationOverviewPM, CantonOverviewPM {
     public DoubleProperty getTotalPower(Canton canton) {
         double result = allPowerStations.stream()
                 .filter(powerStation -> powerStation.getCanton().equals(canton))
-                .collect(Collectors.summingDouble(PowerStation::getMaxPowerMw));
+                .collect(Collectors.summingDouble(PowerStationPM::getMaxPowerMw));
         return new SimpleDoubleProperty(result);
     }
 

@@ -1,14 +1,11 @@
 package ch.fhnw.oop2.hydropowerfx.domain;
 
-import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class PowerStationTest {
-    private PowerStation ps;
+    private PowerStationPM ps;
 
     @BeforeEach
     void setUp() {
@@ -16,12 +13,12 @@ class PowerStationTest {
         String line[] = new String[]{"100100", "Val Giuf", "L", "Rueras", "GR", "0.43", "1.42", "1979", "1979", "46.67133138", "8.75072906", "im Normalbetrieb", "Aua da Milez", "www.hydro.ch/images"};
 
         //when
-        ps = new PowerStation(line);
+        ps = new PowerStationPM(line);
 
         //then
         Assertions.assertEquals(ps.getId(), 100100);
         Assertions.assertEquals(ps.getName(), "Val Giuf");
-        Assertions.assertEquals(ps.getType(), PowerStation.Type.L);
+        Assertions.assertEquals(ps.getType(), PowerStationPM.Type.L);
         Assertions.assertEquals(ps.getSite(), "Rueras");
         Assertions.assertEquals(ps.getCanton(), Canton.GR);
         Assertions.assertEquals(ps.getMaxWaterVolume(),0.43);
