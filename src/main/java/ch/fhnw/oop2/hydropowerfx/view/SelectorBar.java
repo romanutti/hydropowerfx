@@ -61,7 +61,6 @@ public class SelectorBar extends HBox implements ViewMixin {
         setPadding(new Insets(5));
         setSpacing(5);
 
-        // right alligment
         getChildren().addAll(saveButton, createButton, deleteButton, undoButton, redoButton, searchField);
 
     }
