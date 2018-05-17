@@ -89,6 +89,7 @@ public class Editor extends GridPane implements ViewMixin {
     @Override
     public void layoutControls() {
 
+        setMinWidth(USE_PREF_SIZE);
         // Set horizontal gap
         setHgap(10);
         // Set vertical gap
@@ -97,14 +98,12 @@ public class Editor extends GridPane implements ViewMixin {
 
         setPadding(new Insets(5,5,5,5));
         ColumnConstraints cc = new ColumnConstraints();
-        cc.setHgrow(Priority.NEVER);
-      //  cc.setPrefWidth(150);
-        getColumnConstraints().addAll(cc, cc, cc, cc);
-
-        RowConstraints rc = new RowConstraints();
-        rc.setVgrow(Priority.NEVER);
-        getRowConstraints().addAll(rc, rc, rc, rc);
-
+        ColumnConstraints ccFix = new ColumnConstraints();
+        cc.setHgrow(Priority.ALWAYS);
+        ccFix.setHgrow(Priority.NEVER);
+        cc.setMinWidth(140);
+        ccFix.setMinWidth(120);
+        getColumnConstraints().addAll(ccFix, cc, ccFix, cc);
 
         add(nameLabel,0,0);
         add(siteLabel,0,1);
@@ -127,8 +126,8 @@ public class Editor extends GridPane implements ViewMixin {
         add(startOfOperationFirstTextField,1,3);
         add(latitudeTextField,1,4);
         add(statusTextField,1,5);
-        add(waterbodiesTextField,1,6);
-        add(imageUrlTextField,1,7);
+        add(waterbodiesTextField,1,6,3,1);
+        add(imageUrlTextField,1,7,3,1);
 
         add(typeTextField,3,0);
         add(cantonTextField,3,1);

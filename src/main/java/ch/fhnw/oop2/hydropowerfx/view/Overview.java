@@ -51,8 +51,14 @@ public class Overview extends VBox implements ViewMixin{
 
     @Override
     public void layoutControls() {
-        getChildren().addAll(itemTable);
-        setVgrow(itemTable,Priority.ALWAYS);
+
+        setMinWidth(410);
+        //setMaxWidth(405);
+        //TODO: Column selection via index is not ideal
+        getItemTable().getColumns().get(2).setMinWidth(115);
+        getItemTable().setMinWidth(USE_PREF_SIZE);
+        getChildren().addAll(getItemTable());
+        setVgrow(getItemTable(),Priority.ALWAYS);
 
     }
 
@@ -71,8 +77,5 @@ public class Overview extends VBox implements ViewMixin{
         return itemTable;
     }
 
-    public void setItemTable(TableView<PowerStationPM> itemTable) {
-        this.itemTable = itemTable;
-    }
 
 }

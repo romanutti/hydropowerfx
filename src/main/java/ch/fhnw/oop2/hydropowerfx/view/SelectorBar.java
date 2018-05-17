@@ -84,7 +84,7 @@ public class SelectorBar extends HBox implements ViewMixin {
 
     @Override
     public void setupBindings() {
-        germanButton.textProperty().bind(rootPM.getLanguageSwitcherPM().germanButtonTextProperty());
-        englishButton.textProperty().bind(rootPM.getLanguageSwitcherPM().englishButtonTextProperty());
+        germanButton.textProperty().bind(rootPM.getLanguageSwitcherPM().englishButtonTextProperty());
+        englishButton.textProperty().bind(rootPM.getLanguageSwitcherPM().germanButtonTextProperty());
     }
 }

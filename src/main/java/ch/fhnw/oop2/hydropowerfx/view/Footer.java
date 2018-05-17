@@ -46,10 +46,17 @@ public class Footer extends VBox implements ViewMixin{
         return tableView;
     }
 
+
     @Override
     public void layoutControls() {
-        getChildren().addAll(itemTable);
-        setVgrow(itemTable,Priority.ALWAYS);
+        setPrefHeight(USE_PREF_SIZE);
+        getChildren().addAll(getItemTable());
+        setVgrow(getItemTable(),Priority.ALWAYS);
 
     }
+
+    public TableView<Canton> getItemTable() {
+        return itemTable;
+    }
+
 }
