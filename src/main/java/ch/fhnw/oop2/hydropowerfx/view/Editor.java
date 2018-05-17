@@ -1,7 +1,9 @@
 package ch.fhnw.oop2.hydropowerfx.view;
 
+import ch.fhnw.oop2.hydropowerfx.presentationmodel.LanguageSwitcherPM;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
@@ -11,6 +13,9 @@ import javafx.scene.layout.RowConstraints;
 
 public class Editor extends GridPane implements ViewMixin {
     private final RootPM rootPM;
+
+    private Button germanButton;
+    private Button englishButton;
 
     private Label nameLabel;
     private Label typeLabel;
@@ -53,6 +58,9 @@ public class Editor extends GridPane implements ViewMixin {
 
     @Override
     public void initializeControls() {
+        germanButton  = new Button();
+        englishButton = new Button();
+
         nameLabel = new Label("Name");
         typeLabel = new Label("Typ");
         siteLabel = new Label("Standort");
@@ -86,6 +94,9 @@ public class Editor extends GridPane implements ViewMixin {
 
     @Override
     public void layoutControls() {
+        englishButton.setMaxWidth(Double.MAX_VALUE);
+        germanButton.setMaxWidth(Double.MAX_VALUE);
+
         // Set horizontal gap
         setHgap(10);
         // Set vertical gap
@@ -133,5 +144,20 @@ public class Editor extends GridPane implements ViewMixin {
         add(startOfOperationLastTextField,3,3);
         add(longitudeTextField,3,4);
 
+        addRow(9, germanButton, englishButton);
+
+    }
+
+    @Override
+    public void setupEventHandlers() {
+        germanButton.setOnAction(event  -> rootPM.getLanguageSwitcherPM().setLanguage(LanguageSwitcherPM.Lang.DE));
+        englishButton.setOnAction(event -> rootPM.getLanguageSwitcherPM().setLanguage(LanguageSwitcherPM.Lang.EN));
+    }
+
+    @Override
+    public void setupBindings() {
+        germanButton.textProperty().bind(rootPM.getLanguageSwitcherPM().germanButtonTextProperty());
+        englishButton.textProperty().bind(rootPM.getLanguageSwitcherPM().englishButtonTextProperty());
+        nameLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().labelTextProperty());
     }
 }

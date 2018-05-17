@@ -1,20 +1,19 @@
-package ch.fhnw.oop2.hydropowerfx.features;
+package ch.fhnw.oop2.hydropowerfx.presentationmodel;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-import static ch.fhnw.oop2.hydropowerfx.features.LanguageSwitcher.MultiLanguageText.*;
+import static ch.fhnw.oop2.hydropowerfx.presentationmodel.LanguageSwitcherPM.MultiLanguageText.*;
 
-public class LanguageSwitcher {
+public class LanguageSwitcherPM {
 
-    //TODO: Correct implementation and relation to RootPM
+    // TODO: Enums waren initial nicht public
+    public enum Lang {DE, EN}
 
-    enum Lang {DE, EN}
-
-    enum MultiLanguageText {
-        WINDOW_TITLE       ("AquaPowerFX hydroelectric power station of Switzerland","AquaPowerFX Wasserkraftwerke der Schweiz"),
-        NAME_LABEL_TEXT    ("Name","Name"),
-        GERMAN_BUTTON_TEXT ("German","Deutsch"),
+    public enum MultiLanguageText {
+        WINDOW_TITLE("AquaPowerFX hydroelectric power station of Switzerland","AquaPowerFX Wasserkraftwerke der Schweiz"),
+        LABEL_TEXT("some Label", "eine Beschriftung"),
+        GERMAN_BUTTON_TEXT("German", "Deutsch"),
         ENGLISH_BUTTON_TEXT("English", "Englisch");
 
         private final String englishLabel;
@@ -33,38 +32,34 @@ public class LanguageSwitcher {
             return germanLabel;
         }
 
-        public String getText(Lang lang){
-            switch (lang){
+        public String getText(Lang lang) {
+            switch (lang) {
                 case DE:
                     return getGermanLabel();
                 case EN:
                     return getEnglishLabel();
                 default:
-                    return getGermanLabel();
+                    return getEnglishLabel();
             }
         }
     }
 
-    private final StringProperty applicationTitle  = new SimpleStringProperty();
-    private final StringProperty nameLabelText  = new SimpleStringProperty();
-    private final StringProperty germanButtonText  = new SimpleStringProperty();
+    private final StringProperty applicationTitle = new SimpleStringProperty();
+
+    private final StringProperty labelText = new SimpleStringProperty();
+    private final StringProperty germanButtonText = new SimpleStringProperty();
     private final StringProperty englishButtonText = new SimpleStringProperty();
 
-
-    public LanguageSwitcher() {
-        setLanguage(Lang.DE);
+    public LanguageSwitcherPM() {
+        setLanguage(Lang.EN);
     }
-
-
 
     public void setLanguage(Lang lang) {
         setApplicationTitle(WINDOW_TITLE.getText(lang));
-        setNameLabelText(NAME_LABEL_TEXT.getText(lang));
+        setLabelText(LABEL_TEXT.getText(lang));
         setGermanButtonText(GERMAN_BUTTON_TEXT.getText(lang));
         setEnglishButtonText(ENGLISH_BUTTON_TEXT.getText(lang));
-
     }
-
 
     public String getApplicationTitle() {
         return applicationTitle.get();
@@ -74,21 +69,20 @@ public class LanguageSwitcher {
         return applicationTitle;
     }
 
-    public void setApplicationTitle(String applicationTitle) {
+    private void setApplicationTitle(String applicationTitle) {
         this.applicationTitle.set(applicationTitle);
     }
 
-
-    public String getNameLabelText() {
-        return nameLabelText.get();
+    public String getLabelText() {
+        return labelText.get();
     }
 
-    public StringProperty nameLabelTextProperty() {
-        return nameLabelText;
+    public StringProperty labelTextProperty() {
+        return labelText;
     }
 
-    public void setNameLabelText(String nameLabelText) {
-        this.nameLabelText.set(nameLabelText);
+    private void setLabelText(String labelText) {
+        this.labelText.set(labelText);
     }
 
     public String getGermanButtonText() {
@@ -99,7 +93,7 @@ public class LanguageSwitcher {
         return germanButtonText;
     }
 
-    public void setGermanButtonText(String germanButtonText) {
+    private void setGermanButtonText(String germanButtonText) {
         this.germanButtonText.set(germanButtonText);
     }
 
@@ -111,7 +105,8 @@ public class LanguageSwitcher {
         return englishButtonText;
     }
 
-    public void setEnglishButtonText(String englishButtonText) {
+    private void setEnglishButtonText(String englishButtonText) {
         this.englishButtonText.set(englishButtonText);
     }
 }
+

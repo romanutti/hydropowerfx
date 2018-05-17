@@ -23,11 +23,13 @@ public class RootPM {
     private final StringProperty applicationTitle = new SimpleStringProperty("HydroPowerFX");
     private final ObservableList<PowerStationPM> allPowerStations = FXCollections.observableArrayList();
     private final IntegerProperty selectedId = new SimpleIntegerProperty();
+    private final LanguageSwitcherPM languageSwitcherPM;
 
     public RootPM() {
         allPowerStations.addAll(readFromFile());
         // TODO: Prüfen, ob Wert vorhanden
         //Platform.runLater(() -> setSelectedId(100100));
+        this.languageSwitcherPM = new LanguageSwitcherPM();
     }
 
     private Path getPath(String fileName) {
@@ -100,6 +102,10 @@ public class RootPM {
 
     public void setSelectedId(int selectedPowerStationId) {
         this.selectedId.set(selectedPowerStationId);
+    }
+
+    public LanguageSwitcherPM getLanguageSwitcherPM() {
+        return languageSwitcherPM;
     }
 
     // overview methods
