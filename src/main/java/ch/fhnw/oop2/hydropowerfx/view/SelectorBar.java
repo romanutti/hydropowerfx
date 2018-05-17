@@ -1,5 +1,6 @@
 package ch.fhnw.oop2.hydropowerfx.view;
 
+import ch.fhnw.oop2.hydropowerfx.presentationmodel.LanguageSwitcherPM;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -10,12 +11,16 @@ public class SelectorBar extends HBox implements ViewMixin {
 
     private final RootPM rootPM;
 
+
     private Button saveButton;
     private Button createButton;
     private Button deleteButton;
     private Button undoButton;
     private Button redoButton;
     private TextField searchField;
+    private Button germanButton;
+    private Button englishButton;
+
 
     public SelectorBar(RootPM rootPM) {
         this.rootPM = rootPM;
@@ -36,6 +41,9 @@ public class SelectorBar extends HBox implements ViewMixin {
         redoButton = new Button ("redo");
 
         searchField = new TextField("search");
+
+        germanButton  = new Button();
+        englishButton = new Button();
     }
 
     @Override
@@ -47,6 +55,9 @@ public class SelectorBar extends HBox implements ViewMixin {
         redoButton.setMaxWidth(Double.MAX_VALUE);
 
         searchField.setMaxWidth(Double.MAX_VALUE);
+
+        englishButton.setMaxWidth(Double.MAX_VALUE);
+        germanButton.setMaxWidth(Double.MAX_VALUE);
 
         // margin
         setMargin(saveButton, new Insets(1));
@@ -61,7 +72,19 @@ public class SelectorBar extends HBox implements ViewMixin {
         setPadding(new Insets(5));
         setSpacing(5);
 
-        getChildren().addAll(saveButton, createButton, deleteButton, undoButton, redoButton, searchField);
+        getChildren().addAll(saveButton, createButton, deleteButton, undoButton, redoButton, searchField,germanButton,englishButton);
 
+    }
+
+    @Override
+    public void setupEventHandlers() {
+        germanButton.setOnAction(event  -> rootPM.getLanguageSwitcherPM().setLanguage(LanguageSwitcherPM.Lang.DE));
+        englishButton.setOnAction(event -> rootPM.getLanguageSwitcherPM().setLanguage(LanguageSwitcherPM.Lang.EN));
+    }
+
+    @Override
+    public void setupBindings() {
+        germanButton.textProperty().bind(rootPM.getLanguageSwitcherPM().germanButtonTextProperty());
+        englishButton.textProperty().bind(rootPM.getLanguageSwitcherPM().englishButtonTextProperty());
     }
 }

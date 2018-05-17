@@ -4,6 +4,7 @@ import ch.fhnw.oop2.hydropowerfx.presentationmodel.PowerStationPM;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 public class Overview extends VBox implements ViewMixin{
@@ -30,22 +31,48 @@ public class Overview extends VBox implements ViewMixin{
     private TableView<PowerStationPM> initializePowerStationTable() {
         TableView<PowerStationPM> tableView = new TableView<>(rootPM.getAllPowerStations());
 
-        TableColumn<PowerStationPM, String> nameColumn = new TableColumn<>("Name");
+        TableColumn<PowerStationPM, String> nameColumn = new TableColumn<>();
         nameColumn.setCellValueFactory(cell -> cell.getValue().nameProperty());
 
-        TableColumn<PowerStationPM, Number> maxPowerColumn = new TableColumn<>("Leistung MW");
+        TableColumn<PowerStationPM, Number> maxPowerColumn = new TableColumn<>();
         maxPowerColumn.setCellValueFactory(cell -> cell.getValue().maxPowerMwProperty());
 
-        TableColumn<PowerStationPM, Number> startOfOperationFirstColumn = new TableColumn<>("Inbetriebnahme");
+        TableColumn<PowerStationPM, Number> startOfOperationFirstColumn = new TableColumn<>();
         startOfOperationFirstColumn.setCellValueFactory(cell -> cell.getValue().startOfOperationFirstProperty());
 
         tableView.getColumns().addAll(nameColumn, maxPowerColumn, startOfOperationFirstColumn);
 
+
+
+
         return tableView;
     }
+
 
     @Override
     public void layoutControls() {
         getChildren().addAll(itemTable);
+        setVgrow(itemTable,Priority.ALWAYS);
+
     }
+
+
+    @Override
+    public void setupBindings() {
+        //TODO: Better method to identify the right column; not just by id
+        getItemTable().getColumns().get(0).textProperty().bind(rootPM.getLanguageSwitcherPM().nameLabelTextProperty());
+        getItemTable().getColumns().get(1).textProperty().bind(rootPM.getLanguageSwitcherPM().maxPowerMwLabelTextProperty());
+        getItemTable().getColumns().get(2).textProperty().bind(rootPM.getLanguageSwitcherPM().startOfOperationFirstLabelTextProperty());
+
+    }
+
+    //TODO: Check if getter and setter are allowed
+    public TableView<PowerStationPM> getItemTable() {
+        return itemTable;
+    }
+
+    public void setItemTable(TableView<PowerStationPM> itemTable) {
+        this.itemTable = itemTable;
+    }
+
 }

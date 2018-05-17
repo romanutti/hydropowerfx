@@ -14,9 +14,6 @@ import javafx.scene.layout.RowConstraints;
 public class Editor extends GridPane implements ViewMixin {
     private final RootPM rootPM;
 
-    private Button germanButton;
-    private Button englishButton;
-
     private Label nameLabel;
     private Label typeLabel;
     private Label siteLabel;
@@ -58,23 +55,20 @@ public class Editor extends GridPane implements ViewMixin {
 
     @Override
     public void initializeControls() {
-        germanButton  = new Button();
-        englishButton = new Button();
+        nameLabel = new Label();
+        typeLabel = new Label();
+        siteLabel = new Label();
+        cantonLabel = new Label();
+        maxWaterVolumeLabel = new Label();
+        maxPowerMwLabel = new Label();
+        startOfOperationFirstLabel = new Label();
+        startOfOperationLastLabel = new Label();
+        latitudeLabel = new Label();
+        longitudeLabel = new Label();
+        statusLabel = new Label();
+        waterbodiesLabel = new Label();
+        imageUrlLabel = new Label();
 
-        nameLabel = new Label("Name");
-        typeLabel = new Label("Typ");
-        siteLabel = new Label("Standort");
-        cantonLabel = new Label("Kanton");
-        //TODO: add square to WaterVolumeLabel
-        maxWaterVolumeLabel = new Label("Wassermenge(m^3/s)");
-        maxPowerMwLabel = new Label("Leistung(MW)");
-        startOfOperationFirstLabel = new Label("Inbetriebnahme");
-        startOfOperationLastLabel = new Label("Letzte Inbetriebnahme");
-        latitudeLabel = new Label("Breitengrad");
-        longitudeLabel = new Label("Längengrad");
-        statusLabel = new Label("Status");
-        waterbodiesLabel = new Label("Genutzte Gewässer");
-        imageUrlLabel = new Label("Image Url");
 
         nameTextField = new TextField();
         typeTextField = new TextField();
@@ -94,8 +88,6 @@ public class Editor extends GridPane implements ViewMixin {
 
     @Override
     public void layoutControls() {
-        englishButton.setMaxWidth(Double.MAX_VALUE);
-        germanButton.setMaxWidth(Double.MAX_VALUE);
 
         // Set horizontal gap
         setHgap(10);
@@ -144,20 +136,28 @@ public class Editor extends GridPane implements ViewMixin {
         add(startOfOperationLastTextField,3,3);
         add(longitudeTextField,3,4);
 
-        addRow(9, germanButton, englishButton);
-
     }
 
     @Override
     public void setupEventHandlers() {
-        germanButton.setOnAction(event  -> rootPM.getLanguageSwitcherPM().setLanguage(LanguageSwitcherPM.Lang.DE));
-        englishButton.setOnAction(event -> rootPM.getLanguageSwitcherPM().setLanguage(LanguageSwitcherPM.Lang.EN));
+
     }
 
     @Override
     public void setupBindings() {
-        germanButton.textProperty().bind(rootPM.getLanguageSwitcherPM().germanButtonTextProperty());
-        englishButton.textProperty().bind(rootPM.getLanguageSwitcherPM().englishButtonTextProperty());
-        nameLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().labelTextProperty());
+        nameLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().nameLabelTextProperty());
+        typeLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().typeLabelTextProperty());
+        siteLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().siteLabelTextProperty());
+        cantonLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().cantonLabelTextProperty());
+        maxWaterVolumeLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().maxWaterVolumeLabelTextProperty());
+        maxPowerMwLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().maxPowerMwLabelTextProperty());
+        startOfOperationFirstLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().startOfOperationFirstLabelTextProperty());
+        startOfOperationLastLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().startOfOperationLastLabelTextProperty());
+        latitudeLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().latitudeLabelTextProperty());
+        longitudeLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().longitudeLabelTextProperty());
+        statusLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().statusLabelTextProperty());
+        waterbodiesLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().waterbodiesLabelTextProperty());
+        imageUrlLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().imageUrlLabelTextProperty());
+
     }
 }
