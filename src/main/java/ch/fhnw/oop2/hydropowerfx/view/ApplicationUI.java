@@ -1,6 +1,7 @@
 package ch.fhnw.oop2.hydropowerfx.view;
 
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
+import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.BorderPane;
@@ -43,13 +44,10 @@ public class ApplicationUI extends BorderPane implements ViewMixin {
 
     @Override
     public void layoutControls() {
-
         spVerticalMain.getItems().addAll(spHorizontalCenter,footer);
         spVerticalMain.setOrientation(Orientation.VERTICAL);
-
         center.getChildren().addAll(header, editor);
         spHorizontalCenter.getItems().addAll(overview,center);
-
         setTop(selectorbar);
         setCenter(spVerticalMain);
         setMinWidth(USE_PREF_SIZE);

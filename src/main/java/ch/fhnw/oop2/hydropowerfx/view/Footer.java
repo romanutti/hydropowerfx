@@ -3,6 +3,7 @@ package ch.fhnw.oop2.hydropowerfx.view;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.Canton;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.geometry.Insets;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Priority;
@@ -50,6 +51,7 @@ public class Footer extends VBox implements ViewMixin{
     @Override
     public void layoutControls() {
         setPrefHeight(USE_PREF_SIZE);
+        setMinHeight(USE_PREF_SIZE);
         getChildren().addAll(getItemTable());
         setVgrow(getItemTable(),Priority.ALWAYS);
 
