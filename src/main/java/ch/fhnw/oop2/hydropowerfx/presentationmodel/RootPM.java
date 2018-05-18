@@ -20,7 +20,6 @@ public class RootPM {
     private static final String FILE_NAME = "/data/HYDRO_POWERSTATION.csv";
     private static final String DELIMITER = ";";
 
-    private final StringProperty applicationTitle = new SimpleStringProperty("HydroPowerFX");
     private final ObservableList<PowerStationPM> allPowerStations = FXCollections.observableArrayList();
     private final IntegerProperty selectedId = new SimpleIntegerProperty();
     private final LanguageSwitcherPM languageSwitcherPM;
@@ -80,17 +79,6 @@ public class RootPM {
     }
 
     // all getters and setters
-    public String getApplicationTitle() {
-        return applicationTitle.get();
-    }
-
-    public StringProperty applicationTitleProperty() {
-        return applicationTitle;
-    }
-
-    public void setApplicationTitle(String applicationTitle) {
-        this.applicationTitle.set(applicationTitle);
-    }
 
     public int getSelectedId() {
         return selectedId.get();

@@ -18,7 +18,7 @@ public class HydroPowerApp extends Application {
 
 		Scene scene = new Scene(rootPanel);
 
-		primaryStage.titleProperty().bind(model.applicationTitleProperty());
+		primaryStage.titleProperty().bind(model.getLanguageSwitcherPM().applicationTitleProperty());
 		primaryStage.setScene(scene);
 		primaryStage.setHeight(730);
 		primaryStage.setMinWidth(1030);
