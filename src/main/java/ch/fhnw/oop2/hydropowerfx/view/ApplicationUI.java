@@ -1,7 +1,7 @@
 package ch.fhnw.oop2.hydropowerfx.view;
 
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
-import javafx.geometry.Insets;
+import ch.fhnw.oop2.hydropowerfx.view.powerStationOverview.Overview;
 import javafx.geometry.Orientation;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.BorderPane;
