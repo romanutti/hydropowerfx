@@ -22,13 +22,46 @@ public class RootPM {
 
     private final ObservableList<PowerStationPM> allPowerStations = FXCollections.observableArrayList();
     private final IntegerProperty selectedId = new SimpleIntegerProperty();
+    private final PowerStationPM powerStationProxy = new PowerStationPM();
     private final LanguageSwitcherPM languageSwitcherPM;
 
     public RootPM() {
-        allPowerStations.addAll(readFromFile());
+        init(createAllPowerStations());
+        this.languageSwitcherPM = new LanguageSwitcherPM();
+
+    }
+
+    public RootPM(List<PowerStationPM> powerStationList) {
+        init(powerStationList);
+        this.languageSwitcherPM = new LanguageSwitcherPM();
+    }
+
+    private void init(List<PowerStationPM> powerStationList){
+        allPowerStations.addAll(powerStationList);
         // TODO: Prüfen, ob Wert vorhanden
         //Platform.runLater(() -> setSelectedId(100100));
-        this.languageSwitcherPM = new LanguageSwitcherPM();
+
+        selectedIdProperty().addListener((observable, oldValue, newValue) -> {
+                    PowerStationPM oldSelection = getPowerStation(oldValue.intValue());
+                    PowerStationPM newSelection = getPowerStation(newValue.intValue());
+
+                    if (oldSelection != null) {
+                        unbindFromProxy(oldSelection);
+                    }
+
+                    if (newSelection != null) {
+                        bindToProxy(newSelection);
+                    }
+                }
+        );
+        }
+
+    private List<PowerStationPM> createAllPowerStations() {
+        return readFromFile();
+    }
+
+    public ObservableList<PowerStationPM> allCountries() {
+        return allPowerStations;
     }
 
     private Path getPath(String fileName) {
@@ -53,6 +86,44 @@ public class RootPM {
                     .map(line -> new PowerStationPM(line.split(DELIMITER, 22)))
                     .collect(Collectors.toList());
         }
+    }
+
+    public PowerStationPM getPowerStationProxy() {
+        return powerStationProxy;
+    }
+
+    private void bindToProxy(PowerStationPM powerStation) {
+        powerStationProxy.idProperty()  .bindBidirectional(powerStation.idProperty());
+        powerStationProxy.nameProperty().bindBidirectional(powerStation.nameProperty());
+        powerStationProxy.typeProperty().bindBidirectional(powerStation.typeProperty());
+        powerStationProxy.siteProperty().bindBidirectional(powerStation.siteProperty());
+        powerStationProxy.cantonProperty().bindBidirectional(powerStation.cantonProperty());
+        powerStationProxy.maxWaterVolumeProperty().bindBidirectional(powerStation.maxWaterVolumeProperty());
+        powerStationProxy.maxPowerMwProperty().bindBidirectional(powerStation.maxPowerMwProperty());
+        powerStationProxy.startOfOperationFirstProperty().bindBidirectional(powerStation.startOfOperationFirstProperty());
+        powerStationProxy.startOfOperationLastProperty().bindBidirectional(powerStation.startOfOperationLastProperty());
+        powerStationProxy.latitudeProperty().bindBidirectional(powerStation.latitudeProperty());
+        powerStationProxy.longitudeProperty().bindBidirectional(powerStation.longitudeProperty());
+        powerStationProxy.statusProperty().bindBidirectional(powerStation.statusProperty());
+        powerStationProxy.waterbodiesProperty().bindBidirectional(powerStation.waterbodiesProperty());
+        powerStationProxy.imageUrlProperty().bindBidirectional(powerStation.imageUrlProperty());
+    }
+
+    private void unbindFromProxy(PowerStationPM powerStation) {
+        powerStationProxy.idProperty()  .unbindBidirectional(powerStation.idProperty());
+        powerStationProxy.nameProperty().unbindBidirectional(powerStation.nameProperty());
+        powerStationProxy.typeProperty().unbindBidirectional(powerStation.typeProperty());
+        powerStationProxy.siteProperty().unbindBidirectional(powerStation.siteProperty());
+        powerStationProxy.cantonProperty().unbindBidirectional(powerStation.cantonProperty());
+        powerStationProxy.maxWaterVolumeProperty().unbindBidirectional(powerStation.maxWaterVolumeProperty());
+        powerStationProxy.maxPowerMwProperty().unbindBidirectional(powerStation.maxPowerMwProperty());
+        powerStationProxy.startOfOperationFirstProperty().unbindBidirectional(powerStation.startOfOperationFirstProperty());
+        powerStationProxy.startOfOperationLastProperty().unbindBidirectional(powerStation.startOfOperationLastProperty());
+        powerStationProxy.latitudeProperty().unbindBidirectional(powerStation.latitudeProperty());
+        powerStationProxy.longitudeProperty().unbindBidirectional(powerStation.longitudeProperty());
+        powerStationProxy.statusProperty().unbindBidirectional(powerStation.statusProperty());
+        powerStationProxy.waterbodiesProperty().unbindBidirectional(powerStation.waterbodiesProperty());
+        powerStationProxy.imageUrlProperty().unbindBidirectional(powerStation.imageUrlProperty());
     }
 
     public void save() {

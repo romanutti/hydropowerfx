@@ -72,6 +72,9 @@ public class Overview extends VBox implements ViewMixin {
 
     @Override
     public void setupBindings() {
+
+
+        // Language Switcher
         //TODO: Better method to identify the right column; not just by id
         getItemTable().getColumns().get(0).textProperty().bind(rootPM.getLanguageSwitcherPM().nameLabelTextProperty());
         getItemTable().getColumns().get(2).textProperty().bind(rootPM.getLanguageSwitcherPM().maxPowerMwLabelTextProperty());
@@ -79,7 +82,15 @@ public class Overview extends VBox implements ViewMixin {
 
     }
 
+    @Override
+    public void setupValueChangedListeners() {
+        itemTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> rootPM.setSelectedId(newValue.getId()));
+        rootPM.selectedIdProperty().addListener((observable, oldValue, newValue) -> itemTable.getSelectionModel().select(((int) newValue)));
+
+    }
+
     //TODO: Check if getter and setter are allowed
+    //MR: notwendig?
     public TableView<PowerStationPM> getItemTable() {
         return itemTable;
     }

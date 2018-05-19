@@ -22,6 +22,9 @@ public class PowerStationPM {
     private final StringProperty waterbodies = new SimpleStringProperty();
     private final StringProperty imageUrl = new SimpleStringProperty();
 
+    public PowerStationPM(){
+    }
+
     public PowerStationPM(String[] line) {
         setId(Integer.parseInt(line[0]));
         setName(line[1]);
