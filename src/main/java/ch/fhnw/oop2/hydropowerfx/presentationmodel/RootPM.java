@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class RootPM {
-    // TODO: Wie Powerstations ohne Kanton behandeln?
     private static final String FILE_NAME = "/data/HYDRO_POWERSTATION.csv";
     private static final String DELIMITER = ";";
 
@@ -39,8 +38,7 @@ public class RootPM {
 
     private void init(List<PowerStationPM> powerStationList){
         allPowerStations.addAll(powerStationList);
-        // TODO: Prüfen, ob Wert vorhanden
-        Platform.runLater(() -> setSelectedId(100100));
+        Platform.runLater(() -> setSelectedId(getFirstPowerStation()));
 
         selectedIdProperty().addListener((observable, oldValue, newValue) -> {
                     PowerStationPM oldSelection = getPowerStation(oldValue.intValue());
@@ -59,10 +57,6 @@ public class RootPM {
 
     private List<PowerStationPM> createAllPowerStations() {
         return readFromFile();
-    }
-
-    public ObservableList<PowerStationPM> allCountries() {
-        return allPowerStations;
     }
 
     private Path getPath(String fileName) {
@@ -87,10 +81,6 @@ public class RootPM {
                     .map(line -> new PowerStationPM(line.split(DELIMITER, 22)))
                     .collect(Collectors.toList());
         }
-    }
-
-    public PowerStationPM getPowerStationProxy() {
-        return powerStationProxy;
     }
 
     private void bindToProxy(PowerStationPM powerStation) {
@@ -151,6 +141,13 @@ public class RootPM {
     }
 
     // all getters and setters
+    public PowerStationPM getPowerStationProxy() {
+        return powerStationProxy;
+    }
+
+    public ObservableList<PowerStationPM> allCountries() {
+        return allPowerStations;
+    }
 
     public int getSelectedId() {
         return selectedId.get();
@@ -181,6 +178,13 @@ public class RootPM {
     public PowerStationPM getPowerStation(int id) {
         return allPowerStations.stream()
                 .filter(powerStation -> powerStation.getId() == id)
+                .findFirst()
+                .orElse(null);
+    }
+
+    public int getFirstPowerStation() {
+        return allPowerStations.stream()
+                .map(powerStationPM -> powerStationPM.getId())
                 .findFirst()
                 .orElse(null);
     }

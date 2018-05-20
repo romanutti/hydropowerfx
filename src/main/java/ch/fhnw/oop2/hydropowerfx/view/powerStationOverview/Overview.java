@@ -33,7 +33,7 @@ public class Overview extends VBox implements ViewMixin {
     private TableView<PowerStationPM> initializePowerStationTable() {
         TableView<PowerStationPM> tableView = new TableView<>(rootPM.getAllPowerStations());
 
-        TableColumn<PowerStationPM, String> nameColumn = new TableColumn<>();
+        TableColumn<PowerStationPM, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(cell -> cell.getValue().nameProperty());
 
         TableColumn<PowerStationPM, String> emblemColumn = new TableColumn<>();
@@ -41,16 +41,13 @@ public class Overview extends VBox implements ViewMixin {
         emblemColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getCanton().getName()));
         emblemColumn.setCellFactory(canton -> new CantonTableCell());
 
-        TableColumn<PowerStationPM, Number> maxPowerColumn = new TableColumn<>();
+        TableColumn<PowerStationPM, Number> maxPowerColumn = new TableColumn<>("Power");
         maxPowerColumn.setCellValueFactory(cell -> cell.getValue().maxPowerMwProperty());
 
-        TableColumn<PowerStationPM, Number> startOfOperationFirstColumn = new TableColumn<>();
+        TableColumn<PowerStationPM, Number> startOfOperationFirstColumn = new TableColumn<>("StartOfOperationFirst");
         startOfOperationFirstColumn.setCellValueFactory(cell -> cell.getValue().startOfOperationFirstProperty());
 
         tableView.getColumns().addAll(nameColumn, emblemColumn, maxPowerColumn, startOfOperationFirstColumn);
-
-
-
 
         return tableView;
     }
@@ -59,26 +56,32 @@ public class Overview extends VBox implements ViewMixin {
     @Override
     public void layoutControls() {
 
-        setMinWidth(410);
-        //setMaxWidth(405);
-        //TODO: Column selection via index is not ideal
-        getItemTable().getColumns().get(2).setMinWidth(115);
-        getItemTable().setMinWidth(USE_PREF_SIZE);
-        getChildren().addAll(getItemTable());
-        setVgrow(getItemTable(),Priority.ALWAYS);
+        setMinWidth(300);
+        setMaxWidth(405);
+
+        getTableColumnByName("Name").setMinWidth(130);
+        getTableColumnByName("Name").setMaxWidth(150);
+
+        getTableColumnByName("Power").setMinWidth(60);
+        getTableColumnByName("Power").setMaxWidth(60);
+
+        getTableColumnByName("StartOfOperationFirst").setMinWidth(60);
+        getTableColumnByName("StartOfOperationFirst").setMaxWidth(60);
+
+        itemTable.setMinWidth(USE_COMPUTED_SIZE);
+
+        getChildren().addAll(itemTable);
+        setVgrow(itemTable,Priority.ALWAYS);
 
     }
 
 
     @Override
     public void setupBindings() {
-
-
         // Language Switcher
-        //TODO: Better method to identify the right column; not just by id
-        getItemTable().getColumns().get(0).textProperty().bind(rootPM.getLanguageSwitcherPM().nameLabelTextProperty());
-        getItemTable().getColumns().get(2).textProperty().bind(rootPM.getLanguageSwitcherPM().maxPowerMwLabelTextProperty());
-        getItemTable().getColumns().get(3).textProperty().bind(rootPM.getLanguageSwitcherPM().startOfOperationFirstLabelTextProperty());
+        getTableColumnByName("Name").textProperty().bind(rootPM.getLanguageSwitcherPM().nameLabelTextProperty());
+        getTableColumnByName("Power").textProperty().bind(rootPM.getLanguageSwitcherPM().maxPowerMwLabelTextProperty());
+        getTableColumnByName("StartOfOperationFirst").textProperty().bind(rootPM.getLanguageSwitcherPM().startOfOperationFirstLabelTextProperty());
 
     }
 
@@ -89,11 +92,10 @@ public class Overview extends VBox implements ViewMixin {
 
     }
 
-    //TODO: Check if getter and setter are allowed
-    //MR: notwendig?
-    public TableView<PowerStationPM> getItemTable() {
-        return itemTable;
+    private TableColumn getTableColumnByName(String name) {
+        for (TableColumn col : itemTable.getColumns())
+            if (col.getText().equals(name)) return col ;
+        return null ;
     }
-
 
 }
