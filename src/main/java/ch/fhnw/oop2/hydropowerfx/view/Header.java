@@ -1,5 +1,6 @@
 package ch.fhnw.oop2.hydropowerfx.view;
 
+import ch.fhnw.oop2.hydropowerfx.presentationmodel.PowerStationPM;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
@@ -7,6 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.util.converter.NumberStringConverter;
 
 public class Header extends HBox implements ViewMixin {
 
@@ -59,6 +61,25 @@ public class Header extends HBox implements ViewMixin {
 
     @Override
     public void layoutControls() {
+        // TODO: Dinge von oben hierhin?
+
+    }
+
+    @Override
+    public void setupBindings() {
+        PowerStationPM proxy = rootPM.getPowerStationProxy();
+
+        // Title
+        titleLabel.textProperty().bind(proxy.nameProperty());
+
+        // Name
+        nameLabel.textProperty().bind(proxy.nameProperty());
+
+        // Power
+        powerLabel.textProperty().bindBidirectional(proxy.maxWaterVolumeProperty(), new NumberStringConverter());
+
+        // Start of operation first
+        startOfOperationFirstLabel.textProperty().bindBidirectional(proxy.startOfOperationFirstProperty(), new NumberStringConverter());
 
     }
 }
