@@ -1,5 +1,6 @@
 package ch.fhnw.oop2.hydropowerfx.presentationmodel;
 
+import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -39,7 +40,7 @@ public class RootPM {
     private void init(List<PowerStationPM> powerStationList){
         allPowerStations.addAll(powerStationList);
         // TODO: Prüfen, ob Wert vorhanden
-        //Platform.runLater(() -> setSelectedId(100100));
+        Platform.runLater(() -> setSelectedId(100100));
 
         selectedIdProperty().addListener((observable, oldValue, newValue) -> {
                     PowerStationPM oldSelection = getPowerStation(oldValue.intValue());
