@@ -30,7 +30,8 @@ public class PowerStationPM {
         setName(line[1]);
         setType(Type.valueOf(line[2]));
         setSite(line[3]);
-        setCanton(Canton.valueOf(line[4]));
+        // Set empty cantons as "OTHERS"
+        setCanton( (line[4].length() != 2) ? Canton.OTHER :Canton.valueOf(line[4]));
         setMaxWaterVolume(Double.parseDouble(line[5]));
         setMaxPowerMw(Double.parseDouble(line[6]));
         setStartOfOperationFirst(Double.parseDouble(line[7]));

@@ -1,7 +1,5 @@
 package ch.fhnw.oop2.hydropowerfx.presentationmodel;
 
-import javafx.beans.property.StringProperty;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,7 +29,8 @@ public enum Canton {
     VS("Valais"),
     NE("Neuenburg"),
     GE("Genf"),
-    JU("Jura");
+    JU("Jura"),
+    OTHER("Andere");
 
     private final String name;
     private static final Map<String, Canton> lookup = new HashMap<String, Canton>();
