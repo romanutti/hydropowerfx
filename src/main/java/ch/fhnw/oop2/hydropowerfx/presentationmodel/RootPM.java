@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -23,17 +24,25 @@ public class RootPM {
     private final ObservableList<PowerStationPM> allPowerStations = FXCollections.observableArrayList();
     private final IntegerProperty selectedId = new SimpleIntegerProperty();
     private final PowerStationPM powerStationProxy = new PowerStationPM();
+
+    private final FilteredList<PowerStationPM> filteredPowerStations;
+
     private final LanguageSwitcherPM languageSwitcherPM;
 
     public RootPM() {
         init(createAllPowerStations());
         this.languageSwitcherPM = new LanguageSwitcherPM();
 
+        // TODO: DRY
+        filteredPowerStations =  new FilteredList<>(allPowerStations, p -> true);
     }
 
     public RootPM(List<PowerStationPM> powerStationList) {
         init(powerStationList);
         this.languageSwitcherPM = new LanguageSwitcherPM();
+
+        // TODO: DRY
+        filteredPowerStations =  new FilteredList<>(allPowerStations, p -> true);
     }
 
     private void init(List<PowerStationPM> powerStationList){
@@ -53,7 +62,8 @@ public class RootPM {
                     }
                 }
         );
-        }
+
+    }
 
     private List<PowerStationPM> createAllPowerStations() {
         return readFromFile();
@@ -136,11 +146,15 @@ public class RootPM {
         }
     }
 
+    // all getters and setters
     public ObservableList<PowerStationPM> getAllPowerStations() {
         return allPowerStations;
     }
 
-    // all getters and setters
+    public FilteredList<PowerStationPM> getFilteredPowerStations() {
+        return filteredPowerStations;
+    }
+
     public PowerStationPM getPowerStationProxy() {
         return powerStationProxy;
     }

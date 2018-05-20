@@ -4,6 +4,7 @@ import ch.fhnw.oop2.hydropowerfx.presentationmodel.PowerStationPM;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 import ch.fhnw.oop2.hydropowerfx.view.ViewMixin;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.transformation.SortedList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Priority;
@@ -78,6 +79,11 @@ public class Overview extends VBox implements ViewMixin {
 
     @Override
     public void setupBindings() {
+        // Search
+        SortedList<PowerStationPM> sortedData = new SortedList<>(rootPM.getFilteredPowerStations());
+        sortedData.comparatorProperty().bind(itemTable.comparatorProperty());
+        itemTable.setItems(sortedData);
+
         // Language Switcher
         getTableColumnByName("Name").textProperty().bind(rootPM.getLanguageSwitcherPM().nameLabelTextProperty());
         getTableColumnByName("Power").textProperty().bind(rootPM.getLanguageSwitcherPM().maxPowerMwLabelTextProperty());

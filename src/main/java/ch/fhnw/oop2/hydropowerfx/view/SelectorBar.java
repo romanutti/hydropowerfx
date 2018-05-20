@@ -1,6 +1,7 @@
 package ch.fhnw.oop2.hydropowerfx.view;
 
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.LanguageSwitcherPM;
+import ch.fhnw.oop2.hydropowerfx.presentationmodel.PowerStationPM;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -35,14 +36,14 @@ public class SelectorBar extends HBox implements ViewMixin {
     @Override
     public void initializeControls() {
         saveButton = new Button("save");
-        createButton = new Button ("create");
-        deleteButton = new Button ("delete");
-        undoButton = new Button ("undo");
-        redoButton = new Button ("redo");
+        createButton = new Button("create");
+        deleteButton = new Button("delete");
+        undoButton = new Button("undo");
+        redoButton = new Button("redo");
 
         searchField = new TextField("search");
 
-        germanButton  = new Button();
+        germanButton = new Button();
         englishButton = new Button();
     }
 
@@ -72,13 +73,55 @@ public class SelectorBar extends HBox implements ViewMixin {
         setPadding(new Insets(5));
         setSpacing(5);
 
-        getChildren().addAll(saveButton, createButton, deleteButton, undoButton, redoButton, searchField,germanButton,englishButton);
+        getChildren().addAll(saveButton, createButton, deleteButton, undoButton, redoButton, searchField, germanButton, englishButton);
 
     }
 
     @Override
     public void setupEventHandlers() {
-        germanButton.setOnAction(event  -> rootPM.getLanguageSwitcherPM().setLanguage(LanguageSwitcherPM.Lang.DE));
+        searchField.textProperty().addListener((observable, oldValue, newValue) -> {
+            rootPM.getFilteredPowerStations().setPredicate(powerStationPM -> {
+
+                // If filter text is empty, display all powerstations.
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                // Check if input value is number
+                try {
+                    Double numberFilter = Double.parseDouble(newValue);
+
+                    if (powerStationPM.getId() == numberFilter) {
+                        return true; // Filter matches id.
+                    }
+
+                    // TODO: Weitere Attribute in Filter nehmen?
+
+                } catch (NumberFormatException e) {
+                    // Compare first name and last name of every person with filter text.
+                    String lowerCaseFilter = newValue.toLowerCase();
+
+                    if (powerStationPM.getName().toLowerCase().contains(lowerCaseFilter)) {
+                        return true; // Filter matches name.
+                    } else if (powerStationPM.getType().toString().toLowerCase().contains(lowerCaseFilter)) {
+                        return true; // Filter matches type.
+                    } else if (powerStationPM.getCanton().getName().toLowerCase().contains(lowerCaseFilter)) {
+                        return true; // Filter matches canton.
+                    } else if (powerStationPM.getStatus().toLowerCase().contains(lowerCaseFilter)) {
+                        return true; // Filter matches status.
+                    } else if (powerStationPM.getWaterbodies().toLowerCase().contains(lowerCaseFilter)) {
+                        return true; // Filter matches waterbodies.
+                    } else if (powerStationPM.getImageUrl().toLowerCase().contains(lowerCaseFilter)) {
+                        return true; // Filter matches image url.
+                    }
+                }
+
+
+                return false; // Does not match.
+            });
+        });
+
+        germanButton.setOnAction(event -> rootPM.getLanguageSwitcherPM().setLanguage(LanguageSwitcherPM.Lang.DE));
         englishButton.setOnAction(event -> rootPM.getLanguageSwitcherPM().setLanguage(LanguageSwitcherPM.Lang.EN));
     }
 
