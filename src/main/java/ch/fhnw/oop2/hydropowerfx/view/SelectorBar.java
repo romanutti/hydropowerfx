@@ -1,7 +1,6 @@
 package ch.fhnw.oop2.hydropowerfx.view;
 
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.LanguageSwitcherPM;
-import ch.fhnw.oop2.hydropowerfx.presentationmodel.PowerStationPM;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -11,7 +10,6 @@ import javafx.scene.layout.HBox;
 public class SelectorBar extends HBox implements ViewMixin {
 
     private final RootPM rootPM;
-
 
     private Button saveButton;
     private Button createButton;
