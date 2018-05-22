@@ -5,10 +5,13 @@ import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 import ch.fhnw.oop2.hydropowerfx.view.ViewMixin;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.transformation.SortedList;
+import javafx.event.EventHandler;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
+import javafx.util.converter.NumberStringConverter;
 
 public class Overview extends VBox implements ViewMixin {
     private final RootPM rootPM;
@@ -29,6 +32,10 @@ public class Overview extends VBox implements ViewMixin {
     @Override
     public void initializeControls() {
         itemTable = initializePowerStationTable();
+
+        // enable cell editing
+        itemTable.setEditable(true);
+
     }
 
     private TableView<PowerStationPM> initializePowerStationTable() {
@@ -37,16 +44,42 @@ public class Overview extends VBox implements ViewMixin {
         TableColumn<PowerStationPM, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(cell -> cell.getValue().nameProperty());
 
+        // enable cell editing
+        nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        nameColumn.setOnEditCommit(
+                t -> ((PowerStationPM) t.getTableView().getItems().get(
+                        t.getTablePosition().getRow())
+                ).setName(t.getNewValue())
+        );
+
         TableColumn<PowerStationPM, String> emblemColumn = new TableColumn<>();
         // TODO: Kann hier einfach new SimpleStringProperty gemacht werden?
         emblemColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getCanton().getName()));
         emblemColumn.setCellFactory(canton -> new CantonTableCell());
 
+        // TODO: cell editing for canton?
+
         TableColumn<PowerStationPM, Number> maxPowerColumn = new TableColumn<>("Power");
         maxPowerColumn.setCellValueFactory(cell -> cell.getValue().maxPowerMwProperty());
 
+        // enable cell editing
+        maxPowerColumn.setCellFactory(TextFieldTableCell.<PowerStationPM, Number>forTableColumn(new NumberStringConverter()));
+        maxPowerColumn.setOnEditCommit(
+                t -> ((PowerStationPM) t.getTableView().getItems().get(
+                        t.getTablePosition().getRow())
+                ).setMaxPowerMw((Double) t.getNewValue())
+        );
+
         TableColumn<PowerStationPM, Number> startOfOperationFirstColumn = new TableColumn<>("StartOfOperationFirst");
         startOfOperationFirstColumn.setCellValueFactory(cell -> cell.getValue().startOfOperationFirstProperty());
+
+        // enable cell editing
+        startOfOperationFirstColumn.setCellFactory(TextFieldTableCell.<PowerStationPM, Number>forTableColumn(new NumberStringConverter()));
+        startOfOperationFirstColumn.setOnEditCommit(
+                t -> ((PowerStationPM) t.getTableView().getItems().get(
+                        t.getTablePosition().getRow())
+                ).setStartOfOperationFirst((Long) t.getNewValue())
+        );
 
         tableView.getColumns().addAll(nameColumn, emblemColumn, maxPowerColumn, startOfOperationFirstColumn);
 
@@ -72,7 +105,7 @@ public class Overview extends VBox implements ViewMixin {
         itemTable.setMinWidth(USE_COMPUTED_SIZE);
 
         getChildren().addAll(itemTable);
-        setVgrow(itemTable,Priority.ALWAYS);
+        setVgrow(itemTable, Priority.ALWAYS);
 
     }
 
@@ -100,8 +133,8 @@ public class Overview extends VBox implements ViewMixin {
 
     private TableColumn getTableColumnByName(String name) {
         for (TableColumn col : itemTable.getColumns())
-            if (col.getText().equals(name)) return col ;
-        return null ;
+            if (col.getText().equals(name)) return col;
+        return null;
     }
 
 }
