@@ -146,6 +146,8 @@ public class RootPM {
         }
     }
 
+
+
     // all getters and setters
     public ObservableList<PowerStationPM> getAllPowerStations() {
         return allPowerStations;
@@ -180,14 +182,37 @@ public class RootPM {
     }
 
     // overview methods
-    public void addPowerStation(PowerStationPM powerStation) {
-        allPowerStations.add(powerStation);
+    public void addPowerStation() {
+        String line[] = new String[]{
+                "999999",
+                "A",
+                "L",
+                "Rueras",
+                "GR",
+                "0.43",
+                "1.42",
+                "1979",
+                "1979",
+                "46.67133138",
+                "8.75072906",
+                "im Normalbetrieb",
+                "Aua da Milez",
+                "www.hydro.ch/images"};
+        PowerStationPM newItem = new PowerStationPM(line);
+        newItem.setId(getNewPowerStationID());
+        allPowerStations.add(newItem);
+        setSelectedId(newItem.getId());
     }
 
 
-    public void removePowerStation(PowerStationPM powerStation) {
-        allPowerStations.remove(powerStation);
+
+    public void removePowerStation() {
+        if (getSelectedId() != 0) {
+            allPowerStations.remove(allPowerStations.indexOf(getPowerStation(getSelectedId())));
+            setSelectedId(0);
+        }
     }
+
 
     public PowerStationPM getPowerStation(int id) {
         return allPowerStations.stream()
@@ -201,6 +226,19 @@ public class RootPM {
                 .map(powerStationPM -> powerStationPM.getId())
                 .findFirst()
                 .orElse(null);
+    }
+
+    public int getNewPowerStationID(){
+        int newID = allPowerStations.stream()
+                .mapToInt(powerStation -> powerStation.getId())
+                .reduce(Integer::max)
+                .getAsInt();
+
+        while (getPowerStation(newID) != null){
+            ++newID;
+        }
+
+        return newID;
     }
 
     public IntegerProperty size() {

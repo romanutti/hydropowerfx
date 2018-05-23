@@ -1,5 +1,6 @@
 package ch.fhnw.oop2.hydropowerfx.presentationmodel;
 
+import ch.fhnw.oop2.hydropowerfx.HydroPowerApp;
 import javafx.collections.ObservableList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -70,7 +71,8 @@ class RootPMTest {
         //when
 
         //then
-        assertEquals("HydroPowerFX", sut.getApplicationTitle());
+        //TODO
+        assertEquals("HydroPowerFX", "");
     }
 
 
@@ -80,10 +82,10 @@ class RootPMTest {
         String title = "TefalPower";
 
         //when
-        sut.setApplicationTitle(title);
+        //sut.setApplicationTitle(title);
 
         //then
-        assertEquals(title, sut.getApplicationTitle());
+        //assertEquals(title, sut.getApplicationTitle());
     }
 
     @Test
@@ -118,7 +120,7 @@ class RootPMTest {
         int size = sut.getAllPowerStations().size();
 
         //when
-        sut.addPowerStation(ps);
+        //sut.addPowerStation(ps);
 
         //then
         assertTrue(sut.getAllPowerStations().contains(ps));
@@ -131,10 +133,10 @@ class RootPMTest {
         String line[] = new String[]{"999999", "Val Giuf", "L", "Rueras", "BS", "0.43", "1.42", "1979", "1979", "46.4374", "8.75072906", "im Normalbetrieb", "Aua da Tefal", "www.hydro.ch/images"};
         PowerStationPM ps = new PowerStationPM(line);
         int size = sut.getAllPowerStations().size();
-        sut.addPowerStation(ps);
+        //sut.addPowerStation(ps);
 
         //when
-        sut.removePowerStation(ps);
+        //sut.removePowerStation(ps);
 
         //then
         assertFalse(sut.getAllPowerStations().contains(ps));
@@ -144,10 +146,24 @@ class RootPMTest {
     @Test
     void getCurrentPowerStation() {
         //given
-        String line[] = new String[]{"999999", "Val Giuf", "L", "Rueras", "BS", "0.43", "1.42", "1979", "1979", "46.4374", "8.75072906", "im Normalbetrieb", "Aua da Tefal", "www.hydro.ch/images"};
+        String line[] = new String[]{
+                "999999",
+                "Val Giuf",
+                "L",
+                "Rueras",
+                "GR",
+                "0.43",
+                "1.42",
+                "1979",
+                "1979",
+                "46.67133138",
+                "8.75072906",
+                "im Normalbetrieb",
+                "Aua da Milez",
+                "www.hydro.ch/images"};
         PowerStationPM ps = new PowerStationPM(line);
         int index = ps.getId();
-        sut.addPowerStation(ps);
+        //sut.addPowerStation(ps);
         sut.setSelectedId(index);
 
         //when
@@ -156,6 +172,18 @@ class RootPMTest {
         //then
         assertEquals(ps.getId(), pt.getId());
     }
+
+    @Test
+    void getNewPowerStationID(){
+        //given
+        int newID = sut.getNewPowerStationID();
+
+        //when
+
+        //then
+        assertNull(sut.getPowerStation(newID));
+    }
+
 
     @Test
     void size() {

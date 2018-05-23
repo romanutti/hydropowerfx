@@ -15,7 +15,7 @@ public class LanguageSwitcherPM {
         TYPE_LABEL_TEXT("Typ", "Type"),
         SITE_LABEL_TEXT("Standort", "Site"),
         CANTON_LABEL_TEXT("Kanton", "Canton"),
-        MAXWATERVOLUME_LABEL_TEXT("Wassermenge (m^3/s)", "Watervolume (m^3/s)"),
+        MAXWATERVOLUME_LABEL_TEXT("Wassermenge (m\u00B3/s)", "Watervolume (m\u00B3/s)"),
         MAXPOWERMW_LABEL_TEXT("Leistung (MW)", "Power (MW)"),
         STARTOFOPERATIONFIRST_LABEL_TEXT("Inbetriebnahme", "Start of operation"),
         STARTOFOPERATIONLAST_LABEL_TEXT("Letzte Inbetriebnahme", "Last commissioning"),
