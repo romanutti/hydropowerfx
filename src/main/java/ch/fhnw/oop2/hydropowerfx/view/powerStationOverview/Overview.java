@@ -43,6 +43,8 @@ public class Overview extends VBox implements ViewMixin {
 
         TableColumn<PowerStationPM, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(cell -> cell.getValue().nameProperty());
+        // enable sort Ascending in name
+        nameColumn.setSortType(TableColumn.SortType.ASCENDING);
 
         // enable cell editing
         nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -82,6 +84,9 @@ public class Overview extends VBox implements ViewMixin {
         );
 
         tableView.getColumns().addAll(nameColumn, emblemColumn, maxPowerColumn, startOfOperationFirstColumn);
+
+        // add sorted Column name
+        tableView.getSortOrder().add(nameColumn);
 
         return tableView;
     }
