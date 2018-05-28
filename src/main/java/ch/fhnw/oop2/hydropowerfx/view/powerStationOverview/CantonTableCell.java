@@ -26,6 +26,8 @@ class CantonTableCell extends TableCell<PowerStationPM, String> {
         setGraphic(null);
         if (!empty) {
             Image img = WAPPEN.get(item);
+
+            //TODO Replace Canton.getCantom(Item) with binding [Replace whole IF  with a binding]
             if (img == null) {
                 img = new Image(getClass().getResource("wappen_klein/" + Canton.getCanton(item) + ".png")
                         .toExternalForm(), 18, 18, true, true, true);
