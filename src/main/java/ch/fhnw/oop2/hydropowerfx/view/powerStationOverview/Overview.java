@@ -127,8 +127,7 @@ public class Overview extends VBox implements ViewMixin {
     @Override
     public void setupValueChangedListeners() {
         itemTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> rootPM.setSelectedId(newValue.getId()));
-        rootPM.selectedIdProperty().addListener((observable, oldValue, newValue) -> itemTable.getSelectionModel().select(((int) newValue)));
-
+        rootPM.selectedIdProperty().addListener((observable, oldValue, newValue) -> itemTable.getSelectionModel().select((rootPM.getIndexOfPowerStation((int) newValue))));
     }
 
     private TableColumn getTableColumnByName(String name) {
