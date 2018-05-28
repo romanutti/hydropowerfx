@@ -3,9 +3,11 @@ package ch.fhnw.oop2.hydropowerfx.view.powerStationOverview;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.PowerStationPM;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 import ch.fhnw.oop2.hydropowerfx.view.ViewMixin;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.transformation.SortedList;
 import javafx.event.EventHandler;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -17,6 +19,7 @@ public class Overview extends VBox implements ViewMixin {
     private final RootPM rootPM;
 
     private TableView<PowerStationPM> itemTable;
+    private Label resultCountLabal;
 
 
     public Overview(RootPM rootPM) {
@@ -35,6 +38,8 @@ public class Overview extends VBox implements ViewMixin {
 
         // enable cell editing
         itemTable.setEditable(true);
+        resultCountLabal = new Label();
+
 
     }
 
@@ -84,10 +89,8 @@ public class Overview extends VBox implements ViewMixin {
         );
 
         tableView.getColumns().addAll(nameColumn, emblemColumn, maxPowerColumn, startOfOperationFirstColumn);
-
         // add sorted Column name
         tableView.getSortOrder().add(nameColumn);
-
         return tableView;
     }
 
@@ -109,7 +112,7 @@ public class Overview extends VBox implements ViewMixin {
 
         itemTable.setMinWidth(USE_COMPUTED_SIZE);
 
-        getChildren().addAll(itemTable);
+        getChildren().addAll(itemTable,resultCountLabal);
         setVgrow(itemTable, Priority.ALWAYS);
 
     }
@@ -127,6 +130,11 @@ public class Overview extends VBox implements ViewMixin {
         getTableColumnByName("Power").textProperty().bind(rootPM.getLanguageSwitcherPM().maxPowerMwLabelTextProperty());
         getTableColumnByName("StartOfOperationFirst").textProperty().bind(rootPM.getLanguageSwitcherPM().startOfOperationFirstLabelTextProperty());
 
+        //TODO: total labal to show visible/totalRows
+        //resultCountLabal.textProperty().bind(Bindings.size((rootPM.size().asString()));
+        resultCountLabal.textProperty().bind(Bindings.size((itemTable.getItems())).asString());
+
+
     }
 
     @Override
@@ -140,5 +148,6 @@ public class Overview extends VBox implements ViewMixin {
             if (col.getText().equals(name)) return col;
         return null;
     }
+
 
 }
