@@ -1,17 +1,23 @@
 package ch.fhnw.oop2.hydropowerfx.view;
 
+import ch.fhnw.oop2.hydropowerfx.presentationmodel.Canton;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.LanguageSwitcherPM;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.PowerStationPM;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.RowConstraints;
+import javafx.util.StringConverter;
 import javafx.util.converter.NumberStringConverter;
 
 public class Editor extends GridPane implements ViewMixin {
@@ -32,9 +38,9 @@ public class Editor extends GridPane implements ViewMixin {
     private Label imageUrlLabel;
 
     private TextField nameTextField;
-    private TextField typeTextField;
+    private ChoiceBox typeChoiceBox;
     private TextField siteTextField;
-    private TextField cantonTextField;
+    private ChoiceBox cantonChoiceBox;
     private TextField maxWaterVolumeTextField;
     private TextField maxPowerMwTextField;
     private TextField startOfOperationFirstTextField;
@@ -74,9 +80,9 @@ public class Editor extends GridPane implements ViewMixin {
 
 
         nameTextField = new TextField();
-        typeTextField = new TextField();
+        typeChoiceBox = new ChoiceBox();
         siteTextField = new TextField();
-        cantonTextField = new TextField();
+        cantonChoiceBox = new ChoiceBox();
         maxWaterVolumeTextField = new TextField();
         maxPowerMwTextField = new TextField();
         startOfOperationFirstTextField = new TextField();
@@ -132,8 +138,8 @@ public class Editor extends GridPane implements ViewMixin {
         add(waterbodiesTextField,1,6,3,1);
         add(imageUrlTextField,1,7,3,1);
 
-        add(typeTextField,3,0);
-        add(cantonTextField,3,1);
+        add(typeChoiceBox,3,0);
+        add(cantonChoiceBox,3,1);
         add(maxPowerMwTextField,3,2);
         add(startOfOperationLastTextField,3,3);
         add(longitudeTextField,3,4);
@@ -152,58 +158,130 @@ public class Editor extends GridPane implements ViewMixin {
         // Name
         nameLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().nameLabelTextProperty());
         nameTextField.textProperty().bindBidirectional(proxy.nameProperty());
+        // Disable on no selection
         nameTextField.disableProperty().bind(rootPM.labelsEnabledProperty()); //TODO: Für weitere Textproperties umsetzen
 
 
         // Type
         typeLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().typeLabelTextProperty());
-        // TODO: Enums convertieren?
-        //typeTextField.textProperty().bindBidirectional(new StringProperty(proxy.getType().toString());
+        typeChoiceBox.setItems(FXCollections.observableArrayList(PowerStationPM.Type.values()));
+        typeChoiceBox.getSelectionModel().select(proxy.getType());
+        typeChoiceBox.setConverter(new StringConverter<PowerStationPM.Type>() {
+            @Override
+            public String toString(PowerStationPM.Type object) {
+                return object.name();
+            }
+
+            @Override
+            public PowerStationPM.Type fromString(String string) {
+                return PowerStationPM.Type.L;
+            }
+        });
+        cantonChoiceBox.getSelectionModel().selectedItemProperty().addListener((ChangeListener<Canton>) (observable, oldValue, newValue) -> {
+            proxy.setCanton(newValue);
+            proxy.cantonProperty().set(newValue);
+        });
+        // Disable on no selection
+        typeChoiceBox.disableProperty().bind(rootPM.labelsEnabledProperty());
+
 
         // Site
         siteLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().siteLabelTextProperty());
         siteTextField.textProperty().bindBidirectional(proxy.siteProperty());
 
+        // Disable on no selection
+        siteTextField.disableProperty().bind(rootPM.labelsEnabledProperty());
+
         // Canton
         cantonLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().cantonLabelTextProperty());
+
         // TODO: Enums convertieren?
-        // cantonTextField.textProperty().bindBidirectional(proxy.cantonProperty());
+        cantonChoiceBox.setItems(FXCollections.observableArrayList(Canton.values()));
+
+        cantonChoiceBox.getSelectionModel().select(proxy.getCanton());
+        cantonChoiceBox.setConverter(new StringConverter<Canton>() {
+            @Override
+            public String toString(Canton object) {
+                return object.getName();
+            }
+
+            @Override
+            public Canton fromString(String string) {
+                return Canton.ZH;
+            }});
+
+        cantonChoiceBox.getSelectionModel().selectedItemProperty().addListener((ChangeListener<Canton>) (observable, oldValue, newValue) -> {
+            proxy.setCanton(newValue);
+        });
+        // Disable on no selection
+        cantonChoiceBox.disableProperty().bind(rootPM.labelsEnabledProperty());
+
+
+
 
         // MaxWaterVolume
         maxWaterVolumeLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().maxWaterVolumeLabelTextProperty());
         // TODO: Enums convertieren?
         maxWaterVolumeTextField.textProperty().bindBidirectional(proxy.maxWaterVolumeProperty(), new NumberStringConverter());
+        // Disable on no selection
+        maxWaterVolumeTextField.disableProperty().bind(rootPM.labelsEnabledProperty());
+
 
         // MawPowerMw
         maxPowerMwLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().maxPowerMwLabelTextProperty());
         maxPowerMwTextField.textProperty().bindBidirectional(proxy.maxPowerMwProperty(), new NumberStringConverter());
+        // Disable on no selection
+        maxPowerMwTextField.disableProperty().bind(rootPM.labelsEnabledProperty());
+
 
         // StartOfOperationFirst
         startOfOperationFirstLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().startOfOperationFirstLabelTextProperty());
         startOfOperationFirstTextField.textProperty().bindBidirectional(proxy.startOfOperationFirstProperty(), new NumberStringConverter());
+        // Disable on no selection
+        startOfOperationFirstTextField.disableProperty().bind(rootPM.labelsEnabledProperty());
+
+
 
         // StartOfOperationLast
         startOfOperationLastLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().startOfOperationLastLabelTextProperty());
         startOfOperationLastTextField.textProperty().bindBidirectional(proxy.startOfOperationLastProperty(), new NumberStringConverter());
+        // Disable on no selection
+        startOfOperationLastTextField.disableProperty().bind(rootPM.labelsEnabledProperty());
+
 
         // Latitude
         latitudeLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().latitudeLabelTextProperty());
         latitudeTextField.textProperty().bindBidirectional(proxy.latitudeProperty(), new NumberStringConverter());
+        // Disable on no selection
+        latitudeTextField.disableProperty().bind(rootPM.labelsEnabledProperty());
+
 
         // Longitude
         longitudeLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().longitudeLabelTextProperty());
         longitudeTextField.textProperty().bindBidirectional(proxy.longitudeProperty(), new NumberStringConverter());
+        // Disable on no selection
+        longitudeTextField.disableProperty().bind(rootPM.labelsEnabledProperty());
+
 
         // Status
         statusLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().statusLabelTextProperty());
         statusTextField.textProperty().bindBidirectional(proxy.statusProperty());
+        // Disable on no selection
+        statusTextField.disableProperty().bind(rootPM.labelsEnabledProperty());
+
 
         // Waterbodies
         waterbodiesLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().waterbodiesLabelTextProperty());
         waterbodiesTextField.textProperty().bindBidirectional(proxy.waterbodiesProperty());
+        // Disable on no selection
+        waterbodiesTextField.disableProperty().bind(rootPM.labelsEnabledProperty());
+
 
         // ImageUrl
         imageUrlLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().imageUrlLabelTextProperty());
         imageUrlTextField.textProperty().bindBidirectional(proxy.imageUrlProperty());
+        // Disable on no selection
+        imageUrlTextField.disableProperty().bind(rootPM.labelsEnabledProperty());
+
     }
 }
