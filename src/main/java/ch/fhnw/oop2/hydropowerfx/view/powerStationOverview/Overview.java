@@ -105,10 +105,10 @@ public class Overview extends VBox implements ViewMixin {
         getTableColumnByName("Name").setMaxWidth(150);
 
         getTableColumnByName("Power").setMinWidth(60);
-        getTableColumnByName("Power").setMaxWidth(60);
+        getTableColumnByName("Power").setMaxWidth(150);
 
         getTableColumnByName("StartOfOperationFirst").setMinWidth(60);
-        getTableColumnByName("StartOfOperationFirst").setMaxWidth(60);
+        getTableColumnByName("StartOfOperationFirst").setMaxWidth(150);
 
         itemTable.setMinWidth(USE_COMPUTED_SIZE);
 
