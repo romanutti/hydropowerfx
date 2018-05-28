@@ -3,6 +3,7 @@ package ch.fhnw.oop2.hydropowerfx.view;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.Canton;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.LanguageSwitcherPM;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.PowerStationPM;
+import ch.fhnw.oop2.hydropowerfx.presentationmodel.PowerStationPM.Type;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
@@ -149,6 +150,44 @@ public class Editor extends GridPane implements ViewMixin {
     @Override
     public void setupEventHandlers() {
 
+        // type Enum
+        typeChoiceBox.setItems(FXCollections.observableArrayList(Type.values()));
+        rootPM.getPowerStationProxy().typeProperty().addListener((observable, oldValue, newValue) -> typeChoiceBox.getSelectionModel().select(newValue));
+
+        typeChoiceBox.setConverter(new StringConverter<Type>() {
+            @Override
+            public String toString(Type object) {
+                return object.name();
+            }
+
+            @Override
+            public Type fromString(String string) {
+                return null;
+            }});
+
+        typeChoiceBox.getSelectionModel().selectedItemProperty().addListener((ChangeListener<Type>) (observable, oldValue, newValue) -> {
+            rootPM.getPowerStationProxy().setType(newValue);
+        });
+
+        // Canton Enum
+
+        cantonChoiceBox.setItems(FXCollections.observableArrayList(Canton.values()));
+        rootPM.getPowerStationProxy().cantonProperty().addListener((observable, oldValue, newValue) -> cantonChoiceBox.getSelectionModel().select(newValue));
+
+        cantonChoiceBox.setConverter(new StringConverter<Canton>() {
+            @Override
+            public String toString(Canton object) {
+                return object.getName();
+            }
+
+            @Override
+            public Canton fromString(String string) {
+                return null;
+            }});
+
+        cantonChoiceBox.getSelectionModel().selectedItemProperty().addListener((ChangeListener<Canton>) (observable, oldValue, newValue) -> {
+            rootPM.getPowerStationProxy().setCanton(newValue);
+        });
     }
 
     @Override
@@ -159,28 +198,11 @@ public class Editor extends GridPane implements ViewMixin {
         nameLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().nameLabelTextProperty());
         nameTextField.textProperty().bindBidirectional(proxy.nameProperty());
         // Disable on no selection
-        nameTextField.disableProperty().bind(rootPM.labelsEnabledProperty()); //TODO: Für weitere Textproperties umsetzen
-
+        nameTextField.disableProperty().bind(rootPM.labelsEnabledProperty());
 
         // Type
         typeLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().typeLabelTextProperty());
-        typeChoiceBox.setItems(FXCollections.observableArrayList(PowerStationPM.Type.values()));
-        typeChoiceBox.getSelectionModel().select(proxy.getType());
-        typeChoiceBox.setConverter(new StringConverter<PowerStationPM.Type>() {
-            @Override
-            public String toString(PowerStationPM.Type object) {
-                return object.name();
-            }
 
-            @Override
-            public PowerStationPM.Type fromString(String string) {
-                return PowerStationPM.Type.L;
-            }
-        });
-        cantonChoiceBox.getSelectionModel().selectedItemProperty().addListener((ChangeListener<Canton>) (observable, oldValue, newValue) -> {
-            proxy.setCanton(newValue);
-            proxy.cantonProperty().set(newValue);
-        });
         // Disable on no selection
         typeChoiceBox.disableProperty().bind(rootPM.labelsEnabledProperty());
 
@@ -195,28 +217,8 @@ public class Editor extends GridPane implements ViewMixin {
         // Canton
         cantonLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().cantonLabelTextProperty());
 
-        // TODO: Enums convertieren?
-        cantonChoiceBox.setItems(FXCollections.observableArrayList(Canton.values()));
-
-        cantonChoiceBox.getSelectionModel().select(proxy.getCanton());
-        cantonChoiceBox.setConverter(new StringConverter<Canton>() {
-            @Override
-            public String toString(Canton object) {
-                return object.getName();
-            }
-
-            @Override
-            public Canton fromString(String string) {
-                return Canton.ZH;
-            }});
-
-        cantonChoiceBox.getSelectionModel().selectedItemProperty().addListener((ChangeListener<Canton>) (observable, oldValue, newValue) -> {
-            proxy.setCanton(newValue);
-        });
         // Disable on no selection
         cantonChoiceBox.disableProperty().bind(rootPM.labelsEnabledProperty());
-
-
 
 
         // MaxWaterVolume
