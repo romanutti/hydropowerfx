@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+//TODO: Disable RUN later for testing!!!
+
 class RootPMTest {
     private RootPM sut;
 
@@ -221,4 +223,19 @@ class RootPMTest {
         assertEquals(countZh, sut.getPowerStationCount(Canton.ZH).intValue());
         assertEquals(countAg, sut.getPowerStationCount(Canton.AG).intValue());
     }
+
+    @Test
+    void getCanton() {
+        //before
+        sut.setSelectedId(101300);
+
+        //when
+        Canton ca = Canton.GR;
+
+        //then
+        assertEquals(ca,sut.getPowerStationProxy().getCanton());
+    }
+
+
+
 }
