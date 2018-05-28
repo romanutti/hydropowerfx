@@ -121,11 +121,15 @@ public class SelectorBar extends HBox implements ViewMixin {
 
         germanButton.setOnAction(event -> rootPM.getLanguageSwitcherPM().setLanguage(LanguageSwitcherPM.Lang.DE));
         englishButton.setOnAction(event -> rootPM.getLanguageSwitcherPM().setLanguage(LanguageSwitcherPM.Lang.EN));
+
+        deleteButton.setOnAction(event -> rootPM.removePowerStation());
+        createButton.setOnAction(event -> rootPM.addPowerStation());
     }
 
     @Override
     public void setupBindings() {
         germanButton.textProperty().bind(rootPM.getLanguageSwitcherPM().englishButtonTextProperty());
         englishButton.textProperty().bind(rootPM.getLanguageSwitcherPM().germanButtonTextProperty());
+        deleteButton.disableProperty().bind(rootPM.labelsEnabledProperty()); //TODO: Für weitere Buttons umsetzen
     }
 }

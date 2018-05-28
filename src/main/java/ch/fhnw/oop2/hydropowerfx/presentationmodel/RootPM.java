@@ -28,6 +28,8 @@ public class RootPM {
     private final FilteredList<PowerStationPM> filteredPowerStations;
 
     private final LanguageSwitcherPM languageSwitcherPM;
+    private final BooleanProperty labelsEnabled = new SimpleBooleanProperty();
+
 
     public RootPM() {
         init(createAllPowerStations());
@@ -149,6 +151,8 @@ public class RootPM {
 
 
     // all getters and setters
+
+
     public ObservableList<PowerStationPM> getAllPowerStations() {
         return allPowerStations;
     }
@@ -173,12 +177,35 @@ public class RootPM {
         return selectedId;
     }
 
-    public void setSelectedId(int selectedPowerStationId) {
-        this.selectedId.set(selectedPowerStationId);
-    }
 
     public LanguageSwitcherPM getLanguageSwitcherPM() {
         return languageSwitcherPM;
+    }
+
+    public void setSelectedId(int selectedPowerStationId) {
+        this.selectedId.set(selectedPowerStationId);
+
+        if (selectedPowerStationId == 0){
+            setLabelsEnabled(true);
+        } else {
+            setLabelsEnabled(false);
+        }
+    }
+
+    public boolean isLabelsEnabled() {
+        return labelsEnabled.get();
+    }
+
+    public BooleanProperty labelsEnabledProperty() {
+        return labelsEnabled;
+    }
+
+    public void setLabelsEnabled(boolean labelsEnabled) {
+        this.labelsEnabled.set(labelsEnabled);
+    }
+
+    public int getIndexOfPowerStation(int id){
+        return getAllPowerStations().indexOf(getPowerStation(id));
     }
 
     // overview methods

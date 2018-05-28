@@ -152,6 +152,8 @@ public class Editor extends GridPane implements ViewMixin {
         // Name
         nameLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().nameLabelTextProperty());
         nameTextField.textProperty().bindBidirectional(proxy.nameProperty());
+        nameTextField.disableProperty().bind(rootPM.labelsEnabledProperty()); //TODO: Für weitere Textproperties umsetzen
+
 
         // Type
         typeLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().typeLabelTextProperty());
