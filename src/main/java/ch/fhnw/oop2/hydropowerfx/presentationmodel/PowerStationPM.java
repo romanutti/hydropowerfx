@@ -18,7 +18,7 @@ public class PowerStationPM {
     private final DoubleProperty latitude = new SimpleDoubleProperty();
     private final DoubleProperty longitude = new SimpleDoubleProperty();
     // TODO: Attribut status als Enum?
-    private final StringProperty status = new SimpleStringProperty();
+    private final ObjectProperty<Status> status = new SimpleObjectProperty();
     private final StringProperty waterbodies = new SimpleStringProperty();
     private final StringProperty imageUrl = new SimpleStringProperty();
 
@@ -38,7 +38,7 @@ public class PowerStationPM {
         setStartOfOperationLast(Double.parseDouble(line[8]));
         setLatitude(Double.parseDouble(line[9]));
         setLongitude(Double.parseDouble(line[10]));
-        setStatus(line[11]);
+        setStatus(defineStatus(line[11]));
         setWaterbodies(line[12]);
         setImageUrl(line[13]);
     }
@@ -56,7 +56,7 @@ public class PowerStationPM {
                 Double.toString(getStartOfOperationLast()),
                 Double.toString(getLatitude()),
                 Double.toString(getLongitude()),
-                getStatus(),
+                getStatus().name(),
                 getWaterbodies(),
                 getImageUrl()
         );
@@ -195,17 +195,39 @@ public class PowerStationPM {
         this.longitude.set(longitude);
     }
 
-    public String getStatus() {
+    public Status getStatus() {
         return status.get();
     }
 
-    public StringProperty statusProperty() {
+    public ObjectProperty<Status> statusProperty() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Status status) {
         this.status.set(status);
     }
+
+    //TODO review, switch directly in read line???
+    public Status defineStatus(String status){
+        Status result;
+        switch (status) {
+            case "im Normalbetrieb":
+                result = Status.NORMAL;
+                break;
+            case "im Bau":
+                result = Status.BAU;
+                break;
+            case "stillgelegt":
+                result = Status.STILL;
+                break;
+            default:
+                result = Status.NORMAL;
+                break;
+        }
+        return result;
+    }
+
+
 
     public String getWaterbodies() {
         return waterbodies.get();

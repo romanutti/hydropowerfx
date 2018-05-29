@@ -105,7 +105,7 @@ public class SelectorBar extends HBox implements ViewMixin {
                         return true; // Filter matches type.
                     } else if (powerStationPM.getCanton().getName().toLowerCase().contains(lowerCaseFilter)) {
                         return true; // Filter matches canton.
-                    } else if (powerStationPM.getStatus().toLowerCase().contains(lowerCaseFilter)) {
+                    } else if (powerStationPM.getStatus().getName().toLowerCase().contains(lowerCaseFilter)) {
                         return true; // Filter matches status.
                     } else if (powerStationPM.getWaterbodies().toLowerCase().contains(lowerCaseFilter)) {
                         return true; // Filter matches waterbodies.

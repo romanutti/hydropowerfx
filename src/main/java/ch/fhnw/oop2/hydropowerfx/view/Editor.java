@@ -1,23 +1,19 @@
 package ch.fhnw.oop2.hydropowerfx.view;
 
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.Canton;
-import ch.fhnw.oop2.hydropowerfx.presentationmodel.LanguageSwitcherPM;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.PowerStationPM;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.PowerStationPM.Type;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
-import javafx.beans.property.StringProperty;
+import ch.fhnw.oop2.hydropowerfx.presentationmodel.Status;
 import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.RowConstraints;
 import javafx.util.StringConverter;
 import javafx.util.converter.NumberStringConverter;
 
@@ -48,7 +44,7 @@ public class Editor extends GridPane implements ViewMixin {
     private TextField startOfOperationLastTextField;
     private TextField latitudeTextField;
     private TextField longitudeTextField;
-    private TextField statusTextField;
+    private ChoiceBox statusChoiceBox;
     private TextField waterbodiesTextField;
     private TextField imageUrlTextField;
 
@@ -90,7 +86,7 @@ public class Editor extends GridPane implements ViewMixin {
         startOfOperationLastTextField = new TextField();
         latitudeTextField = new TextField();
         longitudeTextField = new TextField();
-        statusTextField = new TextField();
+        statusChoiceBox = new ChoiceBox();
         waterbodiesTextField = new TextField();
         imageUrlTextField = new TextField();
 
@@ -135,7 +131,7 @@ public class Editor extends GridPane implements ViewMixin {
         add(maxWaterVolumeTextField,1,2);
         add(startOfOperationFirstTextField,1,3);
         add(latitudeTextField,1,4);
-        add(statusTextField,1,5);
+        add(statusChoiceBox,1,5);
         add(waterbodiesTextField,1,6,3,1);
         add(imageUrlTextField,1,7,3,1);
 
@@ -188,6 +184,27 @@ public class Editor extends GridPane implements ViewMixin {
         cantonChoiceBox.getSelectionModel().selectedItemProperty().addListener((ChangeListener<Canton>) (observable, oldValue, newValue) -> {
             rootPM.getPowerStationProxy().setCanton(newValue);
         });
+
+        // Status Enum
+
+        statusChoiceBox.setItems(FXCollections.observableArrayList(Status.values()));
+        rootPM.getPowerStationProxy().statusProperty().addListener((observable, oldValue, newValue) -> statusChoiceBox.getSelectionModel().select(newValue));
+
+        statusChoiceBox.setConverter(new StringConverter<Status>() {
+            @Override
+            public String toString(Status object) {
+                return object.getName();
+            }
+
+            //TODO retun null valid?
+            @Override
+            public Status fromString(String string) {
+                return null;
+            }});
+
+        statusChoiceBox.getSelectionModel().selectedItemProperty().addListener((ChangeListener<Status>) (observable, oldValue, newValue) -> {
+            rootPM.getPowerStationProxy().setStatus(newValue);
+        });
     }
 
     @Override
@@ -223,7 +240,6 @@ public class Editor extends GridPane implements ViewMixin {
 
         // MaxWaterVolume
         maxWaterVolumeLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().maxWaterVolumeLabelTextProperty());
-        // TODO: Enums convertieren?
         maxWaterVolumeTextField.textProperty().bindBidirectional(proxy.maxWaterVolumeProperty(), new NumberStringConverter());
         // Disable on no selection
         maxWaterVolumeTextField.disableProperty().bind(rootPM.labelsEnabledProperty());
@@ -267,9 +283,9 @@ public class Editor extends GridPane implements ViewMixin {
 
         // Status
         statusLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().statusLabelTextProperty());
-        statusTextField.textProperty().bindBidirectional(proxy.statusProperty());
+
         // Disable on no selection
-        statusTextField.disableProperty().bind(rootPM.labelsEnabledProperty());
+        statusChoiceBox.disableProperty().bind(rootPM.labelsEnabledProperty());
 
 
         // Waterbodies
