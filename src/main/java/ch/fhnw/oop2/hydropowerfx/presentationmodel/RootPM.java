@@ -1,10 +1,13 @@
 package ch.fhnw.oop2.hydropowerfx.presentationmodel;
 
 import javafx.application.Platform;
+import javafx.beans.Observable;
 import javafx.beans.property.*;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.event.EventHandler;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -21,7 +24,9 @@ public class RootPM {
     private static final String FILE_NAME = "/data/HYDRO_POWERSTATION.csv";
     private static final String DELIMITER = ";";
 
-    private final ObservableList<PowerStationPM> allPowerStations = FXCollections.observableArrayList();
+    private final ObservableList<PowerStationPM> allPowerStations = FXCollections.observableArrayList(
+            powerstation -> new Observable[]{powerstation.maxPowerMwProperty(), powerstation.cantonProperty()});
+    private final ObservableList<CantonPM> allCantons = FXCollections.observableArrayList();
     private final IntegerProperty selectedId = new SimpleIntegerProperty();
     private final PowerStationPM powerStationProxy = new PowerStationPM();
 
@@ -34,6 +39,7 @@ public class RootPM {
     public RootPM() {
         init(createAllPowerStations());
         this.languageSwitcherPM = new LanguageSwitcherPM();
+        setupValueChangedListeners();
 
         // TODO: DRY
         filteredPowerStations =  new FilteredList<>(allPowerStations, p -> true);
@@ -64,6 +70,10 @@ public class RootPM {
                     }
                 }
         );
+
+
+        // Test
+        allCantons.addAll(getCantons());
 
     }
 
@@ -151,10 +161,12 @@ public class RootPM {
 
 
     // all getters and setters
-
-
     public ObservableList<PowerStationPM> getAllPowerStations() {
         return allPowerStations;
+    }
+
+    public ObservableList<CantonPM> getAllCantons() {
+        return allCantons;
     }
 
     public FilteredList<PowerStationPM> getFilteredPowerStations() {
@@ -248,6 +260,13 @@ public class RootPM {
                 .orElse(null);
     }
 
+    public CantonPM getCantonPM(Canton canton) {
+        return allCantons.stream()
+                .filter(cantonpm -> cantonpm.getCanton().getName().equals(canton.getName()))
+                .findFirst().orElse(null);
+    }
+
+
     public int getFirstPowerStation() {
         return allPowerStations.stream()
                 .map(powerStationPM -> powerStationPM.getId())
@@ -273,24 +292,47 @@ public class RootPM {
     }
 
     // footer methods
-    public ObservableList<Canton> getAllCantons(){
+    public ObservableList<CantonPM> getCantons(){
         return FXCollections.observableArrayList(allPowerStations.stream()
                 .map(powerStationPM -> powerStationPM.getCanton())
                 .distinct()
+                .map(canton -> new CantonPM(canton, getTotalPower(canton),getPowerStationCount(canton)))
                 .collect(Collectors.toList()));    }
 
-    public DoubleProperty getTotalPower(Canton canton) {
-        double result = allPowerStations.stream()
+    public double getTotalPower(Canton canton) {
+        return allPowerStations.stream()
                 .filter(powerStation -> powerStation.getCanton().equals(canton))
                 .collect(Collectors.summingDouble(PowerStationPM::getMaxPowerMw));
-        return new SimpleDoubleProperty(result);
     }
 
-    public IntegerProperty getPowerStationCount(Canton canton) {
-        int result = (int) allPowerStations.stream()
+    public int getPowerStationCount(Canton canton) {
+        return (int) allPowerStations.stream()
                 .filter(powerStation -> powerStation.getCanton().equals(canton))
                 .count();
-        return new SimpleIntegerProperty(result);
     }
+
+    public void updateAllCantons(){
+        allCantons.stream()
+                .forEach(cantonPM -> {cantonPM.setPowerStationCount(getPowerStationCount(cantonPM.getCanton()));
+                                      cantonPM.setTotalPowerMw(getTotalPower(cantonPM.getCanton()));} );
+    }
+
+    public void setupValueChangedListeners() {
+
+    allPowerStations.addListener((ListChangeListener<PowerStationPM>) event ->{
+        while (event.next()) {
+            if (event.wasUpdated() || event.wasRemoved() || event.wasAdded()) {
+                Canton affectedCanton = allPowerStations.get(event.getFrom()).getCanton();
+                // TODO: Nur betroffenen Kanton aktualisieren
+                updateAllCantons();
+            }
+        }
+    });
+
+    }
+
+
+
+
 
 }

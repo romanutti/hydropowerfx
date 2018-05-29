@@ -1,9 +1,8 @@
 package ch.fhnw.oop2.hydropowerfx.view;
 
-import ch.fhnw.oop2.hydropowerfx.presentationmodel.Canton;
+import ch.fhnw.oop2.hydropowerfx.presentationmodel.CantonPM;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.geometry.Insets;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Priority;
@@ -12,7 +11,7 @@ import javafx.scene.layout.VBox;
 public class Footer extends VBox implements ViewMixin{
     private final RootPM rootPM;
 
-    private TableView<Canton> itemTable;
+    private TableView<CantonPM> itemTable;
 
 
     public Footer(RootPM rootPM) {
@@ -30,17 +29,18 @@ public class Footer extends VBox implements ViewMixin{
         itemTable = initializeCantonTable();
     }
 
-    private TableView<Canton> initializeCantonTable() {
-        TableView<Canton> tableView = new TableView<>(rootPM.getAllCantons());
+    private TableView<CantonPM> initializeCantonTable() {
+        TableView<CantonPM> tableView = new TableView<>(rootPM.getAllCantons());
 
-        TableColumn<Canton, String> nameColumn = new TableColumn<>();
-        nameColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getName()));
+        TableColumn<CantonPM, String> nameColumn = new TableColumn<>();
+        nameColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getCanton().getName()));
 
-        TableColumn<Canton, Number> maxPowerColumn = new TableColumn<>("");
-        maxPowerColumn.setCellValueFactory(cell -> rootPM.getTotalPower(cell.getValue()));
+        TableColumn<CantonPM, Number> maxPowerColumn = new TableColumn<>("maxPowerColumn");
+        maxPowerColumn.setCellValueFactory(cell -> cell.getValue().totalPowerMwProperty());
 
-        TableColumn<Canton, Number> powerStationCountColumn = new TableColumn<>("");
-        powerStationCountColumn.setCellValueFactory(cell -> rootPM.getPowerStationCount(cell.getValue()));
+        TableColumn<CantonPM, Number> powerStationCountColumn = new TableColumn<>("");
+        powerStationCountColumn.setCellValueFactory(cell -> cell.getValue().powerStationCountProperty());
+
 
         tableView.getColumns().addAll(nameColumn, maxPowerColumn, powerStationCountColumn);
 
@@ -57,7 +57,19 @@ public class Footer extends VBox implements ViewMixin{
 
     }
 
-    public TableView<Canton> getItemTable() {
+    @Override
+    public void setupBindings() {
+    }
+
+    @Override
+    public void setupValueChangedListeners() {
+        //itemTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> rootPM.setSelectedId(newValue.getId()));
+        rootPM.selectedIdProperty().addListener((observable, oldValue, newValue) -> itemTable.getSelectionModel().select(((int) newValue)));
+
+
+    }
+
+    public TableView<CantonPM> getItemTable() {
         return itemTable;
     }
 
