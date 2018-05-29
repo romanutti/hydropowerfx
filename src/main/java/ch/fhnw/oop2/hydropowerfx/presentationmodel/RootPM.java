@@ -16,6 +16,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -101,6 +102,7 @@ public class RootPM {
         try (Stream<String> stream = getStreamOfLines(FILE_NAME)) {
             return stream.skip(1)
                     .map(line -> new PowerStationPM(line.split(DELIMITER, 22)))
+                    .sorted(Comparator.comparing(PowerStationPM::getName))
                     .collect(Collectors.toList());
         }
     }
@@ -296,8 +298,10 @@ public class RootPM {
         return FXCollections.observableArrayList(allPowerStations.stream()
                 .map(powerStationPM -> powerStationPM.getCanton())
                 .distinct()
+                .sorted(Comparator.comparing(Canton::getName))
                 .map(canton -> new CantonPM(canton, getTotalPower(canton),getPowerStationCount(canton)))
-                .collect(Collectors.toList()));    }
+                .collect(Collectors.toList()));
+    }
 
     public double getTotalPower(Canton canton) {
         return allPowerStations.stream()

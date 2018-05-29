@@ -42,6 +42,7 @@ public class Footer extends VBox implements ViewMixin{
         powerStationCountColumn.setCellValueFactory(cell -> cell.getValue().powerStationCountProperty());
 
 
+
         tableView.getColumns().addAll(nameColumn, maxPowerColumn, powerStationCountColumn);
 
         return tableView;
