@@ -144,8 +144,7 @@ public class Editor extends GridPane implements ViewMixin {
     }
 
     @Override
-    public void setupEventHandlers() {
-
+    public void setupValueChangedListeners() {
         // type Enum
         typeChoiceBox.setItems(FXCollections.observableArrayList(Type.values()));
         rootPM.getPowerStationProxy().typeProperty().addListener((observable, oldValue, newValue) -> typeChoiceBox.getSelectionModel().select(newValue));
@@ -196,7 +195,7 @@ public class Editor extends GridPane implements ViewMixin {
                 return object.getName();
             }
 
-            //TODO retun null valid?
+            //TODO return null valid?
             @Override
             public Status fromString(String string) {
                 return null;
@@ -205,6 +204,11 @@ public class Editor extends GridPane implements ViewMixin {
         statusChoiceBox.getSelectionModel().selectedItemProperty().addListener((ChangeListener<Status>) (observable, oldValue, newValue) -> {
             rootPM.getPowerStationProxy().setStatus(newValue);
         });
+    }
+
+    @Override
+    public void setupEventHandlers() {
+
     }
 
     @Override

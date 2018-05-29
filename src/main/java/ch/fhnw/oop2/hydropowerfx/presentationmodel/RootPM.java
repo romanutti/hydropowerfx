@@ -2,12 +2,14 @@ package ch.fhnw.oop2.hydropowerfx.presentationmodel;
 
 import javafx.application.Platform;
 import javafx.beans.Observable;
-import javafx.beans.property.*;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import javafx.event.EventHandler;
 
 import java.io.BufferedWriter;
 import java.io.IOException;

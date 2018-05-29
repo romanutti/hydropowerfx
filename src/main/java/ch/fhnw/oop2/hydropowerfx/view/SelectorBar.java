@@ -1,11 +1,16 @@
 package ch.fhnw.oop2.hydropowerfx.view;
 
-import ch.fhnw.oop2.hydropowerfx.presentationmodel.LanguageSwitcherPM;
+import ch.fhnw.oop2.hydropowerfx.presentationmodel.LanguageSwitcherPM.*;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
+import javafx.beans.value.ChangeListener;
+import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.util.StringConverter;
 
 public class SelectorBar extends HBox implements ViewMixin {
 
@@ -17,8 +22,7 @@ public class SelectorBar extends HBox implements ViewMixin {
     private Button undoButton;
     private Button redoButton;
     private TextField searchField;
-    private Button germanButton;
-    private Button englishButton;
+    private ChoiceBox languageChoiceBox;
 
 
     public SelectorBar(RootPM rootPM) {
@@ -40,9 +44,7 @@ public class SelectorBar extends HBox implements ViewMixin {
         redoButton = new Button("redo");
 
         searchField = new TextField("search");
-
-        germanButton = new Button();
-        englishButton = new Button();
+        languageChoiceBox = new ChoiceBox();
     }
 
     @Override
@@ -54,9 +56,7 @@ public class SelectorBar extends HBox implements ViewMixin {
         redoButton.setMaxWidth(Double.MAX_VALUE);
 
         searchField.setMaxWidth(Double.MAX_VALUE);
-
-        englishButton.setMaxWidth(Double.MAX_VALUE);
-        germanButton.setMaxWidth(Double.MAX_VALUE);
+        searchField.setAlignment(Pos.CENTER_RIGHT);
 
         // margin
         setMargin(saveButton, new Insets(1));
@@ -71,7 +71,7 @@ public class SelectorBar extends HBox implements ViewMixin {
         setPadding(new Insets(5));
         setSpacing(5);
 
-        getChildren().addAll(saveButton, createButton, deleteButton, undoButton, redoButton, searchField, germanButton, englishButton);
+        getChildren().addAll(saveButton, createButton, deleteButton, undoButton, redoButton, searchField, languageChoiceBox);
 
     }
 
@@ -119,17 +119,38 @@ public class SelectorBar extends HBox implements ViewMixin {
             });
         });
 
-        germanButton.setOnAction(event -> rootPM.getLanguageSwitcherPM().setLanguage(LanguageSwitcherPM.Lang.DE));
-        englishButton.setOnAction(event -> rootPM.getLanguageSwitcherPM().setLanguage(LanguageSwitcherPM.Lang.EN));
-
         deleteButton.setOnAction(event -> rootPM.removePowerStation());
         createButton.setOnAction(event -> rootPM.addPowerStation());
     }
 
     @Override
-    public void setupBindings() {
-        germanButton.textProperty().bind(rootPM.getLanguageSwitcherPM().englishButtonTextProperty());
-        englishButton.textProperty().bind(rootPM.getLanguageSwitcherPM().germanButtonTextProperty());
-        deleteButton.disableProperty().bind(rootPM.labelsEnabledProperty()); //TODO: Für weitere Buttons umsetzen
+    public void setupValueChangedListeners() {
+        // Lang Enum
+        languageChoiceBox.setItems(FXCollections.observableArrayList(Lang.values()));
+
+        languageChoiceBox.getSelectionModel().select(rootPM.getLanguageSwitcherPM().getCurrentLanguage());
+        //TODO Implement list update in choicebox is that even possible?
+
+        languageChoiceBox.setConverter(new StringConverter<Lang>() {
+            @Override
+            public String toString(Lang object) {
+                return object.getLangText(rootPM.getLanguageSwitcherPM().getCurrentLanguage());
+            }
+
+            //TODO retun null valid?
+            @Override
+            public Lang fromString(String string) {
+                return null;
+            }});
+
+        languageChoiceBox.getSelectionModel().selectedItemProperty().addListener((ChangeListener<Lang>) (observable, oldValue, newValue) -> {
+            rootPM.getLanguageSwitcherPM().setLanguage(newValue);
+        });
     }
+
+    @Override
+    public void setupBindings() {
+             deleteButton.disableProperty().bind(rootPM.labelsEnabledProperty()); //TODO: Für weitere Buttons umsetzen
+    }
+
 }

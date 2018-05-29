@@ -3,14 +3,58 @@ package ch.fhnw.oop2.hydropowerfx.presentationmodel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
+import java.util.Arrays;
+
+import static ch.fhnw.oop2.hydropowerfx.presentationmodel.LanguageSwitcherPM.Lang.*;
 import static ch.fhnw.oop2.hydropowerfx.presentationmodel.LanguageSwitcherPM.MultiLanguageText.*;
 
 public class LanguageSwitcherPM {
 
-    public enum Lang {DE, EN}
+    //TODO please check: is that valid to implement local variable to store the current language?
+    private Lang currentLanguage;
+
+    public enum Lang {
+        //TODO if not possible to update choicebox list then reduce to Deutsch / English
+        DE("Deutsch","German"),
+        EN("Englisch","English");
+
+        private final String germanLangLabel;
+        private final String englishLangLabel;
+
+        Lang(String germanLabel,String englishLabel){
+            this.germanLangLabel = germanLabel;
+            this.englishLangLabel = englishLabel;
+        }
+        public String getGermanLangLabel() {
+            return germanLangLabel;
+        }
+
+        public String getEnglishLangLabel() {
+            return englishLangLabel;
+        }
+
+
+        //TODO Implement list update in choicebox
+        public String[] getLangStrings(){
+            String[] langStringArray = Arrays.copyOf(values(),values().length,String[].class);
+            return langStringArray;
+        }
+
+        public String getLangText(Lang lang) {
+            switch (lang) {
+                case DE:
+                    return getGermanLangLabel();
+                case EN:
+                    return getEnglishLangLabel();
+                default:
+                    return getEnglishLangLabel();
+            }
+        }
+    }
+
 
     public enum MultiLanguageText {
-        WINDOW_TITLE("AquaPowerFX hydroelectric power stations of Switzerland", "AquaPowerFX Wasserkraftwerke der Schweiz"),
+        WINDOW_TITLE("AquaPowerFX Wasserkraftwerke der Schweiz","AquaPowerFX hydroelectric power stations of Switzerland"),
         NAME_LABEL_TEXT("Name", "Name"),
         TYPE_LABEL_TEXT("Typ", "Type"),
         SITE_LABEL_TEXT("Standort", "Site"),
@@ -23,14 +67,12 @@ public class LanguageSwitcherPM {
         LONGITUDE_LABEL_TEXT("Längengrad", "Longitude"),
         STATUS_LABEL_TEXT("Status", "Status"),
         WATERBODIES_LABEL_TEXT("Genutze Gewässer", "Waterbodies"),
-        IMAGEURL_LABEL_TEXT("Image Url", "Image Url"),
-        GERMAN_BUTTON_TEXT("German", "Deutsch"),
-        ENGLISH_BUTTON_TEXT("English", "Englisch");
+        IMAGEURL_LABEL_TEXT("Image Url", "Image Url");
 
         private final String englishLabel;
         private final String germanLabel;
 
-        MultiLanguageText(String englishLabel, String germanLabel) {
+        MultiLanguageText(String germanLabel, String englishLabel) {
             this.englishLabel = englishLabel;
             this.germanLabel = germanLabel;
         }
@@ -70,14 +112,19 @@ public class LanguageSwitcherPM {
     private final StringProperty waterbodiesLabelText = new SimpleStringProperty();
     private final StringProperty imageUrlLabelText = new SimpleStringProperty();
 
-    private final StringProperty germanButtonText = new SimpleStringProperty();
-    private final StringProperty englishButtonText = new SimpleStringProperty();
+    private final StringProperty germanLangLabel = new SimpleStringProperty();
+    private final StringProperty englishLangLabel = new SimpleStringProperty();
+
 
     public LanguageSwitcherPM() {
-        setLanguage(Lang.EN);
+        setCurrentLanguage(Lang.DE);
+        setLanguage(Lang.DE);
     }
 
+
+
     public void setLanguage(Lang lang) {
+        setCurrentLanguage(lang);
         setApplicationTitle(WINDOW_TITLE.getText(lang));
         setNameLabelText(NAME_LABEL_TEXT.getText(lang));
         setTypeLabelText(TYPE_LABEL_TEXT.getText(lang));
@@ -92,10 +139,20 @@ public class LanguageSwitcherPM {
         setStatusLabelText(STATUS_LABEL_TEXT.getText(lang));
         setWaterbodiesLabelText(WATERBODIES_LABEL_TEXT.getText(lang));
         setImageUrlLabelText(IMAGEURL_LABEL_TEXT.getText(lang));
-        setGermanButtonText(GERMAN_BUTTON_TEXT.getText(lang));
-        setEnglishButtonText(ENGLISH_BUTTON_TEXT.getText(lang));
+
+        setEnglishLangLabel(EN.getLangText(lang));
+        setGermanLangLabel(DE.getLangText(lang));
+
+
     }
 
+    public Lang getCurrentLanguage() {
+        return currentLanguage;
+    }
+
+    public void setCurrentLanguage(Lang currentLanguage) {
+        this.currentLanguage = currentLanguage;
+    }
 
     public String getApplicationTitle() {
         return applicationTitle.get();
@@ -265,28 +322,28 @@ public class LanguageSwitcherPM {
         this.imageUrlLabelText.set(imageUrlLabelText);
     }
 
-    public String getGermanButtonText() {
-        return germanButtonText.get();
+    public String getGermanLangLabel() {
+        return germanLangLabel.get();
     }
 
-    public StringProperty germanButtonTextProperty() {
-        return germanButtonText;
+    public StringProperty germanLangLabelProperty() {
+        return germanLangLabel;
     }
 
-    public void setGermanButtonText(String germanButtonText) {
-        this.germanButtonText.set(germanButtonText);
+    public void setGermanLangLabel(String germanLangLabel) {
+        this.germanLangLabel.set(germanLangLabel);
     }
 
-    public String getEnglishButtonText() {
-        return englishButtonText.get();
+    public String getEnglishLangLabel() {
+        return englishLangLabel.get();
     }
 
-    public StringProperty englishButtonTextProperty() {
-        return englishButtonText;
+    public StringProperty englishLangLabelProperty() {
+        return englishLangLabel;
     }
 
-    public void setEnglishButtonText(String englishButtonText) {
-        this.englishButtonText.set(englishButtonText);
+    public void setEnglishLangLabel(String englishLangLabel) {
+        this.englishLangLabel.set(englishLangLabel);
     }
 }
 
