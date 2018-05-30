@@ -6,11 +6,12 @@ import ch.fhnw.oop2.hydropowerfx.view.ViewMixin;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.transformation.SortedList;
-import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.control.skin.TableViewSkin;
+import javafx.scene.control.skin.VirtualFlow;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.converter.NumberStringConverter;
@@ -110,7 +111,7 @@ public class Overview extends VBox implements ViewMixin {
 
         itemTable.setMinWidth(USE_COMPUTED_SIZE);
 
-        getChildren().addAll(itemTable,resultCountLabal);
+        getChildren().addAll(itemTable, resultCountLabal);
         setVgrow(itemTable, Priority.ALWAYS);
 
     }
@@ -137,10 +138,45 @@ public class Overview extends VBox implements ViewMixin {
 
     @Override
     public void setupValueChangedListeners() {
-        itemTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> rootPM.setSelectedId(newValue.getId()));
-        /* MR, 23.05.2018: Removed because of StackOverflow-Error
-        rootPM.selectedIdProperty().addListener((observable, oldValue, newValue) -> itemTable.getSelectionModel().select((rootPM.getIndexOfPowerStation((int) newValue))));
-        */
+        itemTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            // set null if no item selected
+            rootPM.setSelectedId((newValue == null) ? 0 : newValue.getId());
+
+            // scroll only if powerstation out of visible area in tableview
+            int selectedId = rootPM.getSelectedId();
+            int selectedIndex = rootPM.getIndexOfPowerStation(selectedId);
+            int[] visibleRange = getVisibleRange(itemTable);
+
+            if (!(visibleRange[0] <= selectedIndex && selectedIndex <= visibleRange[visibleRange.length - 1])) {
+                itemTable.scrollTo(rootPM.getIndexOfPowerStation(rootPM.getSelectedId()));
+            }
+
+        });
+
+        rootPM.selectedIdProperty().addListener((observable, oldValue, newValue) -> itemTable.getSelectionModel().select(rootPM.getPowerStation((int) newValue)));
+    }
+
+    private int[] getVisibleRange(TableView table) {
+        TableViewSkin<?> skin = (TableViewSkin) table.getSkin();
+        if (skin == null) {
+            return new int[]{0, 0};
+        }
+        VirtualFlow<?> flow = (VirtualFlow) skin.getChildren().get(1);
+        int indexFirst;
+        int indexLast;
+        if (flow != null && flow.getFirstVisibleCell() != null
+                && flow.getLastVisibleCell() != null) {
+            indexFirst = flow.getFirstVisibleCell().getIndex();
+            if (indexFirst >= table.getItems().size())
+                indexFirst = table.getItems().size() - 1;
+            indexLast = flow.getLastVisibleCell().getIndex();
+            if (indexLast >= table.getItems().size())
+                indexLast = table.getItems().size() - 1;
+        } else {
+            indexFirst = 0;
+            indexLast = 0;
+        }
+        return new int[]{indexFirst, indexLast};
     }
 
     private TableColumn getTableColumnByName(String name) {
