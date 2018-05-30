@@ -5,6 +5,7 @@ import ch.fhnw.oop2.hydropowerfx.view.powerStationOverview.Overview;
 import javafx.geometry.Orientation;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class ApplicationUI extends BorderPane implements ViewMixin {
@@ -17,6 +18,8 @@ public class ApplicationUI extends BorderPane implements ViewMixin {
     private VBox center;
     private Header header;
     private Editor editor;
+    private HBox bottom;
+    private Map map;
     private Footer footer;
 
     public ApplicationUI(RootPM model) {
@@ -39,15 +42,19 @@ public class ApplicationUI extends BorderPane implements ViewMixin {
         center = new VBox();
         header = new Header(model);
         editor = new Editor(model);
+        bottom = new HBox();
+        map = new Map(model);
         footer = new Footer(model);
         }
 
     @Override
     public void layoutControls() {
-        spVerticalMain.getItems().addAll(spHorizontalCenter,footer);
-        spVerticalMain.setOrientation(Orientation.VERTICAL);
         center.getChildren().addAll(header, editor);
         spHorizontalCenter.getItems().addAll(overview,center);
+        bottom.getChildren().addAll(footer, map);
+        spVerticalMain.getItems().addAll(spHorizontalCenter,bottom);
+        spVerticalMain.setOrientation(Orientation.VERTICAL);
+
         setTop(selectorbar);
         setCenter(spVerticalMain);
         setMinWidth(USE_PREF_SIZE);

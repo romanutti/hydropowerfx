@@ -32,16 +32,14 @@ public class Footer extends VBox implements ViewMixin{
     private TableView<CantonPM> initializeCantonTable() {
         TableView<CantonPM> tableView = new TableView<>(rootPM.getAllCantons());
 
-        TableColumn<CantonPM, String> nameColumn = new TableColumn<>();
+        TableColumn<CantonPM, String> nameColumn = new TableColumn<>("canton");
         nameColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getCanton().getName()));
 
         TableColumn<CantonPM, Number> maxPowerColumn = new TableColumn<>("maxPowerColumn");
         maxPowerColumn.setCellValueFactory(cell -> cell.getValue().totalPowerMwProperty());
 
-        TableColumn<CantonPM, Number> powerStationCountColumn = new TableColumn<>("");
+        TableColumn<CantonPM, Number> powerStationCountColumn = new TableColumn<>("powerStationCount");
         powerStationCountColumn.setCellValueFactory(cell -> cell.getValue().powerStationCountProperty());
-
-
 
         tableView.getColumns().addAll(nameColumn, maxPowerColumn, powerStationCountColumn);
 
@@ -51,11 +49,22 @@ public class Footer extends VBox implements ViewMixin{
 
     @Override
     public void layoutControls() {
-        setPrefHeight(USE_PREF_SIZE);
-        setMinHeight(USE_PREF_SIZE);
+        setPrefWidth(700);
+        setMinWidth(700);
+        setPrefHeight(180);
+        setMaxHeight(180);
+
+        getTableColumnByName("canton").setMinWidth(300);
+        getTableColumnByName("canton").setMaxWidth(300);
+
+        getTableColumnByName("maxPowerColumn").setMinWidth(200);
+        getTableColumnByName("maxPowerColumn").setMaxWidth(200);
+
+        getTableColumnByName("powerStationCount").setMinWidth(200);
+        getTableColumnByName("powerStationCount").setMaxWidth(200);
+
         getChildren().addAll(getItemTable());
         setVgrow(getItemTable(),Priority.ALWAYS);
-
     }
 
     @Override
@@ -64,14 +73,18 @@ public class Footer extends VBox implements ViewMixin{
 
     @Override
     public void setupValueChangedListeners() {
-        //itemTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> rootPM.setSelectedId(newValue.getId()));
         rootPM.selectedIdProperty().addListener((observable, oldValue, newValue) -> itemTable.getSelectionModel().select(((int) newValue)));
-
-
     }
 
-    public TableView<CantonPM> getItemTable() {
+    private TableView<CantonPM> getItemTable() {
         return itemTable;
     }
+
+    private TableColumn getTableColumnByName(String name) {
+        for (TableColumn col : itemTable.getColumns())
+            if (col.getText().equals(name)) return col;
+        return null;
+    }
+
 
 }
