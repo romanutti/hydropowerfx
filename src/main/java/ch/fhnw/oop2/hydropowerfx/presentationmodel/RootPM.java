@@ -328,7 +328,7 @@ public class RootPM {
     allPowerStations.addListener((ListChangeListener<PowerStationPM>) event ->{
         while (event.next()) {
             if (event.wasUpdated() || event.wasRemoved() || event.wasAdded()) {
-                Canton affectedCanton = allPowerStations.get(event.getFrom()).getCanton();
+                //Canton affectedCanton = allPowerStations.get(event.getFrom()).getCanton();
                 // TODO: Nur betroffenen Kanton aktualisieren
                 updateAllCantons();
             }
