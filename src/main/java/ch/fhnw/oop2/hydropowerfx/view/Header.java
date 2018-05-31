@@ -37,6 +37,9 @@ public class Header extends HBox implements ViewMixin {
         labelArea = new VBox();
 
         titleLabel = new Label("title");
+        // TODO: Eher bei Layout?
+        titleLabel.setId("titleLabel");
+
         nameLabel = new Label("name");
         powerLabel = new Label("power");
         startOfOperationFirstLabel = new Label("startofopblalba");
