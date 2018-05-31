@@ -167,6 +167,9 @@ public class SelectorBar extends HBox implements ViewMixin {
 
         deleteButton.setOnAction(event -> rootPM.removePowerStation());
         createButton.setOnAction(event -> rootPM.addPowerStation());
+
+        undoButton.setOnAction(event -> rootPM.undo());
+        redoButton.setOnAction(event -> rootPM.redo());
     }
 
     @Override
@@ -196,7 +199,9 @@ public class SelectorBar extends HBox implements ViewMixin {
 
     @Override
     public void setupBindings() {
-             deleteButton.disableProperty().bind(rootPM.labelsEnabledProperty()); //TODO: Für weitere Buttons umsetzen
+        deleteButton.disableProperty().bind(rootPM.deleteEnabledProperty()); //TODO: Für weitere Buttons umsetzen
+        undoButton.disableProperty().bind(rootPM.undoDisabledProperty());
+        redoButton.disableProperty().bind(rootPM.redoDisabledProperty());
     }
 
 }
