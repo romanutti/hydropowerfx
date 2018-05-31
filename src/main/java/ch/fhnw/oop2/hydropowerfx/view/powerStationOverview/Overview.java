@@ -16,6 +16,8 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.converter.NumberStringConverter;
 
+import java.util.Arrays;
+
 public class Overview extends VBox implements ViewMixin {
     private final RootPM rootPM;
 
@@ -146,9 +148,11 @@ public class Overview extends VBox implements ViewMixin {
             int selectedId = rootPM.getSelectedId();
             int selectedIndex = rootPM.getIndexOfPowerStation(selectedId);
             int[] visibleRange = getVisibleRange(itemTable);
+            System.out.println(Arrays.toString(visibleRange));
+            System.out.println(selectedIndex);
 
             if (!(visibleRange[0] <= selectedIndex && selectedIndex <= visibleRange[visibleRange.length - 1])) {
-                itemTable.scrollTo(rootPM.getIndexOfPowerStation(rootPM.getSelectedId()));
+                itemTable.scrollTo(rootPM.getPowerStation(selectedIndex));
             }
 
         });
