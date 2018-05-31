@@ -182,49 +182,75 @@ public class RootPM {
     }
 
     private void bindToProxy(PowerStationPM powerStation) {
-        powerStationProxy.idProperty().bindBidirectional(powerStation.idProperty());
-        powerStationProxy.nameProperty().bindBidirectional(powerStation.nameProperty());
-        powerStationProxy.typeProperty().bindBidirectional(powerStation.typeProperty());
-        powerStationProxy.siteProperty().bindBidirectional(powerStation.siteProperty());
-        powerStationProxy.cantonProperty().bindBidirectional(powerStation.cantonProperty());
-        powerStationProxy.maxWaterVolumeProperty().bindBidirectional(powerStation.maxWaterVolumeProperty());
-        powerStationProxy.maxPowerMwProperty().bindBidirectional(powerStation.maxPowerMwProperty());
-        powerStationProxy.startOfOperationFirstProperty().bindBidirectional(powerStation.startOfOperationFirstProperty());
-        powerStationProxy.startOfOperationLastProperty().bindBidirectional(powerStation.startOfOperationLastProperty());
-        powerStationProxy.latitudeProperty().bindBidirectional(powerStation.latitudeProperty());
-        powerStationProxy.longitudeProperty().bindBidirectional(powerStation.longitudeProperty());
-        powerStationProxy.statusProperty().bindBidirectional(powerStation.statusProperty());
-        powerStationProxy.waterbodiesProperty().bindBidirectional(powerStation.waterbodiesProperty());
-        powerStationProxy.imageUrlProperty().bindBidirectional(powerStation.imageUrlProperty());
+        powerStationProxy.idProperty()                      .bindBidirectional(powerStation.idProperty());
+        powerStationProxy.nameProperty()                    .bindBidirectional(powerStation.nameProperty());
+        powerStationProxy.typeProperty()                    .bindBidirectional(powerStation.typeProperty());
+        powerStationProxy.siteProperty()                    .bindBidirectional(powerStation.siteProperty());
+        powerStationProxy.cantonProperty()                  .bindBidirectional(powerStation.cantonProperty());
+        powerStationProxy.maxWaterVolumeProperty()          .bindBidirectional(powerStation.maxWaterVolumeProperty());
+        powerStationProxy.maxPowerMwProperty()              .bindBidirectional(powerStation.maxPowerMwProperty());
+        powerStationProxy.startOfOperationFirstProperty()   .bindBidirectional(powerStation.startOfOperationFirstProperty());
+        powerStationProxy.startOfOperationLastProperty()    .bindBidirectional(powerStation.startOfOperationLastProperty());
+        powerStationProxy.latitudeProperty()                .bindBidirectional(powerStation.latitudeProperty());
+        powerStationProxy.longitudeProperty()               .bindBidirectional(powerStation.longitudeProperty());
+        powerStationProxy.statusProperty()                  .bindBidirectional(powerStation.statusProperty());
+        powerStationProxy.waterbodiesProperty()             .bindBidirectional(powerStation.waterbodiesProperty());
+        powerStationProxy.imageUrlProperty()                .bindBidirectional(powerStation.imageUrlProperty());
     }
 
     private void unbindFromProxy(PowerStationPM powerStation) {
-        powerStationProxy.idProperty().unbindBidirectional(powerStation.idProperty());
-        powerStationProxy.nameProperty().unbindBidirectional(powerStation.nameProperty());
-        powerStationProxy.typeProperty().unbindBidirectional(powerStation.typeProperty());
-        powerStationProxy.siteProperty().unbindBidirectional(powerStation.siteProperty());
-        powerStationProxy.cantonProperty().unbindBidirectional(powerStation.cantonProperty());
-        powerStationProxy.maxWaterVolumeProperty().unbindBidirectional(powerStation.maxWaterVolumeProperty());
-        powerStationProxy.maxPowerMwProperty().unbindBidirectional(powerStation.maxPowerMwProperty());
-        powerStationProxy.startOfOperationFirstProperty().unbindBidirectional(powerStation.startOfOperationFirstProperty());
-        powerStationProxy.startOfOperationLastProperty().unbindBidirectional(powerStation.startOfOperationLastProperty());
-        powerStationProxy.latitudeProperty().unbindBidirectional(powerStation.latitudeProperty());
-        powerStationProxy.longitudeProperty().unbindBidirectional(powerStation.longitudeProperty());
-        powerStationProxy.statusProperty().unbindBidirectional(powerStation.statusProperty());
-        powerStationProxy.waterbodiesProperty().unbindBidirectional(powerStation.waterbodiesProperty());
-        powerStationProxy.imageUrlProperty().unbindBidirectional(powerStation.imageUrlProperty());
+        powerStationProxy.idProperty()                      .unbindBidirectional(powerStation.idProperty());
+        powerStationProxy.nameProperty()                    .unbindBidirectional(powerStation.nameProperty());
+        powerStationProxy.typeProperty()                    .unbindBidirectional(powerStation.typeProperty());
+        powerStationProxy.siteProperty()                    .unbindBidirectional(powerStation.siteProperty());
+        powerStationProxy.cantonProperty()                  .unbindBidirectional(powerStation.cantonProperty());
+        powerStationProxy.maxWaterVolumeProperty()          .unbindBidirectional(powerStation.maxWaterVolumeProperty());
+        powerStationProxy.maxPowerMwProperty()              .unbindBidirectional(powerStation.maxPowerMwProperty());
+        powerStationProxy.startOfOperationFirstProperty()   .unbindBidirectional(powerStation.startOfOperationFirstProperty());
+        powerStationProxy.startOfOperationLastProperty()    .unbindBidirectional(powerStation.startOfOperationLastProperty());
+        powerStationProxy.latitudeProperty()                .unbindBidirectional(powerStation.latitudeProperty());
+        powerStationProxy.longitudeProperty()               .unbindBidirectional(powerStation.longitudeProperty());
+        powerStationProxy.statusProperty()                  .unbindBidirectional(powerStation.statusProperty());
+        powerStationProxy.waterbodiesProperty()             .unbindBidirectional(powerStation.waterbodiesProperty());
+        powerStationProxy.imageUrlProperty()                .unbindBidirectional(powerStation.imageUrlProperty());
     }
 
     private void disableUndoSupport(PowerStationPM powerstation) {
-        powerstation.idProperty().removeListener(propertyChangeListenerForUndoSupport);
-        powerstation.nameProperty().removeListener(propertyChangeListenerForUndoSupport);
-        // TODO: Andere machen
+        powerstation.idProperty()                       .removeListener(propertyChangeListenerForUndoSupport);
+        powerstation.nameProperty()                     .removeListener(propertyChangeListenerForUndoSupport);
+        powerstation.typeProperty()                     .removeListener(propertyChangeListenerForUndoSupport);
+        powerstation.siteProperty()                     .removeListener(propertyChangeListenerForUndoSupport);
+        powerstation.cantonProperty()                   .removeListener(propertyChangeListenerForUndoSupport);
+        powerstation.maxWaterVolumeProperty()           .removeListener(propertyChangeListenerForUndoSupport);
+        powerstation.maxPowerMwProperty()               .removeListener(propertyChangeListenerForUndoSupport);
+        powerstation.startOfOperationFirstProperty()    .removeListener(propertyChangeListenerForUndoSupport);
+        powerstation.startOfOperationLastProperty()     .removeListener(propertyChangeListenerForUndoSupport);
+        powerstation.latitudeProperty()                 .removeListener(propertyChangeListenerForUndoSupport);
+        powerstation.longitudeProperty()                .removeListener(propertyChangeListenerForUndoSupport);
+        powerstation.statusProperty()                   .removeListener(propertyChangeListenerForUndoSupport);
+        powerstation.waterbodiesProperty()              .removeListener(propertyChangeListenerForUndoSupport);
+        powerstation.imageUrlProperty()                 .removeListener(propertyChangeListenerForUndoSupport);
+
     }
 
     private void enableUndoSupport(PowerStationPM powerstation) {
-        powerstation.idProperty().addListener(propertyChangeListenerForUndoSupport);
-        powerstation.nameProperty().addListener(propertyChangeListenerForUndoSupport);
-        // TODO: Andere machen
+        powerstation.idProperty()                       .addListener(propertyChangeListenerForUndoSupport);
+        powerstation.nameProperty()                     .addListener(propertyChangeListenerForUndoSupport);
+        powerstation.idProperty()                       .addListener(propertyChangeListenerForUndoSupport);
+        powerstation.nameProperty()                     .addListener(propertyChangeListenerForUndoSupport);
+        powerstation.typeProperty()                     .addListener(propertyChangeListenerForUndoSupport);
+        powerstation.siteProperty()                     .addListener(propertyChangeListenerForUndoSupport);
+        powerstation.cantonProperty()                   .addListener(propertyChangeListenerForUndoSupport);
+        powerstation.maxWaterVolumeProperty()           .addListener(propertyChangeListenerForUndoSupport);
+        powerstation.maxPowerMwProperty()               .addListener(propertyChangeListenerForUndoSupport);
+        powerstation.startOfOperationFirstProperty()    .addListener(propertyChangeListenerForUndoSupport);
+        powerstation.startOfOperationLastProperty()     .addListener(propertyChangeListenerForUndoSupport);
+        powerstation.latitudeProperty()                 .addListener(propertyChangeListenerForUndoSupport);
+        powerstation.longitudeProperty()                .addListener(propertyChangeListenerForUndoSupport);
+        powerstation.statusProperty()                   .addListener(propertyChangeListenerForUndoSupport);
+        powerstation.waterbodiesProperty()              .addListener(propertyChangeListenerForUndoSupport);
+        powerstation.imageUrlProperty()                 .addListener(propertyChangeListenerForUndoSupport);
+
     }
 
     <T> void setPropertyValueWithoutUndoSupport(Property<T> property, T newValue) {

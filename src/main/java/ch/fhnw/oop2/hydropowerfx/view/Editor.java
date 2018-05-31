@@ -187,6 +187,7 @@ public class Editor extends GridPane implements ViewMixin {
         // Status Enum
 
         statusChoiceBox.setItems(FXCollections.observableArrayList(Status.values()));
+        statusChoiceBox.getSelectionModel().select(rootPM.getPowerStationProxy().getStatus());
         rootPM.getPowerStationProxy().statusProperty().addListener((observable, oldValue, newValue) -> statusChoiceBox.getSelectionModel().select(newValue));
 
         statusChoiceBox.setConverter(new StringConverter<Status>() {

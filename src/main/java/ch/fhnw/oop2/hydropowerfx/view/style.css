@@ -2,7 +2,7 @@
 .root {
     -fx-padding: 10px;
     -fx-font-family: "Helvetica";
-    -fx-font-size: 10;
+    -fx-font-size: 12;
     /* Block coloring for background */
     -fx-background-color: linear-gradient(
             to bottom,

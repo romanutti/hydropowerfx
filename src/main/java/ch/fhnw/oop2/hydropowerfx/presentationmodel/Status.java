@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
     public enum Status {
+        BAU("im Bau"),
         NORMAL("im Normalbetrieb"),
-        STILL("stillgelegt"),
-        BAU("im Bau");
+        STILL("stillgelegt");
 
         private final String name;
         private static final Map<String, Status> lookup = new HashMap<String, Status>();
