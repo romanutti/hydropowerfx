@@ -9,6 +9,9 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Tooltip;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.util.StringConverter;
 
@@ -37,11 +40,11 @@ public class SelectorBar extends HBox implements ViewMixin {
 
     @Override
     public void initializeControls() {
-        saveButton = new Button("save");
-        createButton = new Button("create");
-        deleteButton = new Button("delete");
-        undoButton = new Button("undo");
-        redoButton = new Button("redo");
+        saveButton = new Button();
+        createButton = new Button();
+        deleteButton = new Button();
+        undoButton = new Button();
+        redoButton = new Button();
 
         searchField = new TextField("search");
         languageChoiceBox = new ChoiceBox();
@@ -71,12 +74,55 @@ public class SelectorBar extends HBox implements ViewMixin {
         setPadding(new Insets(5));
         setSpacing(5);
 
+        // button images
+        Image imageSave = new Image("/images/save_icon.png");
+        ImageView imageSaveArea = new ImageView();
+        imageSaveArea.setImage(imageSave);
+
+        Image imageCreate = new Image("/images/create_icon.png");
+        ImageView imageCreateArea = new ImageView();
+        imageCreateArea.setImage(imageCreate);
+
+        Image imageDelete = new Image("/images/delete_icon.png");
+        ImageView imageDeleteArea = new ImageView();
+        imageDeleteArea.setImage(imageDelete);
+
+        Image imageUndo = new Image("/images/undo_icon.png");
+        ImageView imageUndoArea = new ImageView();
+        imageUndoArea.setImage(imageUndo);
+
+        Image imageRedo = new Image("/images/redo_icon.png");
+        ImageView imageRedoArea = new ImageView();
+        imageRedoArea.setImage(imageRedo);
+
+        imageSaveArea.setFitHeight(20);
+        imageSaveArea.setFitWidth(20);
+
+        imageCreateArea.setFitHeight(20);
+        imageCreateArea.setFitWidth(20);
+
+        imageDeleteArea.setFitHeight(20);
+        imageDeleteArea.setFitWidth(20);
+
+        imageRedoArea.setFitHeight(20);
+        imageRedoArea.setFitWidth(20);
+
+        imageUndoArea.setFitHeight(20);
+        imageUndoArea.setFitWidth(20);
+
+        saveButton.setGraphic(imageSaveArea);
+        createButton.setGraphic(imageCreateArea);
+        deleteButton.setGraphic(imageDeleteArea);
+        undoButton.setGraphic(imageUndoArea);
+        redoButton.setGraphic(imageRedoArea);
+
         getChildren().addAll(saveButton, createButton, deleteButton, undoButton, redoButton, searchField, languageChoiceBox);
 
     }
 
     @Override
     public void setupEventHandlers() {
+        // TODO: allg. EventHandler vs Listener überprüfen!
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
             rootPM.getFilteredPowerStations().setPredicate(powerStationPM -> {
 
