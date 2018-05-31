@@ -29,7 +29,8 @@ public enum Canton {
     UR("Uri"),
     VD("Waadt"),
     VS("Valais"),
-    ZG("Zug");
+    ZG("Zug"),
+    ZH("Zürich");
 
 
     private final String name;
