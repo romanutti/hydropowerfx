@@ -16,14 +16,12 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.converter.NumberStringConverter;
 
-import java.util.Arrays;
-
 public class Overview extends VBox implements ViewMixin {
     private final RootPM rootPM;
 
     private TableView<PowerStationPM> itemTable;
 
-    private Label resultCountLabal;
+    private Label resultCountLabel;
 
 
     public Overview(RootPM rootPM) {
@@ -42,7 +40,7 @@ public class Overview extends VBox implements ViewMixin {
 
         // enable cell editing
         itemTable.setEditable(true);
-        resultCountLabal = new Label();
+        resultCountLabel = new Label();
     }
 
     private TableView<PowerStationPM> initializePowerStationTable() {
@@ -111,7 +109,7 @@ public class Overview extends VBox implements ViewMixin {
 
         itemTable.setMinWidth(USE_COMPUTED_SIZE);
 
-        getChildren().addAll(itemTable, resultCountLabal);
+        getChildren().addAll(itemTable, resultCountLabel);
         setVgrow(itemTable, Priority.ALWAYS);
 
     }
@@ -129,9 +127,11 @@ public class Overview extends VBox implements ViewMixin {
         getTableColumnByName("Power").textProperty().bind(rootPM.getLanguageSwitcherPM().maxPowerMwLabelTextProperty());
         getTableColumnByName("StartOfOperationFirst").textProperty().bind(rootPM.getLanguageSwitcherPM().startOfOperationFirstLabelTextProperty());
 
-        //TODO: total labal to show visible/totalRows
-        //resultCountLabal.textProperty().bind(Bindings.size((rootPM.size().asString()));
-        resultCountLabal.textProperty().bind(Bindings.size((itemTable.getItems())).asString());
+        // Display index nr./total count summary
+        resultCountLabel.textProperty().bind(Bindings.concat(
+                Bindings.selectInteger(itemTable.getFocusModel().focusedIndexProperty().add(1)),
+                "/",
+                Bindings.size((itemTable.getItems())).asString()));
     }
 
     @Override
