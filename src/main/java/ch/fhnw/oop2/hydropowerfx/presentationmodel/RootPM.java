@@ -2,10 +2,9 @@ package ch.fhnw.oop2.hydropowerfx.presentationmodel;
 
 import javafx.application.Platform;
 import javafx.beans.Observable;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.binding.Bindings;
+import javafx.beans.property.*;
+import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -27,6 +26,9 @@ public class RootPM {
     private static final String FILE_NAME = "/data/HYDRO_POWERSTATION.csv";
     private static final String DELIMITER = ";";
 
+    private final ObservableList<Command> undoStack = FXCollections.observableArrayList();
+    private final ObservableList<Command> redoStack = FXCollections.observableArrayList();
+
     private final ObservableList<PowerStationPM> allPowerStations = FXCollections.observableArrayList(
             powerstation -> new Observable[]{powerstation.maxPowerMwProperty(), powerstation.cantonProperty()});
     private final ObservableList<CantonPM> allCantons = FXCollections.observableArrayList();
@@ -36,8 +38,16 @@ public class RootPM {
     private final FilteredList<PowerStationPM> filteredPowerStations;
 
     private final LanguageSwitcherPM languageSwitcherPM;
+
+    private final BooleanProperty undoDisabled = new SimpleBooleanProperty();
+    private final BooleanProperty redoDisabled = new SimpleBooleanProperty();
+    private final BooleanProperty deleteEnabled = new SimpleBooleanProperty();
     private final BooleanProperty labelsEnabled = new SimpleBooleanProperty();
 
+    private final ChangeListener propertyChangeListenerForUndoSupport = (observable, oldValue, newValue) -> {
+        redoStack.clear();
+        undoStack.add(0, new ValueChangeCommand(RootPM.this, (Property) observable, oldValue, newValue));
+    };
 
     public RootPM() {
         init(createAllPowerStations());
@@ -58,7 +68,9 @@ public class RootPM {
 
     private void init(List<PowerStationPM> powerStationList){
         allPowerStations.addAll(powerStationList);
-        Platform.runLater(() -> setSelectedId(getFirstPowerStation()));
+
+        undoDisabled.bind(Bindings.isEmpty(undoStack));
+        redoDisabled.bind(Bindings.isEmpty(redoStack));
 
         selectedIdProperty().addListener((observable, oldValue, newValue) -> {
                     PowerStationPM oldSelection = getPowerStation(oldValue.intValue());
@@ -66,10 +78,12 @@ public class RootPM {
 
                     if (oldSelection != null) {
                         unbindFromProxy(oldSelection);
+                        disableUndoSupport(oldSelection);
                     }
 
                     if (newSelection != null) {
                         bindToProxy(newSelection);
+                        enableUndoSupport(newSelection);
                     }
                 }
         );
@@ -77,6 +91,9 @@ public class RootPM {
 
         // Test
         allCantons.addAll(getCantons());
+
+        Platform.runLater(() -> setSelectedId(getFirstPowerStation()));
+
 
     }
 
@@ -143,6 +160,46 @@ public class RootPM {
         powerStationProxy.imageUrlProperty().unbindBidirectional(powerStation.imageUrlProperty());
     }
 
+    private void disableUndoSupport(PowerStationPM powerstation) {
+        powerstation.idProperty().removeListener(propertyChangeListenerForUndoSupport);
+        powerstation.nameProperty().removeListener(propertyChangeListenerForUndoSupport);
+        // TODO: Andere machen
+    }
+
+    private void enableUndoSupport(PowerStationPM powerstation) {
+        powerstation.idProperty().addListener(propertyChangeListenerForUndoSupport);
+        powerstation.nameProperty().addListener(propertyChangeListenerForUndoSupport);
+        // TODO: Andere machen
+    }
+
+    <T> void setPropertyValueWithoutUndoSupport(Property<T> property, T newValue){
+        property.removeListener(propertyChangeListenerForUndoSupport);
+        property.setValue(newValue);
+        property.addListener(propertyChangeListenerForUndoSupport);
+    }
+
+    public void undo() {
+        if (undoStack.isEmpty()) {
+            return;
+        }
+        Command cmd = undoStack.get(0);
+        undoStack.remove(0);
+        redoStack.add(0, cmd);
+
+        cmd.undo();
+    }
+
+    public void redo() {
+        if (redoStack.isEmpty()) {
+            return;
+        }
+        Command cmd = redoStack.get(0);
+        redoStack.remove(0);
+        undoStack.add(0, cmd);
+
+        cmd.redo();
+    }
+
     public void save() {
         try (BufferedWriter writer = Files.newBufferedWriter(getPath(FILE_NAME))) {
             writer.write("ENTITY_ID;NAME;TYPE;SITE;CANTON;MAX_WATER_VOLUME_M3_S;MAX_POWER_MW;START_OF_OPERATION_FIRST;START_OF_OPERATION_LAST;LATITUDE;LONGITUDE;STATUS;WATERBODIES;IMAGE_URL");
@@ -203,8 +260,10 @@ public class RootPM {
 
         if (selectedPowerStationId == 0){
             setLabelsEnabled(true);
+            setDeleteEnabled(true);
         } else {
             setLabelsEnabled(false);
+            setDeleteEnabled(false);
         }
     }
 
@@ -220,8 +279,44 @@ public class RootPM {
         this.labelsEnabled.set(labelsEnabled);
     }
 
+    public boolean isDeleteEnabled() {
+        return deleteEnabled.get();
+    }
+
+    public BooleanProperty deleteEnabledProperty() {
+        return deleteEnabled;
+    }
+
+    public void setDeleteEnabled(boolean deleteEnabled) {
+        this.deleteEnabled.set(deleteEnabled);
+    }
+
     public int getIndexOfPowerStation(int id){
         return getAllPowerStations().indexOf(getPowerStation(id));
+    }
+
+    public boolean getUndoDisabled() {
+        return undoDisabled.get();
+    }
+
+    public BooleanProperty undoDisabledProperty() {
+        return undoDisabled;
+    }
+
+    public void setUndoDisabled(boolean undoDisabled) {
+        this.undoDisabled.set(undoDisabled);
+    }
+
+    public boolean getRedoDisabled() {
+        return redoDisabled.get();
+    }
+
+    public BooleanProperty redoDisabledProperty() {
+        return redoDisabled;
+    }
+
+    public void setRedoDisabled(boolean redoDisabled) {
+        this.redoDisabled.set(redoDisabled);
     }
 
     // overview methods
@@ -320,25 +415,23 @@ public class RootPM {
     public void updateAllCantons(){
         allCantons.stream()
                 .forEach(cantonPM -> {cantonPM.setPowerStationCount(getPowerStationCount(cantonPM.getCanton()));
-                                      cantonPM.setTotalPowerMw(getTotalPower(cantonPM.getCanton()));} );
+                    cantonPM.setTotalPowerMw(getTotalPower(cantonPM.getCanton()));} );
     }
 
     public void setupValueChangedListeners() {
+        // selection changes are undoable
+        selectedIdProperty().addListener(propertyChangeListenerForUndoSupport);
 
-    allPowerStations.addListener((ListChangeListener<PowerStationPM>) event ->{
-        while (event.next()) {
-            if (event.wasUpdated() || event.wasRemoved() || event.wasAdded()) {
-                //Canton affectedCanton = allPowerStations.get(event.getFrom()).getCanton();
-                // TODO: Nur betroffenen Kanton aktualisieren
-                updateAllCantons();
+        allPowerStations.addListener((ListChangeListener<PowerStationPM>) event ->{
+            while (event.next()) {
+                if (event.wasUpdated() || event.wasRemoved() || event.wasAdded()) {
+                    //Canton affectedCanton = allPowerStations.get(event.getFrom()).getCanton();
+                    // TODO: Nur betroffenen Kanton aktualisieren
+                    updateAllCantons();
+                }
             }
-        }
-    });
+        });
 
     }
-
-
-
-
 
 }
