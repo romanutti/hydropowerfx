@@ -23,22 +23,29 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class RootPM {
+    // constants
     private static final String FILE_NAME = "/data/HYDRO_POWERSTATION.csv";
     private static final String DELIMITER = ";";
+    private static final String HEADER = "ENTITY_ID;NAME;TYPE;SITE;CANTON;MAX_WATER_VOLUME_M3_S;MAX_POWER_MW;START_OF_OPERATION_FIRST;START_OF_OPERATION_LAST;LATITUDE;LONGITUDE;STATUS;WATERBODIES;IMAGE_URL";
 
+    // und/redo stacks
     private final ObservableList<Command> undoStack = FXCollections.observableArrayList();
     private final ObservableList<Command> redoStack = FXCollections.observableArrayList();
 
+    // main data
     private final ObservableList<PowerStationPM> allPowerStations = FXCollections.observableArrayList(
             powerstation -> new Observable[]{powerstation.maxPowerMwProperty(), powerstation.cantonProperty()});
     private final ObservableList<CantonPM> allCantons = FXCollections.observableArrayList();
     private final IntegerProperty selectedId = new SimpleIntegerProperty();
-    private final PowerStationPM powerStationProxy = new PowerStationPM();
+    private final PowerStationPM powerStationProxy = PowerStationPM.getDefaultPowerStationPM();
 
+    // filtered list for search
     private final FilteredList<PowerStationPM> filteredPowerStations;
 
+    // mulitlanguage support
     private final LanguageSwitcherPM languageSwitcherPM;
 
+    // enable disable of components
     private final BooleanProperty undoDisabled = new SimpleBooleanProperty();
     private final BooleanProperty redoDisabled = new SimpleBooleanProperty();
     private final BooleanProperty deleteEnabled = new SimpleBooleanProperty();
@@ -49,29 +56,79 @@ public class RootPM {
         undoStack.add(0, new ValueChangeCommand(RootPM.this, (Property) observable, oldValue, newValue));
     };
 
+    // constructors
     public RootPM() {
+        // initialize data
         init(createAllPowerStations());
-        this.languageSwitcherPM = new LanguageSwitcherPM();
-        setupValueChangedListeners();
 
-        // TODO: DRY
-        filteredPowerStations =  new FilteredList<>(allPowerStations, p -> true);
+        languageSwitcherPM = new LanguageSwitcherPM();
+        filteredPowerStations = new FilteredList<>(allPowerStations, p -> true);
+
+        // initialize listener
+        setupValueChangedListeners();
     }
 
     public RootPM(List<PowerStationPM> powerStationList) {
+        // initialize data
         init(powerStationList);
-        this.languageSwitcherPM = new LanguageSwitcherPM();
 
-        // TODO: DRY
-        filteredPowerStations =  new FilteredList<>(allPowerStations, p -> true);
+        languageSwitcherPM = new LanguageSwitcherPM();
+        filteredPowerStations = new FilteredList<>(allPowerStations, p -> true);
+
+        // initialize listener
+        setupValueChangedListeners();
     }
 
-    private void init(List<PowerStationPM> powerStationList){
+    public void undo() {
+        if (undoStack.isEmpty()) {
+            return;
+        }
+        Command cmd = undoStack.get(0);
+        undoStack.remove(0);
+        redoStack.add(0, cmd);
+
+        cmd.undo();
+    }
+
+    public void redo() {
+        if (redoStack.isEmpty()) {
+            return;
+        }
+        Command cmd = redoStack.get(0);
+        redoStack.remove(0);
+        undoStack.add(0, cmd);
+
+        cmd.redo();
+    }
+
+    public void save() {
+        try (BufferedWriter writer = Files.newBufferedWriter(getPath(FILE_NAME))) {
+            writer.write(HEADER);
+            writer.newLine();
+            allPowerStations.stream()
+                    .map(powerStation -> powerStation.infoAsLine(DELIMITER))
+                    .forEach(line -> {
+                        try {
+                            writer.write(line);
+                            writer.newLine();
+                        } catch (IOException e) {
+                            throw new IllegalStateException(e);
+                        }
+                    });
+        } catch (IOException e) {
+            throw new IllegalStateException("save failed");
+        }
+    }
+
+    private void init(List<PowerStationPM> powerStationList) {
+        // add data
         allPowerStations.addAll(powerStationList);
 
+        // enable components
         undoDisabled.bind(Bindings.isEmpty(undoStack));
         redoDisabled.bind(Bindings.isEmpty(redoStack));
 
+        // setup proxy bindings
         selectedIdProperty().addListener((observable, oldValue, newValue) -> {
                     PowerStationPM oldSelection = getPowerStation(oldValue.intValue());
                     PowerStationPM newSelection = getPowerStation(newValue.intValue());
@@ -88,13 +145,11 @@ public class RootPM {
                 }
         );
 
-
-        // Test
+        // add canton list
         allCantons.addAll(getCantons());
 
+        // set selected id
         Platform.runLater(() -> setSelectedId(getFirstPowerStation()));
-
-
     }
 
     private List<PowerStationPM> createAllPowerStations() {
@@ -127,7 +182,7 @@ public class RootPM {
     }
 
     private void bindToProxy(PowerStationPM powerStation) {
-        powerStationProxy.idProperty()  .bindBidirectional(powerStation.idProperty());
+        powerStationProxy.idProperty().bindBidirectional(powerStation.idProperty());
         powerStationProxy.nameProperty().bindBidirectional(powerStation.nameProperty());
         powerStationProxy.typeProperty().bindBidirectional(powerStation.typeProperty());
         powerStationProxy.siteProperty().bindBidirectional(powerStation.siteProperty());
@@ -144,7 +199,7 @@ public class RootPM {
     }
 
     private void unbindFromProxy(PowerStationPM powerStation) {
-        powerStationProxy.idProperty()  .unbindBidirectional(powerStation.idProperty());
+        powerStationProxy.idProperty().unbindBidirectional(powerStation.idProperty());
         powerStationProxy.nameProperty().unbindBidirectional(powerStation.nameProperty());
         powerStationProxy.typeProperty().unbindBidirectional(powerStation.typeProperty());
         powerStationProxy.siteProperty().unbindBidirectional(powerStation.siteProperty());
@@ -172,56 +227,107 @@ public class RootPM {
         // TODO: Andere machen
     }
 
-    <T> void setPropertyValueWithoutUndoSupport(Property<T> property, T newValue){
+    <T> void setPropertyValueWithoutUndoSupport(Property<T> property, T newValue) {
         property.removeListener(propertyChangeListenerForUndoSupport);
         property.setValue(newValue);
         property.addListener(propertyChangeListenerForUndoSupport);
     }
 
-    public void undo() {
-        if (undoStack.isEmpty()) {
-            return;
-        }
-        Command cmd = undoStack.get(0);
-        undoStack.remove(0);
-        redoStack.add(0, cmd);
-
-        cmd.undo();
+    // overview methods
+    public void addPowerStation() {
+        PowerStationPM newItem = PowerStationPM.getDefaultPowerStationPM();
+        newItem.setId(getNewPowerStationID());
+        allPowerStations.add(newItem);
+        setSelectedId(newItem.getId());
     }
 
-    public void redo() {
-        if (redoStack.isEmpty()) {
-            return;
-        }
-        Command cmd = redoStack.get(0);
-        redoStack.remove(0);
-        undoStack.add(0, cmd);
-
-        cmd.redo();
-    }
-
-    public void save() {
-        try (BufferedWriter writer = Files.newBufferedWriter(getPath(FILE_NAME))) {
-            writer.write("ENTITY_ID;NAME;TYPE;SITE;CANTON;MAX_WATER_VOLUME_M3_S;MAX_POWER_MW;START_OF_OPERATION_FIRST;START_OF_OPERATION_LAST;LATITUDE;LONGITUDE;STATUS;WATERBODIES;IMAGE_URL");
-            writer.newLine();
-            allPowerStations.stream()
-                    .map(powerStation -> powerStation.infoAsLine(DELIMITER))
-                    .forEach(line -> {
-                        try {
-                            writer.write(line);
-                            writer.newLine();
-                        } catch (IOException e) {
-                            throw new IllegalStateException(e);
-                        }
-                    });
-        } catch (IOException e) {
-            throw new IllegalStateException("save failed");
+    public void removePowerStation() {
+        if (getSelectedId() != 0) {
+            allPowerStations.remove(allPowerStations.indexOf(getPowerStation(getSelectedId())));
+            setSelectedId(0);
         }
     }
 
+    public PowerStationPM getPowerStation(int id) {
+        return allPowerStations.stream()
+                .filter(powerStation -> powerStation.getId() == id)
+                .findFirst()
+                .orElse(null);
+    }
 
+    public CantonPM getCantonPM(Canton canton) {
+        return allCantons.stream()
+                .filter(cantonpm -> cantonpm.getCanton().getName().equals(canton.getName()))
+                .findFirst().orElse(null);
+    }
 
-    // all getters and setters
+    public int getFirstPowerStation() {
+        return allPowerStations.stream()
+                .map(powerStationPM -> powerStationPM.getId())
+                .findFirst()
+                .orElse(null);
+    }
+
+    public int getNewPowerStationID() {
+        int newID = allPowerStations.stream()
+                .mapToInt(powerStation -> powerStation.getId())
+                .reduce(Integer::max)
+                .getAsInt();
+
+        while (getPowerStation(newID) != null) {
+            ++newID;
+        }
+        return newID;
+    }
+
+    public IntegerProperty size() {
+        return new SimpleIntegerProperty(allPowerStations.size());
+    }
+
+    // footer methods
+    public ObservableList<CantonPM> getCantons() {
+        return FXCollections.observableArrayList(allPowerStations.stream()
+                .map(powerStationPM -> powerStationPM.getCanton())
+                .distinct()
+                .sorted(Comparator.comparing(Canton::getName))
+                .map(canton -> new CantonPM(canton, getTotalPower(canton), getPowerStationCount(canton)))
+                .collect(Collectors.toList()));
+    }
+
+    public double getTotalPower(Canton canton) {
+        return allPowerStations.stream()
+                .filter(powerStation -> powerStation.getCanton().equals(canton))
+                .collect(Collectors.summingDouble(PowerStationPM::getMaxPowerMw));
+    }
+
+    public int getPowerStationCount(Canton canton) {
+        return (int) allPowerStations.stream()
+                .filter(powerStation -> powerStation.getCanton().equals(canton))
+                .count();
+    }
+
+    public void updateAllCantons() {
+        allCantons.stream()
+                .forEach(cantonPM -> {
+                    cantonPM.setPowerStationCount(getPowerStationCount(cantonPM.getCanton()));
+                    cantonPM.setTotalPowerMw(getTotalPower(cantonPM.getCanton()));
+                });
+    }
+
+    public void setupValueChangedListeners() {
+        // selection changes are undoable
+        selectedIdProperty().addListener(propertyChangeListenerForUndoSupport);
+
+        allPowerStations.addListener((ListChangeListener<PowerStationPM>) event -> {
+            while (event.next()) {
+                if (event.wasUpdated() || event.wasRemoved() || event.wasAdded()) {
+                    updateAllCantons();
+                }
+            }
+        });
+    }
+
+    // getters and setters
     public ObservableList<PowerStationPM> getAllPowerStations() {
         return allPowerStations;
     }
@@ -250,7 +356,6 @@ public class RootPM {
         return selectedId;
     }
 
-
     public LanguageSwitcherPM getLanguageSwitcherPM() {
         return languageSwitcherPM;
     }
@@ -258,7 +363,7 @@ public class RootPM {
     public void setSelectedId(int selectedPowerStationId) {
         this.selectedId.set(selectedPowerStationId);
 
-        if (selectedPowerStationId == 0){
+        if (selectedPowerStationId == 0) {
             setLabelsEnabled(true);
             setDeleteEnabled(true);
         } else {
@@ -291,7 +396,7 @@ public class RootPM {
         this.deleteEnabled.set(deleteEnabled);
     }
 
-    public int getIndexOfPowerStation(int id){
+    public int getIndexOfPowerStation(int id) {
         return getAllPowerStations().indexOf(getPowerStation(id));
     }
 
@@ -318,120 +423,4 @@ public class RootPM {
     public void setRedoDisabled(boolean redoDisabled) {
         this.redoDisabled.set(redoDisabled);
     }
-
-    // overview methods
-    public void addPowerStation() {
-        String line[] = new String[]{
-                "999999",
-                "A",
-                "L",
-                "Rueras",
-                "GR",
-                "0.43",
-                "1.42",
-                "1979",
-                "1979",
-                "46.67133138",
-                "8.75072906",
-                "im Normalbetrieb",
-                "Aua da Milez",
-                "www.hydro.ch/images"};
-        PowerStationPM newItem = new PowerStationPM(line);
-        newItem.setId(getNewPowerStationID());
-        allPowerStations.add(newItem);
-        setSelectedId(newItem.getId());
-    }
-
-
-
-    public void removePowerStation() {
-        if (getSelectedId() != 0) {
-            allPowerStations.remove(allPowerStations.indexOf(getPowerStation(getSelectedId())));
-            setSelectedId(0);
-        }
-    }
-
-
-    public PowerStationPM getPowerStation(int id) {
-        return allPowerStations.stream()
-                .filter(powerStation -> powerStation.getId() == id)
-                .findFirst()
-                .orElse(null);
-    }
-
-    public CantonPM getCantonPM(Canton canton) {
-        return allCantons.stream()
-                .filter(cantonpm -> cantonpm.getCanton().getName().equals(canton.getName()))
-                .findFirst().orElse(null);
-    }
-
-
-    public int getFirstPowerStation() {
-        return allPowerStations.stream()
-                .map(powerStationPM -> powerStationPM.getId())
-                .findFirst()
-                .orElse(null);
-    }
-
-    public int getNewPowerStationID(){
-        int newID = allPowerStations.stream()
-                .mapToInt(powerStation -> powerStation.getId())
-                .reduce(Integer::max)
-                .getAsInt();
-
-        while (getPowerStation(newID) != null){
-            ++newID;
-        }
-
-        return newID;
-    }
-
-    public IntegerProperty size() {
-        return new SimpleIntegerProperty(allPowerStations.size());
-    }
-
-    // footer methods
-    public ObservableList<CantonPM> getCantons(){
-        return FXCollections.observableArrayList(allPowerStations.stream()
-                .map(powerStationPM -> powerStationPM.getCanton())
-                .distinct()
-                .sorted(Comparator.comparing(Canton::getName))
-                .map(canton -> new CantonPM(canton, getTotalPower(canton),getPowerStationCount(canton)))
-                .collect(Collectors.toList()));
-    }
-
-    public double getTotalPower(Canton canton) {
-        return allPowerStations.stream()
-                .filter(powerStation -> powerStation.getCanton().equals(canton))
-                .collect(Collectors.summingDouble(PowerStationPM::getMaxPowerMw));
-    }
-
-    public int getPowerStationCount(Canton canton) {
-        return (int) allPowerStations.stream()
-                .filter(powerStation -> powerStation.getCanton().equals(canton))
-                .count();
-    }
-
-    public void updateAllCantons(){
-        allCantons.stream()
-                .forEach(cantonPM -> {cantonPM.setPowerStationCount(getPowerStationCount(cantonPM.getCanton()));
-                    cantonPM.setTotalPowerMw(getTotalPower(cantonPM.getCanton()));} );
-    }
-
-    public void setupValueChangedListeners() {
-        // selection changes are undoable
-        selectedIdProperty().addListener(propertyChangeListenerForUndoSupport);
-
-        allPowerStations.addListener((ListChangeListener<PowerStationPM>) event ->{
-            while (event.next()) {
-                if (event.wasUpdated() || event.wasRemoved() || event.wasAdded()) {
-                    //Canton affectedCanton = allPowerStations.get(event.getFrom()).getCanton();
-                    // TODO: Nur betroffenen Kanton aktualisieren
-                    updateAllCantons();
-                }
-            }
-        });
-
-    }
-
 }

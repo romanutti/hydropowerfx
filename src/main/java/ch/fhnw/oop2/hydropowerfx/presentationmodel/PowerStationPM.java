@@ -17,12 +17,11 @@ public class PowerStationPM {
     private final DoubleProperty startOfOperationLast = new SimpleDoubleProperty();
     private final DoubleProperty latitude = new SimpleDoubleProperty();
     private final DoubleProperty longitude = new SimpleDoubleProperty();
-    // TODO: Attribut status als Enum?
     private final ObjectProperty<Status> status = new SimpleObjectProperty();
     private final StringProperty waterbodies = new SimpleStringProperty();
     private final StringProperty imageUrl = new SimpleStringProperty();
 
-    public PowerStationPM(){
+    private PowerStationPM() {
     }
 
     public PowerStationPM(String[] line) {
@@ -30,8 +29,7 @@ public class PowerStationPM {
         setName(line[1]);
         setType(Type.valueOf(line[2]));
         setSite(line[3]);
-        // Set empty cantons as "OTHERS"
-        setCanton( (line[4].length() != 2) ? Canton.OTHER :Canton.valueOf(line[4]));
+        setCanton((line[4].length() != 2) ? Canton.OTHER : Canton.valueOf(line[4])); // Sets empty cantons as "OTHERS"
         setMaxWaterVolume(Double.parseDouble(line[5]));
         setMaxPowerMw(Double.parseDouble(line[6]));
         setStartOfOperationFirst(Double.parseDouble(line[7]));
@@ -41,6 +39,28 @@ public class PowerStationPM {
         setStatus(defineStatus(line[11]));
         setWaterbodies(line[12]);
         setImageUrl(line[13]);
+    }
+
+    public static PowerStationPM getDefaultPowerStationPM() {
+        PowerStationPM defaultPowerStation = new PowerStationPM();
+
+        // set default values
+        defaultPowerStation.setId(99);
+        defaultPowerStation.setName("");
+        defaultPowerStation.setType(Type.L);
+        defaultPowerStation.setSite("");
+        defaultPowerStation.setCanton(Canton.OTHER);
+        defaultPowerStation.setMaxWaterVolume(0.0);
+        defaultPowerStation.setMaxPowerMw(0.0);
+        defaultPowerStation.setStartOfOperationFirst(0);
+        defaultPowerStation.setStartOfOperationLast(0);
+        defaultPowerStation.setLatitude(0);
+        defaultPowerStation.setLongitude(0);
+        defaultPowerStation.setStatus(Status.NORMAL);
+        defaultPowerStation.setWaterbodies("");
+        defaultPowerStation.setImageUrl("");
+
+        return defaultPowerStation;
     }
 
     public String infoAsLine(String delimiter) {
@@ -62,7 +82,27 @@ public class PowerStationPM {
         );
     }
 
-    //getters and setters
+    //TODO review, switch directly in read line???
+    public Status defineStatus(String status) {
+        Status result;
+        switch (status) {
+            case "im Normalbetrieb":
+                result = Status.NORMAL;
+                break;
+            case "im Bau":
+                result = Status.BAU;
+                break;
+            case "stillgelegt":
+                result = Status.STILL;
+                break;
+            default:
+                result = Status.NORMAL;
+                break;
+        }
+        return result;
+    }
+
+    // getters and setters
     public int getId() {
         return id.get();
     }
@@ -207,28 +247,6 @@ public class PowerStationPM {
         this.status.set(status);
     }
 
-    //TODO review, switch directly in read line???
-    public Status defineStatus(String status){
-        Status result;
-        switch (status) {
-            case "im Normalbetrieb":
-                result = Status.NORMAL;
-                break;
-            case "im Bau":
-                result = Status.BAU;
-                break;
-            case "stillgelegt":
-                result = Status.STILL;
-                break;
-            default:
-                result = Status.NORMAL;
-                break;
-        }
-        return result;
-    }
-
-
-
     public String getWaterbodies() {
         return waterbodies.get();
     }
@@ -251,5 +269,16 @@ public class PowerStationPM {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl.set(imageUrl);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof PowerStationPM) {
+            if (((PowerStationPM) obj).getId() == this.getId()) {
+                return true;
+            }
+        }
+        return false;
+
     }
 }

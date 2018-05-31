@@ -43,8 +43,6 @@ public class Overview extends VBox implements ViewMixin {
         // enable cell editing
         itemTable.setEditable(true);
         resultCountLabal = new Label();
-
-
     }
 
     private TableView<PowerStationPM> initializePowerStationTable() {
@@ -134,8 +132,6 @@ public class Overview extends VBox implements ViewMixin {
         //TODO: total labal to show visible/totalRows
         //resultCountLabal.textProperty().bind(Bindings.size((rootPM.size().asString()));
         resultCountLabal.textProperty().bind(Bindings.size((itemTable.getItems())).asString());
-
-
     }
 
     @Override
@@ -150,7 +146,7 @@ public class Overview extends VBox implements ViewMixin {
             int[] visibleRange = getVisibleRange(itemTable);
 
             if (!(visibleRange[0] <= selectedIndex && selectedIndex <= visibleRange[visibleRange.length - 1])) {
-                itemTable.scrollTo(rootPM.getPowerStation(selectedIndex));
+                itemTable.scrollTo(rootPM.getPowerStationProxy());
             }
 
         });
