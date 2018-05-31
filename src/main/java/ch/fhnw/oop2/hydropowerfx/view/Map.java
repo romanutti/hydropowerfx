@@ -69,6 +69,7 @@ public class Map extends HBox implements ViewMixin {
         PowerStationPM proxy = rootPM.getPowerStationProxy();
 
         // Refresh Image
+        // change of center
         proxy.siteProperty().addListener((observable, oldValue, newValue) -> {
             try {
                 URL url = new URL(getImageUrl(newValue, null, null));
@@ -79,14 +80,35 @@ public class Map extends HBox implements ViewMixin {
             }
 
         });
-        // TODO: Reresh image when coordinates change?
+        // change of latitude
+        proxy.latitudeProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                URL url = new URL(getImageUrl(null, newValue.toString(), null));
+                imageArea.setImage(new Image(url.toString()));
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+
+        });
+        // change of longitude
+        proxy.longitudeProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                URL url = new URL(getImageUrl(null, null, newValue.toString()));
+                imageArea.setImage(new Image(url.toString()));
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+
+        });
+        // TODO: Refresh image when coordinates change?
 
     }
 
     private String getImageUrl(String site, String latitude, String longitude) {
         PowerStationPM proxy = rootPM.getPowerStationProxy();
         String marker = "";
-
 
         site = (site == null) ? proxy.getSite() : site;
         latitude = (latitude == null) ? String.valueOf(proxy.getLatitude()) : latitude;
