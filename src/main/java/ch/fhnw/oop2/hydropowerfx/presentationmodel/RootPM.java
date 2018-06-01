@@ -321,9 +321,9 @@ public class RootPM {
     }
 
     public double getTotalPower(Canton canton) {
-        return allPowerStations.stream()
+        return round(allPowerStations.stream()
                 .filter(powerStation -> powerStation.getCanton().equals(canton))
-                .collect(Collectors.summingDouble(PowerStationPM::getMaxPowerMw));
+                .collect(Collectors.summingDouble(PowerStationPM::getMaxPowerMw)), 1);
     }
 
     public int getPowerStationCount(Canton canton) {
@@ -351,6 +351,11 @@ public class RootPM {
                 }
             }
         });
+    }
+
+    private static double round(double value, int precision) {
+        int scale = (int) Math.pow(10, precision);
+        return (double) Math.round(value * scale) / scale;
     }
 
     // getters and setters
