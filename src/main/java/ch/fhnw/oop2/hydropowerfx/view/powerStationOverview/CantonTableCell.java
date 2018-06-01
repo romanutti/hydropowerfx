@@ -15,29 +15,30 @@ import javafx.scene.image.ImageView;
 /**
  * @author Dieter Holz
  */
-class CantonTableCell extends TableCell<PowerStationPM, String> {
+class CantonTableCell extends TableCell<PowerStationPM, Canton> {
     private static final Map<String, Image> WAPPEN = new HashMap<>();
 
     private static final Insets INSETS = new Insets(1, 8, 1, 5);
 
     @Override
-    protected void updateItem(String item, boolean empty) {
+    protected void updateItem(Canton item, boolean empty) {
         setText("");
         setGraphic(null);
         if (!empty) {
+            String canton = item.getName();
             Image img = WAPPEN.get(item);
 
             //TODO Replace Canton.getCantom(Item) with binding [Replace whole IF  with a binding]
             if (img == null) {
-                img = new Image(getClass().getResource("wappen_klein/" + Canton.getCanton(item) + ".png")
+                img = new Image(getClass().getResource("wappen_klein/" + Canton.getCanton(canton) + ".png")
                         .toExternalForm(), 18, 18, true, true, true);
-                WAPPEN.put(item, img);
+                WAPPEN.put(canton, img);
             }
 
             ImageView imageView = new ImageView(img);
 
             setGraphic(imageView);
-            setTooltip(new Tooltip(item));
+            setTooltip(new Tooltip(canton));
             setAlignment(Pos.CENTER);
             setPadding(INSETS);
         }

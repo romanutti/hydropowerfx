@@ -1,5 +1,6 @@
 package ch.fhnw.oop2.hydropowerfx.view.powerStationOverview;
 
+import ch.fhnw.oop2.hydropowerfx.presentationmodel.Canton;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.PowerStationPM;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 import ch.fhnw.oop2.hydropowerfx.view.ViewMixin;
@@ -57,12 +58,9 @@ public class Overview extends VBox implements ViewMixin {
                 ).setName(t.getNewValue())
         );
 
-        TableColumn<PowerStationPM, String> emblemColumn = new TableColumn<>();
-        // TODO: Kann hier einfach new SimpleStringProperty gemacht werden?
-        emblemColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getCanton().getName()));
+        TableColumn<PowerStationPM, Canton> emblemColumn = new TableColumn<>();
+        emblemColumn.setCellValueFactory(cell -> cell.getValue().cantonProperty());
         emblemColumn.setCellFactory(canton -> new CantonTableCell());
-
-        // TODO: cell editing for canton?
 
         TableColumn<PowerStationPM, Number> maxPowerColumn = new TableColumn<>("Power");
         maxPowerColumn.setCellValueFactory(cell -> cell.getValue().maxPowerMwProperty());
