@@ -49,22 +49,28 @@ public class Footer extends VBox implements ViewMixin {
 
     @Override
     public void layoutControls() {
-        setPrefWidth(700);
-        setMinWidth(700);
-        setPrefHeight(180);
-        setMaxHeight(180);
 
-        getTableColumnByName("cantonColumn").setMinWidth(300);
+
+        getTableColumnByName("cantonColumn").setPrefWidth(300);
+        getTableColumnByName("cantonColumn").setMinWidth(100);
         getTableColumnByName("cantonColumn").setMaxWidth(300);
 
-        getTableColumnByName("totalPowerColumn").setMinWidth(200);
+        getTableColumnByName("totalPowerColumn").setPrefWidth(200);
+        getTableColumnByName("totalPowerColumn").setMinWidth(50);
         getTableColumnByName("totalPowerColumn").setMaxWidth(200);
 
-        getTableColumnByName("powerStationCountColumn").setMinWidth(200);
+        getTableColumnByName("powerStationCountColumn").setPrefWidth(200);
+        getTableColumnByName("powerStationCountColumn").setMinWidth(50);
         getTableColumnByName("powerStationCountColumn").setMaxWidth(200);
 
+        itemTable.setMinWidth(USE_COMPUTED_SIZE);
         getChildren().addAll(getItemTable());
         setVgrow(getItemTable(), Priority.ALWAYS);
+
+        setPrefWidth(550);
+        setPrefHeight(220);
+
+
     }
 
     @Override

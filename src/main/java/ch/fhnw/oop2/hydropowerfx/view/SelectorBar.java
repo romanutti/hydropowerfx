@@ -57,9 +57,8 @@ public class SelectorBar extends HBox implements ViewMixin {
         deleteButton.setMaxWidth(Double.MAX_VALUE);
         undoButton.setMaxWidth(Double.MAX_VALUE);
         redoButton.setMaxWidth(Double.MAX_VALUE);
-
         searchField.setMaxWidth(Double.MAX_VALUE);
-        searchField.setAlignment(Pos.CENTER_RIGHT);
+
 
         // margin
         setMargin(saveButton, new Insets(1));

@@ -11,14 +11,14 @@ import javafx.scene.layout.VBox;
 public class ApplicationUI extends BorderPane implements ViewMixin {
     private final RootPM model;
 
-    private SplitPane spVerticalMain;
-    private SplitPane spHorizontalCenter;
+    private SplitPane verticalMainSP;
+    private SplitPane horizontalMainCenterSP;
     private SelectorBar selectorbar;
     private Overview overview;
     private VBox center;
     private Header header;
     private Editor editor;
-    private HBox bottom;
+    private SplitPane horizontalMainBottomSP;
     private Map map;
     private Footer footer;
 
@@ -35,14 +35,14 @@ public class ApplicationUI extends BorderPane implements ViewMixin {
 
     @Override
     public void initializeControls() {
-        spVerticalMain = new SplitPane();
-        spHorizontalCenter = new SplitPane();
+        verticalMainSP = new SplitPane();
+        horizontalMainCenterSP = new SplitPane();
+        horizontalMainBottomSP = new SplitPane();
         selectorbar = new SelectorBar(model);
         overview = new Overview(model);
         center = new VBox();
         header = new Header(model);
         editor = new Editor(model);
-        bottom = new HBox();
         map = new Map(model);
         footer = new Footer(model);
         }
@@ -50,13 +50,14 @@ public class ApplicationUI extends BorderPane implements ViewMixin {
     @Override
     public void layoutControls() {
         center.getChildren().addAll(header, editor);
-        spHorizontalCenter.getItems().addAll(overview,center);
-        bottom.getChildren().addAll(footer, map);
-        spVerticalMain.getItems().addAll(spHorizontalCenter,bottom);
-        spVerticalMain.setOrientation(Orientation.VERTICAL);
+        horizontalMainCenterSP.getItems().addAll(overview,center);
+        horizontalMainBottomSP.getItems().addAll(footer, map);
+        verticalMainSP.getItems().addAll(horizontalMainCenterSP, horizontalMainBottomSP);
+        verticalMainSP.setOrientation(Orientation.VERTICAL);
+
 
         setTop(selectorbar);
-        setCenter(spVerticalMain);
+        setCenter(verticalMainSP);
         setMinWidth(USE_PREF_SIZE);
         setMinHeight(USE_PREF_SIZE);
     }

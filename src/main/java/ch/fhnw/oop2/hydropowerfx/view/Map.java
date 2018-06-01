@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import javafx.util.converter.NumberStringConverter;
@@ -42,26 +43,26 @@ public class Map extends HBox implements ViewMixin {
     public void initializeControls() {
         // image area
         imageArea = new ImageView();
+    }
 
-        imageArea.setFitHeight(150);
+    @Override
+    public void layoutControls() {
+
+        // image area
+        imageArea.setFitHeight(200);
         imageArea.setPreserveRatio(true);
+        imageArea.setSmooth(false);
 
         // padding
         setPadding(new Insets(5));
         setSpacing(5);
 
         getChildren().addAll(imageArea);
-
-    }
-
-    @Override
-    public void layoutControls() {
-        // TODO: Dinge von oben hierhin?
-
-        setPrefWidth(200);
-        setMaxWidth(100);
-        setPrefHeight(200);
-        setMaxHeight(200);
+        setPrefWidth(220);
+        setMaxWidth(220);
+        setPrefHeight(215);
+        setMaxHeight(215);
+        setHgrow(imageArea,Priority.ALWAYS);
     }
 
     @Override
@@ -103,6 +104,7 @@ public class Map extends HBox implements ViewMixin {
 
         });
         // TODO: Refresh image when coordinates change?
+        // TODO: Overkill? :)
 
     }
 

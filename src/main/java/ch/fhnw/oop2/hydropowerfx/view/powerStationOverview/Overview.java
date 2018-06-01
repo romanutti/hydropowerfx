@@ -30,6 +30,8 @@ public class Overview extends VBox implements ViewMixin {
         init();
     }
 
+
+
     @Override
     public void initializeSelf() {
         getStyleClass().add("overview");
@@ -94,16 +96,20 @@ public class Overview extends VBox implements ViewMixin {
     public void layoutControls() {
 
         setMinWidth(300);
-        setMaxWidth(405);
+        setMaxWidth(500);
 
-        getTableColumnByName("Name").setMinWidth(130);
-        getTableColumnByName("Name").setMaxWidth(150);
+        getTableColumnByName("Name").setMinWidth(150);
+        getTableColumnByName("Name").setMaxWidth(200);
+
+        // emblem Column formatting
+        getTableColumnByName("").setMinWidth(22);
+        getTableColumnByName("").setMaxWidth(22);
 
         getTableColumnByName("Power").setMinWidth(60);
-        getTableColumnByName("Power").setMaxWidth(150);
+        getTableColumnByName("Power").setMaxWidth(100);
 
         getTableColumnByName("StartOfOperationFirst").setMinWidth(60);
-        getTableColumnByName("StartOfOperationFirst").setMaxWidth(150);
+        getTableColumnByName("StartOfOperationFirst").setMaxWidth(120);
 
         itemTable.setMinWidth(USE_COMPUTED_SIZE);
 
