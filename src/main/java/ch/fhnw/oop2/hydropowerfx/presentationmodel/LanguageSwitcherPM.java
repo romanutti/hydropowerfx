@@ -15,8 +15,8 @@ public class LanguageSwitcherPM {
 
     public enum Lang {
         //TODO if not possible to update choicebox list then reduce to Deutsch / English
-        DE("Deutsch", "German"),
-        EN("Englisch", "English");
+        DE("DE", "DE"),
+        EN("EN", "EN");
 
         private final String germanLangLabel;
         private final String englishLangLabel;

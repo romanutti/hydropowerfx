@@ -118,6 +118,9 @@ public class SelectorBar extends HBox implements ViewMixin {
 
         getChildren().addAll(saveButton, createButton, deleteButton, undoButton, redoButton, searchField, languageChoiceBox);
 
+        // Multilanguage-Support
+        languageChoiceBox.setItems(FXCollections.observableArrayList(Lang.values()));
+        languageChoiceBox.getSelectionModel().select(rootPM.getLanguageSwitcherPM().getCurrentLanguage());
     }
 
     @Override
@@ -174,24 +177,7 @@ public class SelectorBar extends HBox implements ViewMixin {
 
     @Override
     public void setupValueChangedListeners() {
-        // Lang Enum
-        languageChoiceBox.setItems(FXCollections.observableArrayList(Lang.values()));
-
-        languageChoiceBox.getSelectionModel().select(rootPM.getLanguageSwitcherPM().getCurrentLanguage());
-        //TODO Implement list update in choicebox is that even possible?
-
-        languageChoiceBox.setConverter(new StringConverter<Lang>() {
-            @Override
-            public String toString(Lang object) {
-                return object.getLangText(rootPM.getLanguageSwitcherPM().getCurrentLanguage());
-            }
-
-            //TODO retun null valid?
-            @Override
-            public Lang fromString(String string) {
-                return null;
-            }});
-
+        // Multilanguage-Support
         languageChoiceBox.getSelectionModel().selectedItemProperty().addListener((ChangeListener<Lang>) (observable, oldValue, newValue) -> {
             rootPM.getLanguageSwitcherPM().setLanguage(newValue);
         });
