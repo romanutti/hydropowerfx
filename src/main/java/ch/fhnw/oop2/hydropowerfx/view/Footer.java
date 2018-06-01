@@ -8,7 +8,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
-public class Footer extends VBox implements ViewMixin{
+public class Footer extends VBox implements ViewMixin {
     private final RootPM rootPM;
 
     private TableView<CantonPM> itemTable;
@@ -35,7 +35,7 @@ public class Footer extends VBox implements ViewMixin{
         TableColumn<CantonPM, String> nameColumn = new TableColumn<>("canton");
         nameColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getCanton().getName()));
 
-        TableColumn<CantonPM, Number> maxPowerColumn = new TableColumn<>("maxPowerColumn");
+        TableColumn<CantonPM, String> maxPowerColumn = new TableColumn<>("maxPowerColumn");
         maxPowerColumn.setCellValueFactory(cell -> cell.getValue().totalPowerMwProperty());
 
         TableColumn<CantonPM, Number> powerStationCountColumn = new TableColumn<>("powerStationCount");
@@ -64,7 +64,7 @@ public class Footer extends VBox implements ViewMixin{
         getTableColumnByName("powerStationCount").setMaxWidth(200);
 
         getChildren().addAll(getItemTable());
-        setVgrow(getItemTable(),Priority.ALWAYS);
+        setVgrow(getItemTable(), Priority.ALWAYS);
     }
 
     @Override

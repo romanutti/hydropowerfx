@@ -5,12 +5,12 @@ import javafx.beans.property.*;
 public class CantonPM {
 
     private final ObjectProperty<Canton> canton = new SimpleObjectProperty<>();
-    private final DoubleProperty totalPowerMw = new SimpleDoubleProperty();
+    private final StringProperty totalPowerMw = new SimpleStringProperty();
     private final IntegerProperty powerStationCount = new SimpleIntegerProperty();
 
-    public CantonPM(Canton canton, Double totalPowerMw, Integer powerStationCount) {
+    public CantonPM(Canton canton, String totalPowerMw, Integer powerStationCount) {
         this.canton.setValue(canton);
-        this.totalPowerMw.setValue(totalPowerMw);
+        this.totalPowerMw.setValue(totalPowerMw + " MW");
         this.powerStationCount.setValue(powerStationCount);
     }
 
@@ -26,16 +26,16 @@ public class CantonPM {
         this.canton.set(canton);
     }
 
-    public double getTotalPowerMw() {
+    public String getTotalPowerMw() {
         return totalPowerMw.get();
     }
 
-    public DoubleProperty totalPowerMwProperty() {
+    public StringProperty totalPowerMwProperty() {
         return totalPowerMw;
     }
 
-    public void setTotalPowerMw(double totalPowerMw) {
-        this.totalPowerMw.set(totalPowerMw);
+    public void setTotalPowerMw(String totalPowerMw) {
+        this.totalPowerMw.set(totalPowerMw + " MW");
     }
 
     public int getPowerStationCount() {
