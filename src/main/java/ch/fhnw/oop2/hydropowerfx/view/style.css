@@ -30,6 +30,7 @@
 
 .selectorbar .text-field {
     -fx-text-fill: #ffffff;
+    -fx-prompt-text-fill: #ffffff; /* colour of prompted default text */
     -fx-background-color: #a9a9a9 , #39A67F , #39A67F;
     -fx-background-insets: 0 -1 -1 -1, 0 0 0 0, 0 -1 3 -1;
 }

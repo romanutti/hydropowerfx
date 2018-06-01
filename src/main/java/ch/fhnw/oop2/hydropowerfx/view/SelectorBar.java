@@ -46,7 +46,7 @@ public class SelectorBar extends HBox implements ViewMixin {
         undoButton = new Button();
         redoButton = new Button();
 
-        searchField = new TextField("search");
+        searchField = new TextField();
         languageChoiceBox = new ChoiceBox();
     }
 
@@ -199,6 +199,10 @@ public class SelectorBar extends HBox implements ViewMixin {
 
     @Override
     public void setupBindings() {
+        // multilanguage support
+        searchField.promptTextProperty().bind(rootPM.getLanguageSwitcherPM().searchTextfieldTextProperty());
+
+        // enable/disable buttons
         deleteButton.disableProperty().bind(rootPM.deleteEnabledProperty()); //TODO: Für weitere Buttons umsetzen
         undoButton.disableProperty().bind(rootPM.undoDisabledProperty());
         redoButton.disableProperty().bind(rootPM.redoDisabledProperty());
