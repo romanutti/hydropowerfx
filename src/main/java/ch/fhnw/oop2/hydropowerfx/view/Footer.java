@@ -32,13 +32,13 @@ public class Footer extends VBox implements ViewMixin {
     private TableView<CantonPM> initializeCantonTable() {
         TableView<CantonPM> tableView = new TableView<>(rootPM.getAllCantons());
 
-        TableColumn<CantonPM, String> nameColumn = new TableColumn<>("canton");
+        TableColumn<CantonPM, String> nameColumn = new TableColumn<>("cantonColumn");
         nameColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getCanton().getName()));
 
-        TableColumn<CantonPM, String> maxPowerColumn = new TableColumn<>("maxPowerColumn");
+        TableColumn<CantonPM, String> maxPowerColumn = new TableColumn<>("totalPowerColumn");
         maxPowerColumn.setCellValueFactory(cell -> cell.getValue().totalPowerMwProperty());
 
-        TableColumn<CantonPM, Number> powerStationCountColumn = new TableColumn<>("powerStationCount");
+        TableColumn<CantonPM, Number> powerStationCountColumn = new TableColumn<>("powerStationCountColumn");
         powerStationCountColumn.setCellValueFactory(cell -> cell.getValue().powerStationCountProperty());
 
         tableView.getColumns().addAll(nameColumn, maxPowerColumn, powerStationCountColumn);
@@ -54,14 +54,14 @@ public class Footer extends VBox implements ViewMixin {
         setPrefHeight(180);
         setMaxHeight(180);
 
-        getTableColumnByName("canton").setMinWidth(300);
-        getTableColumnByName("canton").setMaxWidth(300);
+        getTableColumnByName("cantonColumn").setMinWidth(300);
+        getTableColumnByName("cantonColumn").setMaxWidth(300);
 
-        getTableColumnByName("maxPowerColumn").setMinWidth(200);
-        getTableColumnByName("maxPowerColumn").setMaxWidth(200);
+        getTableColumnByName("totalPowerColumn").setMinWidth(200);
+        getTableColumnByName("totalPowerColumn").setMaxWidth(200);
 
-        getTableColumnByName("powerStationCount").setMinWidth(200);
-        getTableColumnByName("powerStationCount").setMaxWidth(200);
+        getTableColumnByName("powerStationCountColumn").setMinWidth(200);
+        getTableColumnByName("powerStationCountColumn").setMaxWidth(200);
 
         getChildren().addAll(getItemTable());
         setVgrow(getItemTable(), Priority.ALWAYS);
@@ -69,6 +69,11 @@ public class Footer extends VBox implements ViewMixin {
 
     @Override
     public void setupBindings() {
+        // Language Switcher
+        getTableColumnByName("cantonColumn").textProperty().bind(rootPM.getLanguageSwitcherPM().cantonColumnTextProperty());
+        getTableColumnByName("totalPowerColumn").textProperty().bind(rootPM.getLanguageSwitcherPM().totalPowerMwColumnTextProperty());
+        getTableColumnByName("powerStationCountColumn").textProperty().bind(rootPM.getLanguageSwitcherPM().powerStationCountColumnTextProperty());
+
     }
 
     @Override

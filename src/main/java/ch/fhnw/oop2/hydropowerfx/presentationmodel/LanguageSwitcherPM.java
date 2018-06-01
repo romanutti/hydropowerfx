@@ -15,16 +15,17 @@ public class LanguageSwitcherPM {
 
     public enum Lang {
         //TODO if not possible to update choicebox list then reduce to Deutsch / English
-        DE("Deutsch","German"),
-        EN("Englisch","English");
+        DE("Deutsch", "German"),
+        EN("Englisch", "English");
 
         private final String germanLangLabel;
         private final String englishLangLabel;
 
-        Lang(String germanLabel,String englishLabel){
+        Lang(String germanLabel, String englishLabel) {
             this.germanLangLabel = germanLabel;
             this.englishLangLabel = englishLabel;
         }
+
         public String getGermanLangLabel() {
             return germanLangLabel;
         }
@@ -35,8 +36,8 @@ public class LanguageSwitcherPM {
 
 
         //TODO Implement list update in choicebox
-        public String[] getLangStrings(){
-            String[] langStringArray = Arrays.copyOf(values(),values().length,String[].class);
+        public String[] getLangStrings() {
+            String[] langStringArray = Arrays.copyOf(values(), values().length, String[].class);
             return langStringArray;
         }
 
@@ -54,7 +55,7 @@ public class LanguageSwitcherPM {
 
 
     public enum MultiLanguageText {
-        WINDOW_TITLE("AquaPowerFX Wasserkraftwerke der Schweiz","AquaPowerFX hydroelectric power stations of Switzerland"),
+        WINDOW_TITLE("AquaPowerFX Wasserkraftwerke der Schweiz", "AquaPowerFX hydroelectric power stations of Switzerland"),
         SEARCH_TEXTFIELD_TEXT("suchen", "search"),
         NAME_LABEL_TEXT("Name", "Name"),
         TYPE_LABEL_TEXT("Typ", "Type"),
@@ -68,7 +69,10 @@ public class LanguageSwitcherPM {
         LONGITUDE_LABEL_TEXT("Längengrad", "Longitude"),
         STATUS_LABEL_TEXT("Status", "Status"),
         WATERBODIES_LABEL_TEXT("Genutze Gewässer", "Waterbodies"),
-        IMAGEURL_LABEL_TEXT("Image Url", "Image Url");
+        IMAGEURL_LABEL_TEXT("Image Url", "Image Url"),
+        CANTON_COLUMN_TEXT("Kanton", "Canton"),
+        TOTALPOWERMW_COLUMN_TEXT("Leistung total", "Total power"),
+        POWERSTATIONCOUNT_COLUMN_TEXT("Anzahl Kraftwerke", "Number of powerstations");
 
         private final String englishLabel;
         private final String germanLabel;
@@ -113,6 +117,9 @@ public class LanguageSwitcherPM {
     private final StringProperty statusLabelText = new SimpleStringProperty();
     private final StringProperty waterbodiesLabelText = new SimpleStringProperty();
     private final StringProperty imageUrlLabelText = new SimpleStringProperty();
+    private final StringProperty cantonColumnText = new SimpleStringProperty();
+    private final StringProperty totalPowerMwColumnText = new SimpleStringProperty();
+    private final StringProperty powerStationCountColumnText = new SimpleStringProperty();
 
     private final StringProperty germanLangLabel = new SimpleStringProperty();
     private final StringProperty englishLangLabel = new SimpleStringProperty();
@@ -140,6 +147,9 @@ public class LanguageSwitcherPM {
         setStatusLabelText(STATUS_LABEL_TEXT.getText(lang));
         setWaterbodiesLabelText(WATERBODIES_LABEL_TEXT.getText(lang));
         setImageUrlLabelText(IMAGEURL_LABEL_TEXT.getText(lang));
+        setCantonColumnText(CANTON_COLUMN_TEXT.getText(lang));
+        setTotalPowerMwColumnText(TOTALPOWERMW_COLUMN_TEXT.getText(lang));
+        setPowerStationCountColumnText(POWERSTATIONCOUNT_COLUMN_TEXT.getText(lang));
 
         setEnglishLangLabel(EN.getLangText(lang));
         setGermanLangLabel(DE.getLangText(lang));
@@ -333,6 +343,42 @@ public class LanguageSwitcherPM {
 
     public void setImageUrlLabelText(String imageUrlLabelText) {
         this.imageUrlLabelText.set(imageUrlLabelText);
+    }
+
+    public String getCantonColumnText() {
+        return cantonColumnText.get();
+    }
+
+    public StringProperty cantonColumnTextProperty() {
+        return cantonColumnText;
+    }
+
+    public void setCantonColumnText(String cantonColumnText) {
+        this.cantonColumnText.set(cantonColumnText);
+    }
+
+    public String getTotalPowerMwColumnText() {
+        return totalPowerMwColumnText.get();
+    }
+
+    public StringProperty totalPowerMwColumnTextProperty() {
+        return totalPowerMwColumnText;
+    }
+
+    public void setTotalPowerMwColumnText(String totalPowerMwColumnText) {
+        this.totalPowerMwColumnText.set(totalPowerMwColumnText);
+    }
+
+    public String getPowerStationCountColumnText() {
+        return powerStationCountColumnText.get();
+    }
+
+    public StringProperty powerStationCountColumnTextProperty() {
+        return powerStationCountColumnText;
+    }
+
+    public void setPowerStationCountColumnText(String powerStationCountColumnText) {
+        this.powerStationCountColumnText.set(powerStationCountColumnText);
     }
 
     public String getGermanLangLabel() {
