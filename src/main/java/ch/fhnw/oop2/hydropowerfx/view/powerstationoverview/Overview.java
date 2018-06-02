@@ -1,11 +1,10 @@
-package ch.fhnw.oop2.hydropowerfx.view.powerStationOverview;
+package ch.fhnw.oop2.hydropowerfx.view.powerstationoverview;
 
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.Canton;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.PowerStationPM;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 import ch.fhnw.oop2.hydropowerfx.view.ViewMixin;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;

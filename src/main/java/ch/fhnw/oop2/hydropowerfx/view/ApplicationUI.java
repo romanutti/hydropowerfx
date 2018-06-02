@@ -1,11 +1,10 @@
 package ch.fhnw.oop2.hydropowerfx.view;
 
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
-import ch.fhnw.oop2.hydropowerfx.view.powerStationOverview.Overview;
+import ch.fhnw.oop2.hydropowerfx.view.powerstationoverview.Overview;
 import javafx.geometry.Orientation;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class ApplicationUI extends BorderPane implements ViewMixin {
