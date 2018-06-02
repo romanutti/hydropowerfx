@@ -57,7 +57,6 @@ public class ApplicationUI extends BorderPane implements ViewMixin {
         setTop(selectorbar);
         setCenter(verticalMainSP);
         setMinWidth(USE_PREF_SIZE);
-        setMinHeight(USE_PREF_SIZE);
     }
 
     @Override

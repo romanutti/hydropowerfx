@@ -95,7 +95,7 @@ public class Editor extends GridPane implements ViewMixin {
     @Override
     public void layoutControls() {
 
-        setMinWidth(USE_PREF_SIZE);
+        //setMinWidth(USE_PREF_SIZE);
         // Set horizontal gap
         setHgap(10);
         // Set vertical gap
