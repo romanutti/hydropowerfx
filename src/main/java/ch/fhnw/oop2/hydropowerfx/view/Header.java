@@ -82,12 +82,9 @@ public class Header extends HBox implements ViewMixin {
         titleLabel.textProperty().bind(proxy.nameProperty());
 
         // Name
-        nameLabel.textProperty().bind(proxy.nameProperty());
+        nameLabel.textProperty().bind(Bindings.concat(proxy.nameProperty(),", ", proxy.cantonProperty()));
 
         // Power
-
-
-
         powerLabel.textProperty().bind(Bindings.concat(
                 Bindings.selectString(proxy.maxWaterVolumeProperty()),
                 " MW")
