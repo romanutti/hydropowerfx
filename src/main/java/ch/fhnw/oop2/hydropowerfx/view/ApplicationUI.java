@@ -54,7 +54,6 @@ public class ApplicationUI extends BorderPane implements ViewMixin {
         verticalMainSP.getItems().addAll(horizontalMainCenterSP, horizontalMainBottomSP);
         verticalMainSP.setOrientation(Orientation.VERTICAL);
 
-
         setTop(selectorbar);
         setCenter(verticalMainSP);
         setMinWidth(USE_PREF_SIZE);

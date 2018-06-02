@@ -97,6 +97,9 @@ public class Overview extends VBox implements ViewMixin {
         setMinWidth(300);
         setMaxWidth(500);
 
+        setMinHeight(100);
+        setMaxHeight(500);
+
         getTableColumnByName("Name").setMinWidth(150);
         getTableColumnByName("Name").setMaxWidth(200);
 
