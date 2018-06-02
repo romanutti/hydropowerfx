@@ -4,21 +4,23 @@ import ch.fhnw.oop2.hydropowerfx.presentationmodel.LanguageSwitcherPM.*;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
+import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.TextField;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
 import javafx.util.StringConverter;
 
-public class SelectorBar extends HBox implements ViewMixin {
+public class SelectorBar extends BorderPane implements ViewMixin {
 
     private final RootPM rootPM;
 
+    private HBox titleArea;
+    private ImageView imageArea;
+    private Label titleLabel;
+    private GridPane controlBar;
     private Button saveButton;
     private Button createButton;
     private Button deleteButton;
@@ -40,6 +42,8 @@ public class SelectorBar extends HBox implements ViewMixin {
 
     @Override
     public void initializeControls() {
+        titleArea = new HBox();
+        controlBar = new GridPane();
         saveButton = new Button();
         createButton = new Button();
         deleteButton = new Button();
@@ -48,6 +52,9 @@ public class SelectorBar extends HBox implements ViewMixin {
 
         searchField = new TextField();
         languageChoiceBox = new ChoiceBox();
+
+        titleLabel = new Label("title");
+        titleLabel.setId("titleLabel");
     }
 
     @Override
@@ -57,7 +64,7 @@ public class SelectorBar extends HBox implements ViewMixin {
         deleteButton.setMaxWidth(Double.MAX_VALUE);
         undoButton.setMaxWidth(Double.MAX_VALUE);
         redoButton.setMaxWidth(Double.MAX_VALUE);
-        searchField.setMaxWidth(Double.MAX_VALUE);
+        searchField.setMaxWidth(170);
 
 
         // margin
@@ -71,7 +78,6 @@ public class SelectorBar extends HBox implements ViewMixin {
 
         // padding
         setPadding(new Insets(5));
-        setSpacing(5);
 
         // button images
         Image imageSave = new Image("/images/save_icon.png");
@@ -115,7 +121,38 @@ public class SelectorBar extends HBox implements ViewMixin {
         undoButton.setGraphic(imageUndoArea);
         redoButton.setGraphic(imageRedoArea);
 
-        getChildren().addAll(saveButton, createButton, deleteButton, undoButton, redoButton, searchField, languageChoiceBox);
+        ColumnConstraints cc = new ColumnConstraints();
+        ColumnConstraints ccFix = new ColumnConstraints();
+        cc.setHgrow(Priority.ALWAYS);
+        ccFix.setHgrow(Priority.NEVER);
+        controlBar.getColumnConstraints().addAll(ccFix, ccFix, ccFix, ccFix, ccFix, cc);
+
+        controlBar.add(saveButton, 0, 0);
+        controlBar.add(createButton, 1, 0);
+        controlBar.add(deleteButton, 2, 0);
+        controlBar.add(undoButton, 3, 0);
+        controlBar.add(redoButton, 4, 0);
+        controlBar.add(searchField, 5, 0,110,1);
+        GridPane.setHalignment(searchField, HPos.RIGHT);
+
+        controlBar.setPadding(new Insets(0,18,0,17));
+        controlBar.setHgap(5);
+
+        // image area
+        imageArea = new ImageView();
+        Image image = new Image("/images/drop_icon.png");
+        imageArea.setImage(image);
+
+        imageArea.setFitHeight(30);
+        imageArea.setPreserveRatio(true);
+
+        titleArea.getChildren().addAll(imageArea, titleLabel);
+        titleArea.setAlignment(Pos.CENTER_LEFT);
+        titleArea.setPadding(new Insets(10,0,50,12));
+
+        setBottom(controlBar);
+        setCenter(titleArea);
+        setRight(languageChoiceBox);
 
         // Multilanguage-Support
         languageChoiceBox.setItems(FXCollections.observableArrayList(Lang.values()));
@@ -185,6 +222,7 @@ public class SelectorBar extends HBox implements ViewMixin {
     @Override
     public void setupBindings() {
         // multilanguage support
+        titleLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().applicationNameProperty());
         searchField.promptTextProperty().bind(rootPM.getLanguageSwitcherPM().searchTextfieldTextProperty());
 
         // enable/disable buttons

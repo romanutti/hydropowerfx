@@ -55,7 +55,8 @@ public class LanguageSwitcherPM {
 
 
     public enum MultiLanguageText {
-        WINDOW_TITLE("AquaPowerFX Wasserkraftwerke der Schweiz", "AquaPowerFX hydroelectric power stations of Switzerland"),
+        WINDOW_TITLE("HydroPowerFX Wasserkraftwerke der Schweiz", "HydroPowerFX hydroelectric power stations of Switzerland"),
+        APPLICATION_NAME("HydroPowerFX", "HydroPowerFX"),
         SEARCH_TEXTFIELD_TEXT("suchen", "search"),
         NAME_LABEL_TEXT("Name", "Name"),
         TYPE_LABEL_TEXT("Typ", "Type"),
@@ -103,6 +104,7 @@ public class LanguageSwitcherPM {
     }
 
     private final StringProperty applicationTitle = new SimpleStringProperty();
+    private final StringProperty applicationName = new SimpleStringProperty();
     private final StringProperty searchTextfieldText = new SimpleStringProperty();
     private final StringProperty nameLabelText = new SimpleStringProperty();
     private final StringProperty typeLabelText = new SimpleStringProperty();
@@ -133,6 +135,7 @@ public class LanguageSwitcherPM {
     public void setLanguage(Lang lang) {
         setCurrentLanguage(lang);
         setApplicationTitle(WINDOW_TITLE.getText(lang));
+        setApplicationName(APPLICATION_NAME.getText(lang));
         setSearchTextfieldText(SEARCH_TEXTFIELD_TEXT.getText(lang));
         setNameLabelText(NAME_LABEL_TEXT.getText(lang));
         setTypeLabelText(TYPE_LABEL_TEXT.getText(lang));
@@ -175,6 +178,18 @@ public class LanguageSwitcherPM {
 
     public void setApplicationTitle(String applicationTitle) {
         this.applicationTitle.set(applicationTitle);
+    }
+
+    public String getApplicationName() {
+        return applicationName.get();
+    }
+
+    public StringProperty applicationNameProperty() {
+        return applicationName;
+    }
+
+    public void setApplicationName(String applicationName) {
+        this.applicationName.set(applicationName);
     }
 
     public String getSearchTextfieldText() {
