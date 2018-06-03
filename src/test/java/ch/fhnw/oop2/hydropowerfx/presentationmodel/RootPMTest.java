@@ -53,7 +53,7 @@ class RootPMTest {
 
         //then
         assertTrue(allPowerStations.size() > 1);
-        assertEquals(505110, allPowerStations.get(0).getId());
+        assertEquals(203000, allPowerStations.get(0).getId());
         assertEquals(301250, allPowerStations.get(allPowerStations.size() - 1).getId());
     }
 
@@ -116,14 +116,13 @@ class RootPMTest {
 
     @Test
     void addPowerStation() {
-        //TODO
         //before
         String line[] = new String[]{"999999", "Val Giuf", "L", "Rueras", "BS", "0.43", "1.42", "1979", "1979", "46.4374", "8.75072906", "im Normalbetrieb", "Aua da Tefal", "www.hydro.ch/images"};
         PowerStationPM ps = new PowerStationPM(line);
         int size = sut.getAllPowerStations().size();
 
         //when
-        //sut.addPowerStation(ps);
+        sut.getAllPowerStations().add(ps);
 
         //then
         assertTrue(sut.getAllPowerStations().contains(ps));
@@ -136,10 +135,11 @@ class RootPMTest {
         String line[] = new String[]{"999999", "Val Giuf", "L", "Rueras", "BS", "0.43", "1.42", "1979", "1979", "46.4374", "8.75072906", "im Normalbetrieb", "Aua da Tefal", "www.hydro.ch/images"};
         PowerStationPM ps = new PowerStationPM(line);
         int size = sut.getAllPowerStations().size();
-        //sut.addPowerStation(ps);
+        sut.getAllPowerStations().add(ps);
 
         //when
-        //sut.removePowerStation(ps);
+        sut.setSelectedId(ps.getId());
+        sut.removePowerStation();
 
         //then
         assertFalse(sut.getAllPowerStations().contains(ps));
@@ -148,7 +148,6 @@ class RootPMTest {
 
     @Test
     void getCurrentPowerStation() {
-        //TODO
         //given
         String line[] = new String[]{
                 "999999",
@@ -167,7 +166,7 @@ class RootPMTest {
                 "www.hydro.ch/images"};
         PowerStationPM ps = new PowerStationPM(line);
         int index = ps.getId();
-        sut.addPowerStation();
+        sut.getAllPowerStations().add(ps);
         sut.setSelectedId(index);
 
         //when
