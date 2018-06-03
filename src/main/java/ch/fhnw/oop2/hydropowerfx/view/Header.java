@@ -14,14 +14,17 @@ import javafx.util.converter.NumberStringConverter;
 
 public class Header extends HBox implements ViewMixin {
 
+    // model
     private final RootPM rootPM;
 
+    // gui elements
     private VBox labelArea;
     private ImageView imageArea;
     private Label titleLabel;
     private Label nameLabel;
     private Label powerLabel;
     private Label startOfOperationFirstLabel;
+
 
     public Header(RootPM rootPM) {
         this.rootPM = rootPM;
@@ -37,16 +40,15 @@ public class Header extends HBox implements ViewMixin {
     public void initializeControls() {
         // label area
         labelArea = new VBox();
-        nameLabel = new Label("name");
-        powerLabel = new Label("power");
-        titleLabel = new Label("title");
+        nameLabel = new Label();
+        powerLabel = new Label();
+        titleLabel = new Label();
         titleLabel.setId("titleLabel");
-        startOfOperationFirstLabel = new Label("startofopblalba");
-
+        startOfOperationFirstLabel = new Label();
 
         // image area
         imageArea = new ImageView();
-        Image image = new Image("http://consumersfederation.org.au/wp-content/uploads/2015/09/hydropower.png");
+        Image image = new Image("/images/metrics_icon.png");
         imageArea.setImage(image);
 
     }
@@ -54,22 +56,22 @@ public class Header extends HBox implements ViewMixin {
     @Override
     public void layoutControls() {
 
-        imageArea.setFitHeight(70);
-        imageArea.setFitWidth(70);
+        // sizing
+        setPadding(new Insets(5));
+        setSpacing(5);
+
+        imageArea.setFitHeight(18);
+        imageArea.setFitWidth(18);
         imageArea.setPreserveRatio(true);
 
         labelArea.setPrefHeight(70);
         labelArea.setMinHeight(70);
-        labelArea.setVgrow(nameLabel,Priority.ALWAYS);
-        labelArea.setVgrow(powerLabel,Priority.ALWAYS);
-        labelArea.setVgrow(titleLabel,Priority.ALWAYS);
-
-        //TODO enable Vgrow for space between header and Editor
-        // padding
-        setPadding(new Insets(5));
-        setSpacing(5);
+        labelArea.setVgrow(nameLabel, Priority.ALWAYS);
+        labelArea.setVgrow(powerLabel, Priority.ALWAYS);
+        labelArea.setVgrow(titleLabel, Priority.ALWAYS);
 
         labelArea.getChildren().addAll(titleLabel, nameLabel, powerLabel, startOfOperationFirstLabel);
+
         getChildren().addAll(labelArea, imageArea);
 
     }
@@ -78,19 +80,18 @@ public class Header extends HBox implements ViewMixin {
     public void setupBindings() {
         PowerStationPM proxy = rootPM.getPowerStationProxy();
 
-        // Title
+        // title
         titleLabel.textProperty().bind(proxy.nameProperty());
 
-        // Name
-        nameLabel.textProperty().bind(Bindings.concat(proxy.nameProperty(),", ", proxy.cantonProperty()));
+        // name
+        nameLabel.textProperty().bind(Bindings.concat(proxy.nameProperty(), ", ", proxy.cantonProperty()));
 
-        // Power
+        // power
         powerLabel.textProperty().bind(Bindings.concat(
-                Bindings.selectString(proxy.maxWaterVolumeProperty()),
-                " MW")
+                Bindings.selectString(proxy.maxWaterVolumeProperty()), " MW") // add suffix "MW"
         );
 
-        // Start of operation first
+        // operationfirst
         startOfOperationFirstLabel.textProperty().bindBidirectional(proxy.startOfOperationFirstProperty(), new NumberStringConverter());
 
     }
