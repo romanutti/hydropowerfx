@@ -123,8 +123,9 @@ public class Overview extends VBox implements ViewMixin {
         // set min size
         itemTable.setMinWidth(USE_COMPUTED_SIZE);
 
-        getChildren().addAll(itemTable, resultCountLabel);
         setVgrow(itemTable, Priority.ALWAYS);
+
+        getChildren().addAll(itemTable, resultCountLabel);
 
     }
 

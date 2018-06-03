@@ -54,16 +54,17 @@ public class Map extends HBox implements ViewMixin {
     public void layoutControls() {
 
         // sizing
+        setMinHeight(150);
         setPrefWidth(220);
         setMaxWidth(220);
         setPrefHeight(215);
         setMaxHeight(215);
-        setHgrow(imageArea, Priority.ALWAYS);
+        //setHgrow(imageArea, Priority.ALWAYS);
 
         // image area
-        imageArea.setFitHeight(200);
-        imageArea.setPreserveRatio(true);
-        imageArea.setSmooth(false);
+        imageArea.setFitHeight(210);
+        //imageArea.setPreserveRatio(true);
+        //imageArea.setSmooth(false);
 
         // padding
         setPadding(new Insets(5));

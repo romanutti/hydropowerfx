@@ -56,7 +56,7 @@ public class Footer extends VBox implements ViewMixin {
     public void layoutControls() {
 
         // sizing
-        setMinHeight(220);
+        setMinHeight(150);
         setMaxHeight(220);
         setPrefWidth(550);
         setPrefHeight(220);
