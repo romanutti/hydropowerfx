@@ -128,7 +128,6 @@ public class Overview extends VBox implements ViewMixin {
 
     }
 
-
     @Override
     public void setupBindings() {
         // search
@@ -156,7 +155,6 @@ public class Overview extends VBox implements ViewMixin {
             rootPM.setSelectedId((newValue == null) ? 0 : newValue.getId());
 
             // scroll only if powerstation out of visible area in tableview
-            int selectedId = rootPM.getSelectedId();
             int selectedIndex = itemTable.getSelectionModel().getSelectedIndex();
             int[] visibleRange = getVisibleRange(itemTable);
 
