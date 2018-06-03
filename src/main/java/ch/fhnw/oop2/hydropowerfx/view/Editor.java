@@ -35,6 +35,7 @@ public class Editor extends GridPane implements ViewMixin {
     private Label statusLabel;
     private Label waterbodiesLabel;
     private Label imageUrlLabel;
+    private Label inputValidatorLabel;
 
     private TextField nameTextField;
     private ChoiceBox typeChoiceBox;
@@ -77,6 +78,9 @@ public class Editor extends GridPane implements ViewMixin {
         statusLabel = new Label();
         waterbodiesLabel = new Label();
         imageUrlLabel = new Label();
+        inputValidatorLabel = new Label();
+        inputValidatorLabel.setId("inputValidatorLabel");
+
 
         // textfields
         nameTextField = new TextField();
@@ -123,6 +127,7 @@ public class Editor extends GridPane implements ViewMixin {
         add(statusLabel, 0, 5);
         add(waterbodiesLabel, 0, 6);
         add(imageUrlLabel, 0, 7);
+        add(inputValidatorLabel, 0, 8, 4, 1);
 
         add(typeLabel, 2, 0);
         add(cantonLabel, 2, 1);
@@ -210,10 +215,26 @@ public class Editor extends GridPane implements ViewMixin {
         statusChoiceBox.getSelectionModel().selectedItemProperty().addListener((ChangeListener<Status>) (observable, oldValue, newValue) -> {
             rootPM.getPowerStationProxy().setStatus(newValue);
         });
-    }
 
-    @Override
-    public void setupEventHandlers() {
+        // input validation
+        maxPowerMwTextField.textProperty().addListener((ChangeListener<String>) (observable, oldValue, newValue) -> {
+            rootPM.isValidInput(newValue, "double");
+        });
+        maxWaterVolumeTextField.textProperty().addListener((ChangeListener<String>) (observable, oldValue, newValue) -> {
+            rootPM.isValidInput(newValue, "double");
+        });
+        startOfOperationFirstTextField.textProperty().addListener((ChangeListener<String>) (observable, oldValue, newValue) -> {
+            rootPM.isValidInput(newValue, "int");
+        });
+        startOfOperationLastTextField.textProperty().addListener((ChangeListener<String>) (observable, oldValue, newValue) -> {
+            rootPM.isValidInput(newValue, "int");
+        });
+        longitudeTextField.textProperty().addListener((ChangeListener<String>) (observable, oldValue, newValue) -> {
+             rootPM.isValidInput(newValue, "double");
+        });
+        latitudeTextField.textProperty().addListener((ChangeListener<String>) (observable, oldValue, newValue) -> {
+            rootPM.isValidInput(newValue, "double");
+        });
 
     }
 
@@ -296,5 +317,11 @@ public class Editor extends GridPane implements ViewMixin {
         // disable on no selection
         imageUrlTextField.disableProperty().bind(rootPM.labelsEnabledProperty());
 
+        // input validation
+        inputValidatorLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().inputValidationTextProperty());
+        inputValidatorLabel.visibleProperty().bind(rootPM.invalidInputEnteredProperty());
+
+
     }
+
 }

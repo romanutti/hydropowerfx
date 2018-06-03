@@ -73,7 +73,9 @@ public class LanguageSwitcherPM {
         IMAGEURL_LABEL_TEXT("Image Url", "Image Url"),
         CANTON_COLUMN_TEXT("Kanton", "Canton"),
         TOTALPOWERMW_COLUMN_TEXT("Leistung total", "Total power"),
-        POWERSTATIONCOUNT_COLUMN_TEXT("Anzahl Kraftwerke", "Number of powerstations");
+        POWERSTATIONCOUNT_COLUMN_TEXT("Anzahl Kraftwerke", "Number of powerstations"),
+        INPUT_VALIDATION_MESSAGE("Ungültige Eingabe", "Invalid input");
+
 
         private final String englishLabel;
         private final String germanLabel;
@@ -122,6 +124,7 @@ public class LanguageSwitcherPM {
     private final StringProperty cantonColumnText = new SimpleStringProperty();
     private final StringProperty totalPowerMwColumnText = new SimpleStringProperty();
     private final StringProperty powerStationCountColumnText = new SimpleStringProperty();
+    private final StringProperty inputValidationText = new SimpleStringProperty();
 
     private final StringProperty germanLangLabel = new SimpleStringProperty();
     private final StringProperty englishLangLabel = new SimpleStringProperty();
@@ -153,6 +156,7 @@ public class LanguageSwitcherPM {
         setCantonColumnText(CANTON_COLUMN_TEXT.getText(lang));
         setTotalPowerMwColumnText(TOTALPOWERMW_COLUMN_TEXT.getText(lang));
         setPowerStationCountColumnText(POWERSTATIONCOUNT_COLUMN_TEXT.getText(lang));
+        setInputValidationText(INPUT_VALIDATION_MESSAGE.getText(lang));
 
         setEnglishLangLabel(EN.getLangText(lang));
         setGermanLangLabel(DE.getLangText(lang));
@@ -418,6 +422,18 @@ public class LanguageSwitcherPM {
 
     public void setEnglishLangLabel(String englishLangLabel) {
         this.englishLangLabel.set(englishLangLabel);
+    }
+
+    public String getInputValidationText() {
+        return inputValidationText.get();
+    }
+
+    public StringProperty inputValidationTextProperty() {
+        return inputValidationText;
+    }
+
+    public void setInputValidationText(String inputValidationText) {
+        this.inputValidationText.set(inputValidationText);
     }
 }
 

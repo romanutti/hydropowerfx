@@ -126,6 +126,14 @@
     -fx-background-color: #999999;
 }
 
+.editor #inputValidatorLabel{
+    -fx-font-size: 9;
+    -fx-font-style: italic;
+    -fx-font-weight: bold;
+    -fx-text-fill: #EA6B66;
+    -fx-padding: 5 0 0 0;
+}
+
 /* ======================= footer settings ==================================================== */
 .footer {
     -fx-background-color: #EBF5F1;

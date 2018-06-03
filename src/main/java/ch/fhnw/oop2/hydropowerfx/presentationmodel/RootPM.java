@@ -45,6 +45,9 @@ public class RootPM {
     // mulitlanguage support
     private final LanguageSwitcherPM languageSwitcherPM;
 
+    // input valitation
+    private final BooleanProperty invalidInputEntered = new SimpleBooleanProperty();
+
     // enable disable of components
     private final BooleanProperty undoDisabled = new SimpleBooleanProperty();
     private final BooleanProperty redoDisabled = new SimpleBooleanProperty();
@@ -150,6 +153,7 @@ public class RootPM {
 
         // set selected id
         Platform.runLater(() -> setSelectedId(getFirstPowerStation()));
+        invalidInputEntered.setValue(false);
     }
 
     private List<PowerStationPM> createAllPowerStations() {
@@ -340,17 +344,23 @@ public class RootPM {
                 });
     }
 
-    public void setupValueChangedListeners() {
-        // selection changes are undoable
-        selectedIdProperty().addListener(propertyChangeListenerForUndoSupport);
-
-        allPowerStations.addListener((ListChangeListener<PowerStationPM>) event -> {
-            while (event.next()) {
-                if (event.wasUpdated() || event.wasRemoved() || event.wasAdded()) {
-                    updateAllCantons();
-                }
+    public Boolean isValidInput(String input, String type) {
+        try {
+            if (type.equalsIgnoreCase("float")) {
+                Float.parseFloat(input);
+            } else if (type.equalsIgnoreCase("int")) {
+                Integer.parseInt(input);
+            } else if (type.equalsIgnoreCase("double")) {
+                Double.parseDouble(input);
             }
-        });
+            setInvalidInputEntered(false);
+            return false ;
+
+        } catch(Exception e) {
+            setInvalidInputEntered(true);
+            return true ;
+        }
+
     }
 
     private static double round(double value, int precision) {
@@ -393,6 +403,7 @@ public class RootPM {
 
     public void setSelectedId(int selectedPowerStationId) {
         this.selectedId.set(selectedPowerStationId);
+        setInvalidInputEntered(false);
 
         if (selectedPowerStationId == 0) {
             setLabelsEnabled(true);
@@ -453,5 +464,30 @@ public class RootPM {
 
     public void setRedoDisabled(boolean redoDisabled) {
         this.redoDisabled.set(redoDisabled);
+    }
+
+    public boolean isInvalidInputEntered() {
+        return invalidInputEntered.get();
+    }
+
+    public BooleanProperty invalidInputEnteredProperty() {
+        return invalidInputEntered;
+    }
+
+    public void setInvalidInputEntered(boolean invalidInputEntered) {
+        this.invalidInputEntered.set(invalidInputEntered);
+    }
+
+    public void setupValueChangedListeners() {
+        // selection changes are undoable
+        selectedIdProperty().addListener(propertyChangeListenerForUndoSupport);
+
+        allPowerStations.addListener((ListChangeListener<PowerStationPM>) event -> {
+            while (event.next()) {
+                if (event.wasUpdated() || event.wasRemoved() || event.wasAdded()) {
+                    updateAllCantons();
+                }
+            }
+        });
     }
 }
