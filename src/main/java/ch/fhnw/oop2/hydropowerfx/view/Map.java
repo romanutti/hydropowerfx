@@ -22,11 +22,16 @@ import java.util.concurrent.TimeUnit;
 
 public class Map extends HBox implements ViewMixin {
 
+    // contants
+    private static final String DEFAULT_CENTER_LOCATION_ = "Schweiz";
+    private static final String GOOGLE_API_KEY = "AIzaSyAzMrORyFTTVCWFlAeKcSfhWr7lkq3VRnQ";
+
+    // model
     private final RootPM rootPM;
 
+    // gui elements
     private ImageView imageArea;
 
-    private Boolean isInitiallyLoaded = false;
 
     public Map(RootPM rootPM) {
         this.rootPM = rootPM;
@@ -36,7 +41,7 @@ public class Map extends HBox implements ViewMixin {
 
     @Override
     public void initializeSelf() {
-        getStyleClass().add("header");
+        getStyleClass().add("map");
     }
 
     @Override
@@ -48,6 +53,13 @@ public class Map extends HBox implements ViewMixin {
     @Override
     public void layoutControls() {
 
+        // sizing
+        setPrefWidth(220);
+        setMaxWidth(220);
+        setPrefHeight(215);
+        setMaxHeight(215);
+        setHgrow(imageArea, Priority.ALWAYS);
+
         // image area
         imageArea.setFitHeight(200);
         imageArea.setPreserveRatio(true);
@@ -58,18 +70,14 @@ public class Map extends HBox implements ViewMixin {
         setSpacing(5);
 
         getChildren().addAll(imageArea);
-        setPrefWidth(220);
-        setMaxWidth(220);
-        setPrefHeight(215);
-        setMaxHeight(215);
-        setHgrow(imageArea,Priority.ALWAYS);
+
     }
 
     @Override
     public void setupValueChangedListeners() {
         PowerStationPM proxy = rootPM.getPowerStationProxy();
 
-        // Refresh Image
+        // refresh Image
         // change of center
         proxy.siteProperty().addListener((observable, oldValue, newValue) -> {
             try {
@@ -103,8 +111,6 @@ public class Map extends HBox implements ViewMixin {
             }
 
         });
-        // TODO: Refresh image when coordinates change?
-        // TODO: Overkill? :)
 
     }
 
@@ -117,16 +123,15 @@ public class Map extends HBox implements ViewMixin {
         longitude = (longitude == null) ? String.valueOf(proxy.getLongitude()) : longitude;
 
         try {
-
             // replace malformed url components
             site = URLEncoder.encode(site, "UTF-8");
             latitude = latitude.replaceAll("\\.", "%2E");
             longitude = longitude.replaceAll("\\.", "%2E");
             marker = latitude + "," + longitude;
         } catch (UnsupportedEncodingException e) {
-            site = "Schweiz";
+            site = DEFAULT_CENTER_LOCATION_;
         }
-        return "http://maps.googleapis.com/maps/api/staticmap?center=" + site + "&scale=1&size=300x200&maptype=roadmap&format=png&visual_refresh=true&markers=size:mid%7Ccolor:0xff0000%7Clabel:%7C" + marker + "&key=AIzaSyAzMrORyFTTVCWFlAeKcSfhWr7lkq3VRnQ";
+        return "http://maps.googleapis.com/maps/api/staticmap?center=" + site + "&scale=1&size=300x200&maptype=roadmap&format=png&visual_refresh=true&markers=size:mid%7Ccolor:0xff0000%7Clabel:%7C" + marker + "&key=" + GOOGLE_API_KEY;
 
     }
 }

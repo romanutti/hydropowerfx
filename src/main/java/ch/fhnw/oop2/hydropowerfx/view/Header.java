@@ -60,8 +60,8 @@ public class Header extends HBox implements ViewMixin {
         setPadding(new Insets(5));
         setSpacing(5);
 
-        imageArea.setFitHeight(18);
-        imageArea.setFitWidth(18);
+        imageArea.setFitHeight(14);
+        imageArea.setFitWidth(14);
         imageArea.setPreserveRatio(true);
 
         labelArea.setPrefHeight(70);
