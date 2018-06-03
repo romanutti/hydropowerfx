@@ -17,7 +17,9 @@ import javafx.scene.layout.Priority;
 import javafx.util.StringConverter;
 import javafx.util.converter.NumberStringConverter;
 
-public class Editor extends GridPane implements ViewMixin {
+import java.text.DecimalFormat;
+
+public class EditorView extends GridPane implements ViewMixin {
     // model
     private final RootPM rootPM;
 
@@ -51,8 +53,10 @@ public class Editor extends GridPane implements ViewMixin {
     private TextField waterbodiesTextField;
     private TextField imageUrlTextField;
 
+    //TODO implement as Interfcae or directly in powerstation? Please review
+    private DecimalFormat dec;
 
-    public Editor(RootPM rootPM) {
+    public EditorView(RootPM rootPM) {
         this.rootPM = rootPM;
         init();
     }
@@ -96,6 +100,11 @@ public class Editor extends GridPane implements ViewMixin {
         statusChoiceBox = new ChoiceBox();
         waterbodiesTextField = new TextField();
         imageUrlTextField = new TextField();
+
+        //TODO implement as Interfcae or directly in powerstation? Please review
+        // formatting for year numbers
+        dec = new DecimalFormat();
+        dec.setGroupingUsed(false);
 
     }
 
@@ -276,15 +285,16 @@ public class Editor extends GridPane implements ViewMixin {
         // disable on no selection
         maxPowerMwTextField.disableProperty().bind(rootPM.labelsEnabledProperty());
 
+
         // operationfirst
         startOfOperationFirstLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().startOfOperationFirstLabelTextProperty());
-        startOfOperationFirstTextField.textProperty().bindBidirectional(proxy.startOfOperationFirstProperty(), new NumberStringConverter());
+        startOfOperationFirstTextField.textProperty().bindBidirectional(proxy.startOfOperationFirstProperty(), new NumberStringConverter(dec));
         // disable on no selection
         startOfOperationFirstTextField.disableProperty().bind(rootPM.labelsEnabledProperty());
 
         // operationlast
         startOfOperationLastLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().startOfOperationLastLabelTextProperty());
-        startOfOperationLastTextField.textProperty().bindBidirectional(proxy.startOfOperationLastProperty(), new NumberStringConverter());
+        startOfOperationLastTextField.textProperty().bindBidirectional(proxy.startOfOperationLastProperty(), new NumberStringConverter(dec));
         // disable on no selection
         startOfOperationLastTextField.disableProperty().bind(rootPM.labelsEnabledProperty());
 

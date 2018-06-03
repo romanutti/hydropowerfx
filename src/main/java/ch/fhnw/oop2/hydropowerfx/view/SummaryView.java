@@ -8,7 +8,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
-public class Footer extends VBox implements ViewMixin {
+public class SummaryView extends VBox implements ViewMixin {
     // model
     private final RootPM rootPM;
 
@@ -16,7 +16,7 @@ public class Footer extends VBox implements ViewMixin {
     private TableView<CantonPM> itemTable;
 
 
-    public Footer(RootPM rootPM) {
+    public SummaryView(RootPM rootPM) {
         this.rootPM = rootPM;
         init();
     }

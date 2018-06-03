@@ -20,7 +20,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.concurrent.TimeUnit;
 
-public class Map extends HBox implements ViewMixin {
+public class MapView extends HBox implements ViewMixin {
 
     // contants
     private static final String DEFAULT_CENTER_LOCATION_ = "Schweiz";
@@ -33,7 +33,7 @@ public class Map extends HBox implements ViewMixin {
     private ImageView imageArea;
 
 
-    public Map(RootPM rootPM) {
+    public MapView(RootPM rootPM) {
         this.rootPM = rootPM;
         init();
     }

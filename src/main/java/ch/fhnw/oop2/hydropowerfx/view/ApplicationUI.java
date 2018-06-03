@@ -1,7 +1,7 @@
 package ch.fhnw.oop2.hydropowerfx.view;
 
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
-import ch.fhnw.oop2.hydropowerfx.view.powerstationoverview.Overview;
+import ch.fhnw.oop2.hydropowerfx.view.powerstationoverview.DetailView;
 import javafx.geometry.Orientation;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.BorderPane;
@@ -14,14 +14,14 @@ public class ApplicationUI extends BorderPane implements ViewMixin {
     // gui elements
     private SplitPane verticalMainSP;
     private SplitPane horizontalMainCenterSP;
-    private SelectorBar selectorbar;
-    private Overview overview;
+    private ToolbarView selectorbar;
+    private DetailView detailView;
     private VBox center;
-    private Header header;
-    private Editor editor;
+    private HeaderView headerView;
+    private EditorView editorView;
     private SplitPane horizontalMainBottomSP;
-    private Map map;
-    private Footer footer;
+    private MapView mapView;
+    private SummaryView summaryView;
 
 
     public ApplicationUI(RootPM model) {
@@ -40,20 +40,20 @@ public class ApplicationUI extends BorderPane implements ViewMixin {
         verticalMainSP = new SplitPane();
         horizontalMainCenterSP = new SplitPane();
         horizontalMainBottomSP = new SplitPane();
-        selectorbar = new SelectorBar(model);
-        overview = new Overview(model);
+        selectorbar = new ToolbarView(model);
+        detailView = new DetailView(model);
         center = new VBox();
-        header = new Header(model);
-        editor = new Editor(model);
-        map = new Map(model);
-        footer = new Footer(model);
+        headerView = new HeaderView(model);
+        editorView = new EditorView(model);
+        mapView = new MapView(model);
+        summaryView = new SummaryView(model);
     }
 
     @Override
     public void layoutControls() {
-        center.getChildren().addAll(header, editor);
-        horizontalMainCenterSP.getItems().addAll(overview, center);
-        horizontalMainBottomSP.getItems().addAll(footer, map);
+        center.getChildren().addAll(headerView, editorView);
+        horizontalMainCenterSP.getItems().addAll(detailView, center);
+        horizontalMainBottomSP.getItems().addAll(summaryView, mapView);
         verticalMainSP.getItems().addAll(horizontalMainCenterSP, horizontalMainBottomSP);
         verticalMainSP.setOrientation(Orientation.VERTICAL);
 

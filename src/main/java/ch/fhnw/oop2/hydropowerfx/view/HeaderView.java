@@ -12,7 +12,7 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.converter.NumberStringConverter;
 
-public class Header extends HBox implements ViewMixin {
+public class HeaderView extends HBox implements ViewMixin {
 
     // model
     private final RootPM rootPM;
@@ -26,7 +26,7 @@ public class Header extends HBox implements ViewMixin {
     private Label startOfOperationFirstLabel;
 
 
-    public Header(RootPM rootPM) {
+    public HeaderView(RootPM rootPM) {
         this.rootPM = rootPM;
         init();
     }
