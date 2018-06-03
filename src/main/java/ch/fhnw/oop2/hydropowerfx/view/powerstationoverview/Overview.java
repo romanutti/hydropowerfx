@@ -16,6 +16,8 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.converter.NumberStringConverter;
 
+import java.util.Arrays;
+
 public class Overview extends VBox implements ViewMixin {
     // model
     private final RootPM rootPM;
@@ -155,10 +157,12 @@ public class Overview extends VBox implements ViewMixin {
 
             // scroll only if powerstation out of visible area in tableview
             int selectedId = rootPM.getSelectedId();
-            int selectedIndex = rootPM.getIndexOfPowerStation(selectedId);
+            int selectedIndex = itemTable.getSelectionModel().getSelectedIndex();
             int[] visibleRange = getVisibleRange(itemTable);
+            System.out.println(Arrays.toString(visibleRange));
 
             if (!(visibleRange[0] <= selectedIndex && selectedIndex <= visibleRange[visibleRange.length - 1])) {
+                System.out.println(selectedIndex);
                 itemTable.scrollTo(rootPM.getPowerStationProxy());
             }
 
