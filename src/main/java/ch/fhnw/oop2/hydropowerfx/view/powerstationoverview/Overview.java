@@ -17,10 +17,11 @@ import javafx.scene.layout.VBox;
 import javafx.util.converter.NumberStringConverter;
 
 public class Overview extends VBox implements ViewMixin {
+    // model
     private final RootPM rootPM;
 
+    // gui elements
     private TableView<PowerStationPM> itemTable;
-
     private Label resultCountLabel;
 
 
@@ -28,8 +29,6 @@ public class Overview extends VBox implements ViewMixin {
         this.rootPM = rootPM;
         init();
     }
-
-
 
     @Override
     public void initializeSelf() {
@@ -39,18 +38,15 @@ public class Overview extends VBox implements ViewMixin {
     @Override
     public void initializeControls() {
         itemTable = initializePowerStationTable();
-
-        // enable cell editing
-        itemTable.setEditable(true);
         resultCountLabel = new Label();
     }
 
     private TableView<PowerStationPM> initializePowerStationTable() {
         TableView<PowerStationPM> tableView = new TableView<>(rootPM.getAllPowerStations());
 
+        // name column
         TableColumn<PowerStationPM, String> nameColumn = new TableColumn<>("Name");
         nameColumn.setCellValueFactory(cell -> cell.getValue().nameProperty());
-
         // enable cell editing
         nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         nameColumn.setOnEditCommit(
@@ -59,13 +55,14 @@ public class Overview extends VBox implements ViewMixin {
                 ).setName(t.getNewValue())
         );
 
+        // emblem column
         TableColumn<PowerStationPM, Canton> emblemColumn = new TableColumn<>();
         emblemColumn.setCellValueFactory(cell -> cell.getValue().cantonProperty());
         emblemColumn.setCellFactory(canton -> new CantonTableCell());
 
+        // maxpower column
         TableColumn<PowerStationPM, Number> maxPowerColumn = new TableColumn<>("Power");
         maxPowerColumn.setCellValueFactory(cell -> cell.getValue().maxPowerMwProperty());
-
         // enable cell editing
         maxPowerColumn.setCellFactory(TextFieldTableCell.<PowerStationPM, Number>forTableColumn(new NumberStringConverter()));
         maxPowerColumn.setOnEditCommit(
@@ -74,9 +71,9 @@ public class Overview extends VBox implements ViewMixin {
                 ).setMaxPowerMw((Double) t.getNewValue())
         );
 
+        // number column
         TableColumn<PowerStationPM, Number> startOfOperationFirstColumn = new TableColumn<>("StartOfOperationFirst");
         startOfOperationFirstColumn.setCellValueFactory(cell -> cell.getValue().startOfOperationFirstProperty());
-
         // enable cell editing
         startOfOperationFirstColumn.setCellFactory(TextFieldTableCell.<PowerStationPM, Number>forTableColumn(new NumberStringConverter()));
         startOfOperationFirstColumn.setOnEditCommit(
@@ -85,8 +82,9 @@ public class Overview extends VBox implements ViewMixin {
                 ).setStartOfOperationFirst((Long) t.getNewValue())
         );
 
+        // add columns
         tableView.getColumns().addAll(nameColumn, emblemColumn, maxPowerColumn, startOfOperationFirstColumn);
-        // add sorted Column name
+
         return tableView;
     }
 
@@ -94,24 +92,33 @@ public class Overview extends VBox implements ViewMixin {
     @Override
     public void layoutControls() {
 
-        setMinWidth(300);
+        // set ui element sizes
+        setMinWidth(350);
         setMaxWidth(500);
+        setPrefWidth(300);
+        setMaxHeight(1000);
 
-        setMaxHeight(800);
 
+        // table element
+        // name column formatting
         getTableColumnByName("Name").setMinWidth(150);
-        getTableColumnByName("Name").setMaxWidth(200);
+        getTableColumnByName("Name").setMaxWidth(250);
 
         // emblem Column formatting
         getTableColumnByName("").setMinWidth(22);
         getTableColumnByName("").setMaxWidth(22);
 
+        // power column formatting
         getTableColumnByName("Power").setMinWidth(60);
         getTableColumnByName("Power").setMaxWidth(100);
 
+        // startofoperationfirst column formatting
         getTableColumnByName("StartOfOperationFirst").setMinWidth(60);
         getTableColumnByName("StartOfOperationFirst").setMaxWidth(120);
 
+        // enable cell editing
+        itemTable.setEditable(true);
+        // set min size
         itemTable.setMinWidth(USE_COMPUTED_SIZE);
 
         getChildren().addAll(itemTable, resultCountLabel);
@@ -122,17 +129,17 @@ public class Overview extends VBox implements ViewMixin {
 
     @Override
     public void setupBindings() {
-        // Search
+        // search
         SortedList<PowerStationPM> sortedData = new SortedList<>(rootPM.getFilteredPowerStations());
         sortedData.comparatorProperty().bind(itemTable.comparatorProperty());
         itemTable.setItems(sortedData);
 
-        // Language Switcher
+        // multilanguage support
         getTableColumnByName("Name").textProperty().bind(rootPM.getLanguageSwitcherPM().nameLabelTextProperty());
         getTableColumnByName("Power").textProperty().bind(rootPM.getLanguageSwitcherPM().maxPowerMwLabelTextProperty());
         getTableColumnByName("StartOfOperationFirst").textProperty().bind(rootPM.getLanguageSwitcherPM().startOfOperationFirstLabelTextProperty());
 
-        // Display index nr./total count summary
+        // display index nr./total count summary
         resultCountLabel.textProperty().bind(Bindings.concat(
                 Bindings.selectInteger(itemTable.getFocusModel().focusedIndexProperty().add(1)),
                 "/",
@@ -141,6 +148,7 @@ public class Overview extends VBox implements ViewMixin {
 
     @Override
     public void setupValueChangedListeners() {
+        // selected item on table
         itemTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             // set null if no item selected
             rootPM.setSelectedId((newValue == null) ? 0 : newValue.getId());
@@ -156,6 +164,7 @@ public class Overview extends VBox implements ViewMixin {
 
         });
 
+        // selected id on model
         rootPM.selectedIdProperty().addListener((observable, oldValue, newValue) -> itemTable.getSelectionModel().select(rootPM.getPowerStation((int) newValue)));
     }
 
@@ -187,6 +196,5 @@ public class Overview extends VBox implements ViewMixin {
             if (col.getText().equals(name)) return col;
         return null;
     }
-
 
 }
