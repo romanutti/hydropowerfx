@@ -9,8 +9,10 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
 public class Footer extends VBox implements ViewMixin {
+    // model
     private final RootPM rootPM;
 
+    // gui elements
     private TableView<CantonPM> itemTable;
 
 
@@ -32,12 +34,15 @@ public class Footer extends VBox implements ViewMixin {
     private TableView<CantonPM> initializeCantonTable() {
         TableView<CantonPM> tableView = new TableView<>(rootPM.getAllCantons());
 
+        // name column
         TableColumn<CantonPM, String> nameColumn = new TableColumn<>("cantonColumn");
         nameColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getCanton().getName()));
 
+        // totalpower column
         TableColumn<CantonPM, String> maxPowerColumn = new TableColumn<>("totalPowerColumn");
         maxPowerColumn.setCellValueFactory(cell -> cell.getValue().totalPowerMwProperty());
 
+        // powerstationcount column
         TableColumn<CantonPM, Number> powerStationCountColumn = new TableColumn<>("powerStationCountColumn");
         powerStationCountColumn.setCellValueFactory(cell -> cell.getValue().powerStationCountProperty());
 
@@ -50,12 +55,16 @@ public class Footer extends VBox implements ViewMixin {
     @Override
     public void layoutControls() {
 
+        // sizing
         setMinHeight(220);
         setMaxHeight(220);
-
         setPrefWidth(550);
         setPrefHeight(220);
-        
+
+        setVgrow(getItemTable(), Priority.ALWAYS);
+
+
+        // table element
         getTableColumnByName("cantonColumn").setPrefWidth(300);
         getTableColumnByName("cantonColumn").setMinWidth(100);
         getTableColumnByName("cantonColumn").setMaxWidth(300);
@@ -70,13 +79,12 @@ public class Footer extends VBox implements ViewMixin {
 
         itemTable.setMinWidth(USE_COMPUTED_SIZE);
         getChildren().addAll(getItemTable());
-        setVgrow(getItemTable(), Priority.ALWAYS);
 
     }
 
     @Override
     public void setupBindings() {
-        // Language Switcher
+        // multilanguage support
         getTableColumnByName("cantonColumn").textProperty().bind(rootPM.getLanguageSwitcherPM().cantonColumnTextProperty());
         getTableColumnByName("totalPowerColumn").textProperty().bind(rootPM.getLanguageSwitcherPM().totalPowerMwColumnTextProperty());
         getTableColumnByName("powerStationCountColumn").textProperty().bind(rootPM.getLanguageSwitcherPM().powerStationCountColumnTextProperty());
