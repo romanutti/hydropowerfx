@@ -15,10 +15,13 @@ import javafx.util.StringConverter;
 
 public class SelectorBar extends BorderPane implements ViewMixin {
 
+    // constants
     private static final int MAX_LEVENSHTEIN_DISTANCE = 2;
 
+    // model
     private final RootPM rootPM;
 
+    // gui elements
     private HBox titleArea;
     private ImageView imageArea;
     private Label titleLabel;
@@ -55,31 +58,25 @@ public class SelectorBar extends BorderPane implements ViewMixin {
         searchField = new TextField();
         languageChoiceBox = new ChoiceBox();
 
-        titleLabel = new Label("title");
+        titleLabel = new Label();
         titleLabel.setId("titleLabel");
     }
 
     @Override
     public void layoutControls() {
-        saveButton.setMaxWidth(Double.MAX_VALUE);
-        createButton.setMaxWidth(Double.MAX_VALUE);
-        deleteButton.setMaxWidth(Double.MAX_VALUE);
-        undoButton.setMaxWidth(Double.MAX_VALUE);
-        redoButton.setMaxWidth(Double.MAX_VALUE);
-        searchField.setMaxWidth(170);
 
-
-        // margin
+        //sizing
         setMargin(saveButton, new Insets(1));
         setMargin(createButton, new Insets(1));
         setMargin(deleteButton, new Insets(1));
         setMargin(undoButton, new Insets(1));
         setMargin(redoButton, new Insets(1));
-
         setMargin(searchField, new Insets(1));
 
-        // padding
         setPadding(new Insets(5));
+
+        searchField.setMaxWidth(170);
+
 
         // button images
         Image imageSave = new Image("/images/save_icon.png");
@@ -123,6 +120,8 @@ public class SelectorBar extends BorderPane implements ViewMixin {
         undoButton.setGraphic(imageUndoArea);
         redoButton.setGraphic(imageRedoArea);
 
+
+        // control bar
         ColumnConstraints cc = new ColumnConstraints();
         ColumnConstraints ccFix = new ColumnConstraints();
         cc.setHgrow(Priority.ALWAYS);
@@ -140,6 +139,7 @@ public class SelectorBar extends BorderPane implements ViewMixin {
         controlBar.setPadding(new Insets(0, 18, 0, 17));
         controlBar.setHgap(5);
 
+
         // image area
         imageArea = new ImageView();
         Image image = new Image("/images/drop_icon.png");
@@ -152,18 +152,28 @@ public class SelectorBar extends BorderPane implements ViewMixin {
         titleArea.setAlignment(Pos.CENTER_LEFT);
         titleArea.setPadding(new Insets(10, 0, 50, 12));
 
+
+        // multilanguage-support
+        languageChoiceBox.setItems(FXCollections.observableArrayList(Lang.values()));
+        languageChoiceBox.getSelectionModel().select(rootPM.getLanguageSwitcherPM().getCurrentLanguage());
+
+
         setBottom(controlBar);
         setCenter(titleArea);
         setRight(languageChoiceBox);
-
-        // Multilanguage-Support
-        languageChoiceBox.setItems(FXCollections.observableArrayList(Lang.values()));
-        languageChoiceBox.getSelectionModel().select(rootPM.getLanguageSwitcherPM().getCurrentLanguage());
     }
 
     @Override
     public void setupEventHandlers() {
-        // TODO: allg. EventHandler vs Listener überprüfen!
+        deleteButton.setOnAction(event -> rootPM.removePowerStation());
+        createButton.setOnAction(event -> rootPM.addPowerStation());
+
+        undoButton.setOnAction(event -> rootPM.undo());
+        redoButton.setOnAction(event -> rootPM.redo());
+    }
+
+    @Override
+    public void setupValueChangedListeners() {
         // search functionality
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
             rootPM.getFilteredPowerStations().setPredicate(powerStationPM -> {
@@ -181,12 +191,11 @@ public class SelectorBar extends BorderPane implements ViewMixin {
                         return true; // Filter matches id.
                     }
 
-                    // TODO: Weitere Attribute in Filter nehmen?
-
                 } catch (NumberFormatException e) {
-                    // Compare entered value with differnt attributes
+                    // Compare entered value with different attributes
                     String lowerCaseFilter = newValue.toLowerCase();
 
+                    // compare attributes
                     if (powerStationPM.getName().toLowerCase().contains(lowerCaseFilter) ||
                             levenshteinDistance(powerStationPM.getName().toLowerCase(), lowerCaseFilter) <= MAX_LEVENSHTEIN_DISTANCE) {
                         return true; // Filter matches name.
@@ -212,16 +221,7 @@ public class SelectorBar extends BorderPane implements ViewMixin {
             });
         });
 
-        deleteButton.setOnAction(event -> rootPM.removePowerStation());
-        createButton.setOnAction(event -> rootPM.addPowerStation());
-
-        undoButton.setOnAction(event -> rootPM.undo());
-        redoButton.setOnAction(event -> rootPM.redo());
-    }
-
-    @Override
-    public void setupValueChangedListeners() {
-        // Multilanguage-Support
+        // multilanguage-support
         languageChoiceBox.getSelectionModel().selectedItemProperty().addListener((ChangeListener<Lang>) (observable, oldValue, newValue) -> {
             rootPM.getLanguageSwitcherPM().setLanguage(newValue);
         });
@@ -234,7 +234,7 @@ public class SelectorBar extends BorderPane implements ViewMixin {
         searchField.promptTextProperty().bind(rootPM.getLanguageSwitcherPM().searchTextfieldTextProperty());
 
         // enable/disable buttons
-        deleteButton.disableProperty().bind(rootPM.deleteEnabledProperty()); //TODO: Für weitere Buttons umsetzen
+        deleteButton.disableProperty().bind(rootPM.deleteEnabledProperty());
         undoButton.disableProperty().bind(rootPM.undoDisabledProperty());
         redoButton.disableProperty().bind(rootPM.redoDisabledProperty());
     }
