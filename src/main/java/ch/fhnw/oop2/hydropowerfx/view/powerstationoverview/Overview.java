@@ -159,10 +159,8 @@ public class Overview extends VBox implements ViewMixin {
             int selectedId = rootPM.getSelectedId();
             int selectedIndex = itemTable.getSelectionModel().getSelectedIndex();
             int[] visibleRange = getVisibleRange(itemTable);
-            System.out.println(Arrays.toString(visibleRange));
 
             if (!(visibleRange[0] <= selectedIndex && selectedIndex <= visibleRange[visibleRange.length - 1])) {
-                System.out.println(selectedIndex);
                 itemTable.scrollTo(rootPM.getPowerStationProxy());
             }
 
