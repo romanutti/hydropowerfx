@@ -15,6 +15,8 @@ import javafx.util.StringConverter;
 
 public class SelectorBar extends BorderPane implements ViewMixin {
 
+    private static final int MAX_LEVENSHTEIN_DISTANCE = 2;
+
     private final RootPM rootPM;
 
     private HBox titleArea;
@@ -132,10 +134,10 @@ public class SelectorBar extends BorderPane implements ViewMixin {
         controlBar.add(deleteButton, 2, 0);
         controlBar.add(undoButton, 3, 0);
         controlBar.add(redoButton, 4, 0);
-        controlBar.add(searchField, 5, 0,110,1);
+        controlBar.add(searchField, 5, 0, 110, 1);
         GridPane.setHalignment(searchField, HPos.RIGHT);
 
-        controlBar.setPadding(new Insets(0,18,0,17));
+        controlBar.setPadding(new Insets(0, 18, 0, 17));
         controlBar.setHgap(5);
 
         // image area
@@ -148,7 +150,7 @@ public class SelectorBar extends BorderPane implements ViewMixin {
 
         titleArea.getChildren().addAll(imageArea, titleLabel);
         titleArea.setAlignment(Pos.CENTER_LEFT);
-        titleArea.setPadding(new Insets(10,0,50,12));
+        titleArea.setPadding(new Insets(10, 0, 50, 12));
 
         setBottom(controlBar);
         setCenter(titleArea);
@@ -162,6 +164,7 @@ public class SelectorBar extends BorderPane implements ViewMixin {
     @Override
     public void setupEventHandlers() {
         // TODO: allg. EventHandler vs Listener überprüfen!
+        // search functionality
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
             rootPM.getFilteredPowerStations().setPredicate(powerStationPM -> {
 
@@ -181,24 +184,29 @@ public class SelectorBar extends BorderPane implements ViewMixin {
                     // TODO: Weitere Attribute in Filter nehmen?
 
                 } catch (NumberFormatException e) {
-                    // Compare first name and last name of every person with filter text.
+                    // Compare entered value with differnt attributes
                     String lowerCaseFilter = newValue.toLowerCase();
 
-                    if (powerStationPM.getName().toLowerCase().contains(lowerCaseFilter)) {
+                    if (powerStationPM.getName().toLowerCase().contains(lowerCaseFilter) ||
+                            levenshteinDistance(powerStationPM.getName().toLowerCase(), lowerCaseFilter) <= MAX_LEVENSHTEIN_DISTANCE) {
                         return true; // Filter matches name.
-                    } else if (powerStationPM.getType().toString().toLowerCase().contains(lowerCaseFilter)) {
+                    } else if (powerStationPM.getType().toString().toLowerCase().contains(lowerCaseFilter) ||
+                            levenshteinDistance(powerStationPM.getType().toString().toLowerCase(), lowerCaseFilter) <= MAX_LEVENSHTEIN_DISTANCE) {
                         return true; // Filter matches type.
-                    } else if (powerStationPM.getCanton().getName().toLowerCase().contains(lowerCaseFilter)) {
+                    } else if (powerStationPM.getCanton().getName().toLowerCase().contains(lowerCaseFilter) ||
+                            levenshteinDistance(powerStationPM.getCanton().getName().toLowerCase(), lowerCaseFilter) <= MAX_LEVENSHTEIN_DISTANCE) {
                         return true; // Filter matches canton.
-                    } else if (powerStationPM.getStatus().getName().toLowerCase().contains(lowerCaseFilter)) {
+                    } else if (powerStationPM.getStatus().getName().toLowerCase().contains(lowerCaseFilter) ||
+                            levenshteinDistance(powerStationPM.getStatus().getName().toLowerCase(), lowerCaseFilter) <= MAX_LEVENSHTEIN_DISTANCE) {
                         return true; // Filter matches status.
-                    } else if (powerStationPM.getWaterbodies().toLowerCase().contains(lowerCaseFilter)) {
+                    } else if (powerStationPM.getWaterbodies().toLowerCase().contains(lowerCaseFilter) ||
+                            levenshteinDistance(powerStationPM.getWaterbodies().toLowerCase(), lowerCaseFilter) <= MAX_LEVENSHTEIN_DISTANCE) {
                         return true; // Filter matches waterbodies.
-                    } else if (powerStationPM.getImageUrl().toLowerCase().contains(lowerCaseFilter)) {
+                    } else if (powerStationPM.getImageUrl().toLowerCase().contains(lowerCaseFilter) ||
+                            levenshteinDistance(powerStationPM.getImageUrl().toLowerCase(), lowerCaseFilter) <= MAX_LEVENSHTEIN_DISTANCE) {
                         return true; // Filter matches image url.
                     }
                 }
-
 
                 return false; // Does not match.
             });
@@ -229,6 +237,48 @@ public class SelectorBar extends BorderPane implements ViewMixin {
         deleteButton.disableProperty().bind(rootPM.deleteEnabledProperty()); //TODO: Für weitere Buttons umsetzen
         undoButton.disableProperty().bind(rootPM.undoDisabledProperty());
         redoButton.disableProperty().bind(rootPM.redoDisabledProperty());
+    }
+
+    public int levenshteinDistance(CharSequence lhs, CharSequence rhs) {
+        int len0 = lhs.length() + 1;
+        int len1 = rhs.length() + 1;
+
+        // the array of distances
+        int[] cost = new int[len0];
+        int[] newcost = new int[len0];
+
+        // initial cost of skipping prefix in String s0
+        for (int i = 0; i < len0; i++) cost[i] = i;
+
+        // dynamically computing the array of distances
+
+        // transformation cost for each letter in s1
+        for (int j = 1; j < len1; j++) {
+            // initial cost of skipping prefix in String s1
+            newcost[0] = j;
+
+            // transformation cost for each letter in s0
+            for (int i = 1; i < len0; i++) {
+                // matching current letters in both strings
+                int match = (lhs.charAt(i - 1) == rhs.charAt(j - 1)) ? 0 : 1;
+
+                // computing cost for each transformation
+                int cost_replace = cost[i - 1] + match;
+                int cost_insert = cost[i] + 1;
+                int cost_delete = newcost[i - 1] + 1;
+
+                // keep minimum cost
+                newcost[i] = Math.min(Math.min(cost_insert, cost_delete), cost_replace);
+            }
+
+            // swap cost/newcost arrays
+            int[] swap = cost;
+            cost = newcost;
+            newcost = swap;
+        }
+
+        // the distance is the cost for transforming all letters in both strings
+        return cost[len0 - 1];
     }
 
 }
