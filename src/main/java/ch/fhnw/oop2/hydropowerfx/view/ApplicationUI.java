@@ -8,8 +8,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 
 public class ApplicationUI extends BorderPane implements ViewMixin {
+    // model
     private final RootPM model;
 
+    // gui elements
     private SplitPane verticalMainSP;
     private SplitPane horizontalMainCenterSP;
     private SelectorBar selectorbar;
@@ -20,6 +22,7 @@ public class ApplicationUI extends BorderPane implements ViewMixin {
     private SplitPane horizontalMainBottomSP;
     private Map map;
     private Footer footer;
+
 
     public ApplicationUI(RootPM model) {
         this.model = model;
@@ -44,12 +47,12 @@ public class ApplicationUI extends BorderPane implements ViewMixin {
         editor = new Editor(model);
         map = new Map(model);
         footer = new Footer(model);
-        }
+    }
 
     @Override
     public void layoutControls() {
         center.getChildren().addAll(header, editor);
-        horizontalMainCenterSP.getItems().addAll(overview,center);
+        horizontalMainCenterSP.getItems().addAll(overview, center);
         horizontalMainBottomSP.getItems().addAll(footer, map);
         verticalMainSP.getItems().addAll(horizontalMainCenterSP, horizontalMainBottomSP);
         verticalMainSP.setOrientation(Orientation.VERTICAL);
