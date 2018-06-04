@@ -16,8 +16,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
 import javafx.util.StringConverter;
 import javafx.util.converter.NumberStringConverter;
-
-import java.text.DecimalFormat;
+import static ch.fhnw.oop2.hydropowerfx.util.NumberFormatUtil.*;
 
 public class EditorView extends GridPane implements ViewMixin {
     // model
@@ -52,9 +51,6 @@ public class EditorView extends GridPane implements ViewMixin {
     private ChoiceBox statusChoiceBox;
     private TextField waterbodiesTextField;
     private TextField imageUrlTextField;
-
-    //TODO implement as Interfcae or directly in powerstation? Please review
-    private DecimalFormat dec;
 
     public EditorView(RootPM rootPM) {
         this.rootPM = rootPM;
@@ -100,11 +96,6 @@ public class EditorView extends GridPane implements ViewMixin {
         statusChoiceBox = new ChoiceBox();
         waterbodiesTextField = new TextField();
         imageUrlTextField = new TextField();
-
-        //TODO implement as Interfcae or directly in powerstation? Please review
-        // formatting for year numbers
-        dec = new DecimalFormat();
-        dec.setGroupingUsed(false);
 
     }
 
@@ -301,13 +292,13 @@ public class EditorView extends GridPane implements ViewMixin {
 
         // operationfirst
         startOfOperationFirstLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().startOfOperationFirstLabelTextProperty());
-        startOfOperationFirstTextField.textProperty().bindBidirectional(proxy.startOfOperationFirstProperty(), new NumberStringConverter(dec));
+        startOfOperationFirstTextField.textProperty().bindBidirectional(proxy.startOfOperationFirstProperty(), new NumberStringConverter(YEAR_FORMAT));
         // disable on no selection
         startOfOperationFirstTextField.disableProperty().bind(rootPM.labelsEnabledProperty());
 
         // operationlast
         startOfOperationLastLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().startOfOperationLastLabelTextProperty());
-        startOfOperationLastTextField.textProperty().bindBidirectional(proxy.startOfOperationLastProperty(), new NumberStringConverter(dec));
+        startOfOperationLastTextField.textProperty().bindBidirectional(proxy.startOfOperationLastProperty(), new NumberStringConverter(YEAR_FORMAT));
         // disable on no selection
         startOfOperationLastTextField.disableProperty().bind(rootPM.labelsEnabledProperty());
 

@@ -3,10 +3,9 @@ package ch.fhnw.oop2.hydropowerfx.view;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 import ch.fhnw.oop2.hydropowerfx.view.powerstationoverview.DetailView;
 import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
 import javafx.scene.control.SplitPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 
 public class ApplicationUI extends BorderPane implements ViewMixin {
     // model
@@ -17,7 +16,7 @@ public class ApplicationUI extends BorderPane implements ViewMixin {
     private SplitPane horizontalMainCenterSP;
     private ToolbarView toolbarView;
     private DetailView detailView;
-    private VBox center;
+    private GridPane centerView;
     private HeaderView headerView;
     private EditorView editorView;
     private SplitPane horizontalMainBottomSP;
@@ -43,7 +42,7 @@ public class ApplicationUI extends BorderPane implements ViewMixin {
         horizontalMainBottomSP = new SplitPane();
         toolbarView = new ToolbarView(model);
         detailView = new DetailView(model);
-        center = new VBox();
+        centerView = new GridPane();
         headerView = new HeaderView(model);
         editorView = new EditorView(model);
         mapView = new MapView(model);
@@ -52,8 +51,13 @@ public class ApplicationUI extends BorderPane implements ViewMixin {
 
     @Override
     public void layoutControls() {
-        center.getChildren().addAll(headerView, editorView);
-        horizontalMainCenterSP.getItems().addAll(detailView, center);
+
+        centerView.add(headerView,0,0);
+        centerView.add(editorView,0,1);
+        ColumnConstraints ccCenterView = new ColumnConstraints();
+        ccCenterView.setHgrow(Priority.ALWAYS);
+        centerView.getColumnConstraints().addAll(ccCenterView);
+        horizontalMainCenterSP.getItems().addAll(detailView, centerView);
         horizontalMainBottomSP.getItems().addAll(summaryView, mapView);
         verticalMainSP.getItems().addAll(horizontalMainCenterSP, horizontalMainBottomSP);
         verticalMainSP.setOrientation(Orientation.VERTICAL);

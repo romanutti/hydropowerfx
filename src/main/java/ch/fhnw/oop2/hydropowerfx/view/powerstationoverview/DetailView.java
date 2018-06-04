@@ -15,9 +15,8 @@ import javafx.scene.control.skin.VirtualFlow;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.converter.NumberStringConverter;
+import static ch.fhnw.oop2.hydropowerfx.util.NumberFormatUtil.*;
 
-import java.text.DecimalFormat;
-import java.util.Arrays;
 
 public class DetailView extends VBox implements ViewMixin {
     // model
@@ -78,7 +77,7 @@ public class DetailView extends VBox implements ViewMixin {
         TableColumn<PowerStationPM, Number> startOfOperationFirstColumn = new TableColumn<>("StartOfOperationFirst");
         startOfOperationFirstColumn.setCellValueFactory(cell -> cell.getValue().startOfOperationFirstProperty());
         // enable cell editing
-        startOfOperationFirstColumn.setCellFactory(TextFieldTableCell.<PowerStationPM, Number>forTableColumn(new NumberStringConverter()));
+        startOfOperationFirstColumn.setCellFactory(TextFieldTableCell.<PowerStationPM, Number>forTableColumn(new NumberStringConverter(YEAR_FORMAT)));
         startOfOperationFirstColumn.setOnEditCommit(
                 t -> ((PowerStationPM) t.getTableView().getItems().get(
                         t.getTablePosition().getRow())

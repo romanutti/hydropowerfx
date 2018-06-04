@@ -11,6 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.converter.NumberStringConverter;
+import static ch.fhnw.oop2.hydropowerfx.util.NumberFormatUtil.*;
 
 public class HeaderView extends HBox implements ViewMixin {
 
@@ -93,7 +94,7 @@ public class HeaderView extends HBox implements ViewMixin {
         );
 
         // operationfirst
-        startOfOperationFirstLabel.textProperty().bindBidirectional(proxy.startOfOperationFirstProperty(), new NumberStringConverter());
+        startOfOperationFirstLabel.textProperty().bindBidirectional(proxy.startOfOperationFirstProperty(), new NumberStringConverter(YEAR_FORMAT));
 
     }
 }
