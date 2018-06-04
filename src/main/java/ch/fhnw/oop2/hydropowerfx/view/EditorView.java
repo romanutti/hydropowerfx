@@ -206,7 +206,6 @@ public class EditorView extends GridPane implements ViewMixin {
                 return object.getName();
             }
 
-            //TODO return null valid?
             @Override
             public Status fromString(String string) {
                 return null;

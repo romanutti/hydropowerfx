@@ -10,11 +10,9 @@ import static ch.fhnw.oop2.hydropowerfx.presentationmodel.LanguageSwitcherPM.Mul
 
 public class LanguageSwitcherPM {
 
-    //TODO please check: is that valid to implement local variable to store the current language?
     private Lang currentLanguage;
 
     public enum Lang {
-        //TODO if not possible to update choicebox list then reduce to Deutsch / English
         DE("DE", "DE"),
         EN("EN", "EN");
 
@@ -34,13 +32,6 @@ public class LanguageSwitcherPM {
             return englishLangLabel;
         }
 
-
-        //TODO Implement list update in choicebox
-        public String[] getLangStrings() {
-            String[] langStringArray = Arrays.copyOf(values(), values().length, String[].class);
-            return langStringArray;
-        }
-
         public String getLangText(Lang lang) {
             switch (lang) {
                 case DE:
@@ -52,7 +43,6 @@ public class LanguageSwitcherPM {
             }
         }
     }
-
 
     public enum MultiLanguageText {
         WINDOW_TITLE("HydroPowerFX Wasserkraftwerke der Schweiz", "HydroPowerFX hydroelectric power stations of Switzerland"),
