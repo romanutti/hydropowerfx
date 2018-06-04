@@ -1,0 +1,85 @@
+.business-control {
+    -fx-padding: 10;
+    -base-color: blue;
+    -invalid-base-color: red;
+    -mandatory-base-color: red;
+    -convertible-base-color: green;
+    -fx-background-color: rgb(255, 255, 250);
+}
+
+.business-control .drawing-pane {
+    -fx-background-color: transparent;
+}
+
+.business-control .editable-node {
+    -fx-font-family: 'Roboto Regular';
+    -fx-font-size: 14;
+    -fx-background-color: blue , white , white;
+    -fx-background-insets: 0 -1 -1 -1, 0 0 0 0, 0 -1 3 -1;
+    -fx-border-radius: 0 0 0 0;
+    -fx-background-radius: 0 0 0 0;
+}
+
+.business-control:invalid .editable-node {
+    -fx-font-family: 'Roboto Light';
+    -fx-text-fill: -invalid-base-color;
+}
+
+.business-control:mandatory .editable-node {
+    -fx-background-color: -mandatory-base-color , white , white;
+    -fx-background-insets: 0 -1 -1 -1, 0 0 0 0, 0 -1 3 -1;
+    -fx-border-radius: 0 0 0 0;
+    -fx-background-radius: 0 0 0 0;
+}
+
+.business-control:convertible .editable-node {
+    -fx-font-family: 'Roboto Light';
+    -fx-text-fill: -convertible-base-color;
+}
+
+.business-control .read-only-node {
+    -fx-font-family: 'Roboto Bold';
+    -fx-pref-width: 80;
+    -fx-max-width: 1024;
+    -fx-alignment: center;
+    -fx-content-display: text-only;
+    -fx-font-size: 14;
+}
+
+.business-control .chooser-button {
+    -fx-font-family: 'FontAwesome';
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+    -fx-min-width: 26;
+    -fx-min-height: 26;
+    -fx-font-size: 14;
+    -fx-text-fill: derive(-base-color, -30%);
+    -fx-padding: 5;
+    -fx-content-display: text-only;
+    -fx-cursor: hand;
+}
+
+.business-control .chooser-button:hover {
+    -fx-background-color: derive(-base-color, 90%);
+    -fx-background-radius: 1024;
+    -fx-background-insets: 4;
+}
+
+.business-control:mandatory .chooser-button {
+    -fx-font-family: 'FontAwesome';
+    -fx-border-color: transparent;
+    -fx-background-color: transparent;
+    -fx-min-width: 26;
+    -fx-min-height: 26;
+    -fx-font-size: 14;
+    -fx-text-fill: derive(-mandatory-base-color, -30%);
+    -fx-padding: 5;
+    -fx-content-display: text-only;
+    -fx-cursor: hand;
+}
+
+.business-control:mandatory .chooser-button:hover {
+    -fx-background-color: derive(-mandatory-base-color, 90%);
+    -fx-background-radius: 1024;
+    -fx-background-insets: 4;
+}

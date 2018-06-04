@@ -1,5 +1,6 @@
 package ch.fhnw.oop2.hydropowerfx.view;
 
+import ch.fhnw.oop2.hydropowerfx.control.yearcontrol.BusinessControl;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.Canton;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.PowerStationPM;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.PowerStationPM.Type;
@@ -44,13 +45,14 @@ public class EditorView extends GridPane implements ViewMixin {
     private ChoiceBox cantonChoiceBox;
     private TextField maxWaterVolumeTextField;
     private TextField maxPowerMwTextField;
-    private TextField startOfOperationFirstTextField;
-    private TextField startOfOperationLastTextField;
+    private BusinessControl startOfOperationFirstTextField;
+    private BusinessControl startOfOperationLastTextField;
     private TextField latitudeTextField;
     private TextField longitudeTextField;
     private ChoiceBox statusChoiceBox;
     private TextField waterbodiesTextField;
     private TextField imageUrlTextField;
+
 
     public EditorView(RootPM rootPM) {
         this.rootPM = rootPM;
@@ -89,8 +91,8 @@ public class EditorView extends GridPane implements ViewMixin {
         cantonChoiceBox = new ChoiceBox();
         maxWaterVolumeTextField = new TextField();
         maxPowerMwTextField = new TextField();
-        startOfOperationFirstTextField = new TextField();
-        startOfOperationLastTextField = new TextField();
+        startOfOperationFirstTextField = new BusinessControl();
+        startOfOperationLastTextField = new BusinessControl();
         latitudeTextField = new TextField();
         longitudeTextField = new TextField();
         statusChoiceBox = new ChoiceBox();
@@ -229,12 +231,15 @@ public class EditorView extends GridPane implements ViewMixin {
         maxWaterVolumeTextField.textProperty().addListener((ChangeListener<String>) (observable, oldValue, newValue) -> {
             rootPM.isValidInput(newValue, "double");
         });
-        startOfOperationFirstTextField.textProperty().addListener((ChangeListener<String>) (observable, oldValue, newValue) -> {
+        // TODO: Input Validation
+        /*
+        startOfOperationFirstTextField.valueProperty().addListener((ChangeListener<String>) (observable, oldValue, newValue) -> {
             rootPM.isValidInput(newValue, "int");
         });
-        startOfOperationLastTextField.textProperty().addListener((ChangeListener<String>) (observable, oldValue, newValue) -> {
+        startOfOperationLastTextField.valueProperty().addListener((ChangeListener<String>) (observable, oldValue, newValue) -> {
             rootPM.isValidInput(newValue, "int");
         });
+        */
         longitudeTextField.textProperty().addListener((ChangeListener<String>) (observable, oldValue, newValue) -> {
             rootPM.isValidInput(newValue, "double");
         });
@@ -291,13 +296,13 @@ public class EditorView extends GridPane implements ViewMixin {
 
         // operationfirst
         startOfOperationFirstLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().startOfOperationFirstLabelTextProperty());
-        startOfOperationFirstTextField.textProperty().bindBidirectional(proxy.startOfOperationFirstProperty(), new NumberStringConverter(YEAR_FORMAT));
+        startOfOperationFirstTextField.valueProperty().bindBidirectional(proxy.startOfOperationFirstProperty());
         // disable on no selection
         startOfOperationFirstTextField.disableProperty().bind(rootPM.labelsEnabledProperty());
 
         // operationlast
         startOfOperationLastLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().startOfOperationLastLabelTextProperty());
-        startOfOperationLastTextField.textProperty().bindBidirectional(proxy.startOfOperationLastProperty(), new NumberStringConverter(YEAR_FORMAT));
+        startOfOperationLastTextField.valueProperty().bindBidirectional(proxy.startOfOperationLastProperty());
         // disable on no selection
         startOfOperationLastTextField.disableProperty().bind(rootPM.labelsEnabledProperty());
 
@@ -333,8 +338,6 @@ public class EditorView extends GridPane implements ViewMixin {
         // input validation
         inputValidatorLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().inputValidationTextProperty());
         inputValidatorLabel.visibleProperty().bind(rootPM.invalidInputEnteredProperty());
-
-
-    }
+        }
 
 }
