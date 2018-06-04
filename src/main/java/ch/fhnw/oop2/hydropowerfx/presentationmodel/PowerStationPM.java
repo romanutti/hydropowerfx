@@ -2,43 +2,46 @@ package ch.fhnw.oop2.hydropowerfx.presentationmodel;
 
 import javafx.beans.property.*;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 public class PowerStationPM {
 
     public enum Type {L, P, S, U}
 
-    private final IntegerProperty id = new SimpleIntegerProperty();
-    private final StringProperty name = new SimpleStringProperty();
-    private final ObjectProperty<Type> type = new SimpleObjectProperty<>();
-    private final StringProperty site = new SimpleStringProperty();
-    private final ObjectProperty<Canton> canton = new SimpleObjectProperty<>();
-    private final DoubleProperty maxWaterVolume = new SimpleDoubleProperty();
-    private final DoubleProperty maxPowerMw = new SimpleDoubleProperty();
-    private final DoubleProperty startOfOperationFirst = new SimpleDoubleProperty();
-    private final DoubleProperty startOfOperationLast = new SimpleDoubleProperty();
-    private final DoubleProperty latitude = new SimpleDoubleProperty();
-    private final DoubleProperty longitude = new SimpleDoubleProperty();
-    private final ObjectProperty<Status> status = new SimpleObjectProperty();
-    private final StringProperty waterbodies = new SimpleStringProperty();
-    private final StringProperty imageUrl = new SimpleStringProperty();
+    private final IntegerProperty id                            = new SimpleIntegerProperty();
+    private final StringProperty name                           = new SimpleStringProperty();
+    private final ObjectProperty<Type> type                     = new SimpleObjectProperty<>();
+    private final StringProperty site                           = new SimpleStringProperty();
+    private final ObjectProperty<Canton> canton                 = new SimpleObjectProperty<>();
+    private final DoubleProperty maxWaterVolume                 = new SimpleDoubleProperty();
+    private final DoubleProperty maxPowerMw                     = new SimpleDoubleProperty();
+    private final SimpleIntegerProperty startOfOperationFirst   = new SimpleIntegerProperty();
+    private final SimpleIntegerProperty startOfOperationLast    = new SimpleIntegerProperty();
+    private final DoubleProperty latitude                       = new SimpleDoubleProperty();
+    private final DoubleProperty longitude                      = new SimpleDoubleProperty();
+    private final ObjectProperty<Status> status                 = new SimpleObjectProperty();
+    private final StringProperty waterbodies                    = new SimpleStringProperty();
+    private final StringProperty imageUrl                       = new SimpleStringProperty();
 
     private PowerStationPM() {
     }
 
     public PowerStationPM(String[] line) {
-        setId(Integer.parseInt(line[0]));
-        setName(line[1]);
-        setType(Type.valueOf(line[2]));
-        setSite(line[3]);
+        setId(                                           Integer.parseInt(line[0]));
+        setName(                                                          line[1]);
+        setType(                                             Type.valueOf(line[2]));
+        setSite(                                                          line[3]);
         setCanton((line[4].length() != 2) ? Canton.OTHER : Canton.valueOf(line[4])); // Sets empty cantons as "OTHERS"
-        setMaxWaterVolume(Double.parseDouble(line[5]));
-        setMaxPowerMw(Double.parseDouble(line[6]));
-        setStartOfOperationFirst(Double.parseDouble(line[7]));
-        setStartOfOperationLast(Double.parseDouble(line[8]));
-        setLatitude(Double.parseDouble(line[9]));
-        setLongitude(Double.parseDouble(line[10]));
-        setStatus(defineStatus(line[11]));
-        setWaterbodies(line[12]);
-        setImageUrl(line[13]);
+        setMaxWaterVolume(                             Double.parseDouble(line[5]));
+        setMaxPowerMw(                                 Double.parseDouble(line[6]));
+        setStartOfOperationFirst(                        Integer.parseInt(line[7]));
+        setStartOfOperationLast(                         Integer.parseInt(line[8]));
+        setLatitude(                                   Double.parseDouble(line[9]));
+        setLongitude(                                  Double.parseDouble(line[10]));
+        setStatus(                                           defineStatus(line[11]));
+        setWaterbodies(                                                   line[12]);
+        setImageUrl(                                                      line[13]);
     }
 
     public static PowerStationPM getDefaultPowerStationPM() {
@@ -72,8 +75,8 @@ public class PowerStationPM {
                 getCanton().name(),
                 Double.toString(getMaxWaterVolume()),
                 Double.toString(getMaxPowerMw()),
-                Double.toString(getStartOfOperationFirst()),
-                Double.toString(getStartOfOperationLast()),
+                Integer.toString(getStartOfOperationFirst()),
+                Integer.toString(getStartOfOperationLast()),
                 Double.toString(getLatitude()),
                 Double.toString(getLongitude()),
                 getStatus().name(),
@@ -82,7 +85,6 @@ public class PowerStationPM {
         );
     }
 
-    //TODO review, switch directly in read line???
     public Status defineStatus(String status) {
         Status result;
         switch (status) {
@@ -187,27 +189,28 @@ public class PowerStationPM {
         this.maxPowerMw.set(maxPowerMw);
     }
 
-    public double getStartOfOperationFirst() {
+    public Integer getStartOfOperationFirst() {
         return startOfOperationFirst.get();
     }
 
-    public DoubleProperty startOfOperationFirstProperty() {
+    public IntegerProperty startOfOperationFirstProperty() {
         return startOfOperationFirst;
+
     }
 
-    public void setStartOfOperationFirst(double startOfOperationFirst) {
+    public void setStartOfOperationFirst(Integer startOfOperationFirst) {
         this.startOfOperationFirst.set(startOfOperationFirst);
     }
 
-    public double getStartOfOperationLast() {
+    public Integer getStartOfOperationLast() {
         return startOfOperationLast.get();
     }
 
-    public DoubleProperty startOfOperationLastProperty() {
+    public IntegerProperty startOfOperationLastProperty() {
         return startOfOperationLast;
     }
 
-    public void setStartOfOperationLast(double startOfOperationLast) {
+    public void setStartOfOperationLast(Integer startOfOperationLast) {
         this.startOfOperationLast.set(startOfOperationLast);
     }
 
@@ -279,6 +282,5 @@ public class PowerStationPM {
             }
         }
         return false;
-
     }
 }

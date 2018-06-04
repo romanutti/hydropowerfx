@@ -13,7 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.util.StringConverter;
 
-public class SelectorBar extends BorderPane implements ViewMixin {
+public class ToolbarView extends BorderPane implements ViewMixin {
 
     // constants
     private static final int MAX_LEVENSHTEIN_DISTANCE = 2;
@@ -35,7 +35,7 @@ public class SelectorBar extends BorderPane implements ViewMixin {
     private ChoiceBox languageChoiceBox;
 
 
-    public SelectorBar(RootPM rootPM) {
+    public ToolbarView(RootPM rootPM) {
         this.rootPM = rootPM;
         init();
     }

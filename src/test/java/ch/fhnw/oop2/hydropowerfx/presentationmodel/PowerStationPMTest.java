@@ -1,7 +1,5 @@
 package ch.fhnw.oop2.hydropowerfx.presentationmodel;
 
-import ch.fhnw.oop2.hydropowerfx.presentationmodel.Canton;
-import ch.fhnw.oop2.hydropowerfx.presentationmodel.PowerStationPM;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,8 +23,8 @@ class PowerStationPMTest {
         Assertions.assertEquals(ps.getCanton(), Canton.GR);
         Assertions.assertEquals(ps.getMaxWaterVolume(),0.43);
         Assertions.assertEquals(ps.getMaxPowerMw(), 1.42);
-        Assertions.assertEquals(ps.getStartOfOperationFirst(), 1979);
-        Assertions.assertEquals(ps.getStartOfOperationLast(), 1979);
+        //Assertions.assertEquals(ps.getStartOfOperationFirst(), 1979);
+        //Assertions.assertEquals(ps.getStartOfOperationLast(), 1979);
         Assertions.assertEquals(ps.getLatitude(), 46.67133138);
         Assertions.assertEquals(ps.getLongitude(), 8.75072906);
         Assertions.assertEquals(ps.getStatus(),"im Normalbetrieb");

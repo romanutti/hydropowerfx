@@ -8,7 +8,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
-public class Footer extends VBox implements ViewMixin {
+public class SummaryView extends VBox implements ViewMixin {
     // model
     private final RootPM rootPM;
 
@@ -16,7 +16,7 @@ public class Footer extends VBox implements ViewMixin {
     private TableView<CantonPM> itemTable;
 
 
-    public Footer(RootPM rootPM) {
+    public SummaryView(RootPM rootPM) {
         this.rootPM = rootPM;
         init();
     }
@@ -58,22 +58,22 @@ public class Footer extends VBox implements ViewMixin {
         // sizing
         setMinHeight(150);
         setMaxHeight(220);
-        setPrefWidth(550);
+        setPrefWidth(650);
         setPrefHeight(220);
 
         setVgrow(getItemTable(), Priority.ALWAYS);
 
 
         // table element
-        getTableColumnByName("cantonColumn").setPrefWidth(300);
+        getTableColumnByName("cantonColumn").setPrefWidth(370);
         getTableColumnByName("cantonColumn").setMinWidth(100);
-        getTableColumnByName("cantonColumn").setMaxWidth(300);
+        getTableColumnByName("cantonColumn").setMaxWidth(600);
 
-        getTableColumnByName("totalPowerColumn").setPrefWidth(200);
+        getTableColumnByName("totalPowerColumn").setPrefWidth(150);
         getTableColumnByName("totalPowerColumn").setMinWidth(50);
         getTableColumnByName("totalPowerColumn").setMaxWidth(200);
 
-        getTableColumnByName("powerStationCountColumn").setPrefWidth(200);
+        getTableColumnByName("powerStationCountColumn").setPrefWidth(150);
         getTableColumnByName("powerStationCountColumn").setMinWidth(50);
         getTableColumnByName("powerStationCountColumn").setMaxWidth(200);
 

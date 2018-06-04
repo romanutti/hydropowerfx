@@ -16,9 +16,10 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.converter.NumberStringConverter;
 
+import java.text.DecimalFormat;
 import java.util.Arrays;
 
-public class Overview extends VBox implements ViewMixin {
+public class DetailView extends VBox implements ViewMixin {
     // model
     private final RootPM rootPM;
 
@@ -27,7 +28,7 @@ public class Overview extends VBox implements ViewMixin {
     private Label resultCountLabel;
 
 
-    public Overview(RootPM rootPM) {
+    public DetailView(RootPM rootPM) {
         this.rootPM = rootPM;
         init();
     }
@@ -73,7 +74,7 @@ public class Overview extends VBox implements ViewMixin {
                 ).setMaxPowerMw((Double) t.getNewValue())
         );
 
-        // number column
+        // start of Operations column
         TableColumn<PowerStationPM, Number> startOfOperationFirstColumn = new TableColumn<>("StartOfOperationFirst");
         startOfOperationFirstColumn.setCellValueFactory(cell -> cell.getValue().startOfOperationFirstProperty());
         // enable cell editing
@@ -81,7 +82,7 @@ public class Overview extends VBox implements ViewMixin {
         startOfOperationFirstColumn.setOnEditCommit(
                 t -> ((PowerStationPM) t.getTableView().getItems().get(
                         t.getTablePosition().getRow())
-                ).setStartOfOperationFirst((Long) t.getNewValue())
+                ).setStartOfOperationFirst((Integer) t.getNewValue())
         );
 
         // add columns
