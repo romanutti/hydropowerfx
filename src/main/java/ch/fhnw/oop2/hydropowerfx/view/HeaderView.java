@@ -2,6 +2,8 @@ package ch.fhnw.oop2.hydropowerfx.view;
 
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.PowerStationPM;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
+import ch.fhnw.oop2.hydropowerfx.control.watercontrol.demo.DemoPane;
+import ch.fhnw.oop2.hydropowerfx.control.watercontrol.demo.PresentationModel;
 import javafx.beans.binding.Bindings;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
@@ -25,6 +27,9 @@ public class HeaderView extends HBox implements ViewMixin {
     private Label nameLabel;
     private Label powerLabel;
     private Label startOfOperationFirstLabel;
+    private DemoPane waterControl;
+    private PresentationModel waterControlPM;
+
 
 
     public HeaderView(RootPM rootPM) {
@@ -44,6 +49,8 @@ public class HeaderView extends HBox implements ViewMixin {
         nameLabel = new Label();
         powerLabel = new Label();
         titleLabel = new Label();
+        waterControlPM = new PresentationModel();
+        waterControl = new DemoPane(waterControlPM);
         titleLabel.setId("titleLabel");
         startOfOperationFirstLabel = new Label();
 
@@ -72,7 +79,7 @@ public class HeaderView extends HBox implements ViewMixin {
         labelArea.setVgrow(titleLabel, Priority.ALWAYS);
         labelArea.setVgrow(startOfOperationFirstLabel,Priority.ALWAYS);
 
-        labelArea.getChildren().addAll(titleLabel, nameLabel, powerLabel, startOfOperationFirstLabel);
+        labelArea.getChildren().addAll(titleLabel, nameLabel, powerLabel, startOfOperationFirstLabel, waterControl);
 
         getChildren().addAll(labelArea, imageArea);
 
@@ -95,6 +102,8 @@ public class HeaderView extends HBox implements ViewMixin {
 
         // operationfirst
         startOfOperationFirstLabel.textProperty().bindBidirectional(proxy.startOfOperationFirstProperty(), new NumberStringConverter(YEAR_FORMAT));
+
+        waterControlPM.waterAmountProperty().bindBidirectional(proxy.maxWaterVolumeProperty());
 
     }
 }
