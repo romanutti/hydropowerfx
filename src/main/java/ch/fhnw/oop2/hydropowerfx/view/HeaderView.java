@@ -79,9 +79,9 @@ public class HeaderView extends HBox implements ViewMixin {
         labelArea.setVgrow(titleLabel, Priority.ALWAYS);
         labelArea.setVgrow(startOfOperationFirstLabel,Priority.ALWAYS);
 
-        labelArea.getChildren().addAll(titleLabel, nameLabel, powerLabel, startOfOperationFirstLabel, waterControl);
+        labelArea.getChildren().addAll(titleLabel, nameLabel, powerLabel, startOfOperationFirstLabel);
 
-        getChildren().addAll(labelArea, imageArea);
+        getChildren().addAll(labelArea, imageArea, waterControl);
 
     }
 
