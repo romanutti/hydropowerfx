@@ -152,7 +152,9 @@ public class RootPM {
         allCantons.addAll(getCantons());
 
         // set selected id
-        Platform.runLater(() -> setSelectedId(getFirstPowerStation()));
+        // TODO: Check if can be uncommented without affecting tests
+        //Platform.runLater(() -> setSelectedId(getFirstPowerStation()));
+        setSelectedId(getFirstPowerStation());
         invalidInputEntered.setValue(false);
     }
 
