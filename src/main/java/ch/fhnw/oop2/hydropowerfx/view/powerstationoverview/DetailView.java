@@ -70,7 +70,7 @@ public class DetailView extends VBox implements ViewMixin {
         maxPowerColumn.setOnEditCommit(
                 t -> ((PowerStationPM) t.getTableView().getItems().get(
                         t.getTablePosition().getRow())
-                ).setMaxPowerMw((Double) t.getNewValue())
+                ).setMaxPowerMw(t.getNewValue().doubleValue())
         );
 
         // start of Operations column
@@ -81,7 +81,7 @@ public class DetailView extends VBox implements ViewMixin {
         startOfOperationFirstColumn.setOnEditCommit(
                 t -> ((PowerStationPM) t.getTableView().getItems().get(
                         t.getTablePosition().getRow())
-                ).setStartOfOperationFirst((Integer) t.getNewValue())
+                ).setStartOfOperationFirst(t.getNewValue().intValue())
         );
 
         // add columns
