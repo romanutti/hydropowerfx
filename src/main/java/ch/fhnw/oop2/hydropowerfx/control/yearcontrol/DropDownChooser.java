@@ -231,12 +231,12 @@ class DropDownChooser extends VBox {
                     selYear = Integer.valueOf(newValue);
                 }
 
-                setButtonText(selYear);
-                hiddenYear = selYear;
-
             } catch (Exception e) {
 
             }
+
+            setButtonText(selYear);
+            hiddenYear = selYear;
 
         });
     }

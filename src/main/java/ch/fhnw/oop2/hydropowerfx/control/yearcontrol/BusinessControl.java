@@ -41,7 +41,6 @@ public class BusinessControl extends Control {
 
     private final BooleanProperty invalid = new SimpleBooleanProperty(false) {
         /* MR: Invalidation disabled, as we use our own
-
         @Override
         protected void invalidated() {
             pseudoClassStateChanged(INVALID_CLASS, get());
@@ -49,12 +48,11 @@ public class BusinessControl extends Control {
     };
 
     private final BooleanProperty convertible = new SimpleBooleanProperty(false){
-        /* MR: Invalidation disabled, as we use our own
         @Override
         protected void invalidated()
         {
             pseudoClassStateChanged(CONVERTIBLE_CLASS, get());
-        }*/
+        }
     };
 
     private final BooleanProperty readOnly     = new SimpleBooleanProperty();

@@ -11,8 +11,8 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Popup;
 
 class BusinessSkin extends SkinBase<BusinessControl> {
-    private static final String ANGLE_DOWN = "\uf107";
-    private static final String ANGLE_UP   = "\uf106";
+    private static final String ANGLE_DOWN = "\uf271";
+    private static final String ANGLE_UP   = "\uf272";
 
     private static final String FONTS_CSS = "/fonts/fonts.css";
     private static final String STYLE_CSS = "style.css";
