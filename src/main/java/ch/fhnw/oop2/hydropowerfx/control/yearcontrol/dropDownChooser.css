@@ -1,42 +1,39 @@
 .drop-down-chooser {
     -base-color: transparent;
-    -hover-color: derive(lightgray, 70%);
+    -hover-color: #0093ff ;
 
-    -fx-background-color: rgb(250, 250, 250);
-    -fx-background-radius: 4;
-    -fx-effect: dropshadow(gaussian, rgb(200, 200, 200), 5.0, 0.0, 2, 2);
-
+    -fx-background-color: #EBF5F1;
     -fx-pref-width: 150;
-    -fx-border-width: 1;
-    -fx-border-radius: 4;
-    -fx-border-color: rgb(200, 200, 200);
-    -fx-spacing: 10;
-    -fx-padding: 5;
 }
 
 .year-btns {
     -fx-pref-height: 70px;
     -fx-pref-width: 70px;
     -fx-background-color: -base-color;
+    -fx-text-fill: #999999;
+
 }
 
 .year-btns:hover {
-    -fx-border-color: white;
     -fx-background-color: -hover-color
 }
 
 .year-btns:focused {
-    -fx-border-color: orange;
+    -fx-border-color: #39A67F;
 }
 
 .selected-year {
-    -fx-font-family: 'Roboto Bold';
+    -fx-font-family: 'Helvetica';
     -fx-font-weight: bolder;
+    -fx-text-fill: #999999;
+
 }
 
 .control-btn {
     -fx-background-color: -base-color;
-    -fx-border-color: lightgray;
+    -fx-border-color: -base-color;
+    -fx-text-fill: #999999;
+
 }
 
 .control-btn:hover {

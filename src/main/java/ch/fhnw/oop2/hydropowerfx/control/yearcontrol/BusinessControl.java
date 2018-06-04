@@ -3,6 +3,7 @@ package ch.fhnw.oop2.hydropowerfx.control.yearcontrol;
 import java.util.Calendar;
 import java.util.regex.Pattern;
 
+import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -14,12 +15,15 @@ import javafx.scene.control.Control;
 import javafx.scene.control.Skin;
 
 public class BusinessControl extends Control {
+    private static RootPM rootPM;
+
     private static final PseudoClass MANDATORY_CLASS = PseudoClass.getPseudoClass("mandatory");
-    private static final PseudoClass INVALID_CLASS   = PseudoClass.getPseudoClass("invalid");
+    // MR: Invalidation disabled, as we use our own
+    // private static final PseudoClass INVALID_CLASS   = PseudoClass.getPseudoClass("invalid");
     private static final PseudoClass CONVERTIBLE_CLASS = PseudoClass.getPseudoClass("convertible");
 
 
-    private static final String INTEGER_REGEX    = "[\\d]{1,4}";
+    private static final String INTEGER_REGEX    = "[\\d]{4,4}";
     private static final String CALC_REGEX = "\\d+\\s*[\\+-]\\s*\\d+";
     private static final Pattern INTEGER_PATTERN = Pattern.compile(INTEGER_REGEX);
 
@@ -36,25 +40,29 @@ public class BusinessControl extends Control {
     };
 
     private final BooleanProperty invalid = new SimpleBooleanProperty(false) {
+        /* MR: Invalidation disabled, as we use our own
+
         @Override
         protected void invalidated() {
             pseudoClassStateChanged(INVALID_CLASS, get());
-        }
+        }*/
     };
 
     private final BooleanProperty convertible = new SimpleBooleanProperty(false){
+        /* MR: Invalidation disabled, as we use our own
         @Override
         protected void invalidated()
         {
             pseudoClassStateChanged(CONVERTIBLE_CLASS, get());
-        }
+        }*/
     };
 
     private final BooleanProperty readOnly     = new SimpleBooleanProperty();
     private final StringProperty  errorMessage = new SimpleStringProperty();
 
 
-    public BusinessControl() {
+    public BusinessControl(RootPM model) {
+        this.rootPM = model;
         initializeSelf();
         addValueChangeListener();
     }
@@ -189,6 +197,8 @@ public class BusinessControl extends Control {
 
     public void setInvalid(boolean invalid) {
         this.invalid.set(invalid);
+        // MR: Input validation adapted
+        this.rootPM.setInvalidInputEntered(true);
     }
 
     public String getErrorMessage() {

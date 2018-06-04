@@ -91,8 +91,8 @@ public class EditorView extends GridPane implements ViewMixin {
         cantonChoiceBox = new ChoiceBox();
         maxWaterVolumeTextField = new TextField();
         maxPowerMwTextField = new TextField();
-        startOfOperationFirstTextField = new BusinessControl();
-        startOfOperationLastTextField = new BusinessControl();
+        startOfOperationFirstTextField = new BusinessControl(rootPM);
+        startOfOperationLastTextField = new BusinessControl(rootPM);
         latitudeTextField = new TextField();
         longitudeTextField = new TextField();
         statusChoiceBox = new ChoiceBox();
@@ -231,15 +231,12 @@ public class EditorView extends GridPane implements ViewMixin {
         maxWaterVolumeTextField.textProperty().addListener((ChangeListener<String>) (observable, oldValue, newValue) -> {
             rootPM.isValidInput(newValue, "double");
         });
-        // TODO: Input Validation
-        /*
-        startOfOperationFirstTextField.valueProperty().addListener((ChangeListener<String>) (observable, oldValue, newValue) -> {
-            rootPM.isValidInput(newValue, "int");
+        startOfOperationFirstTextField.valueProperty().addListener( (observable, oldValue, newValue) -> {
+            rootPM.isValidInput(newValue.toString(), "int");
         });
-        startOfOperationLastTextField.valueProperty().addListener((ChangeListener<String>) (observable, oldValue, newValue) -> {
-            rootPM.isValidInput(newValue, "int");
+        startOfOperationLastTextField.valueProperty().addListener( (observable, oldValue, newValue) -> {
+            rootPM.isValidInput(newValue.toString(), "int");
         });
-        */
         longitudeTextField.textProperty().addListener((ChangeListener<String>) (observable, oldValue, newValue) -> {
             rootPM.isValidInput(newValue, "double");
         });

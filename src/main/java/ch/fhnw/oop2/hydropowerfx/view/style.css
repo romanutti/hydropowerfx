@@ -96,6 +96,12 @@
     -fx-background-insets: 0 -1 -1 -1, 0 0 0 0, 0 -1 3 -1;
 }
 
+.editor .business-control {
+    -fx-text-fill: #999999;
+    -fx-background-color: #a9a9a9 , #EBF5F1 , #EBF5F1;
+    -fx-background-insets: 0 -1 -1 -1, 0 0 0 0, 0 -1 3 -1;
+}
+
 /* MR, 31.05.2018: Focusing disabled
 .editor .text-field:focused {
     -fx-background-color: #a9a9a9 , white , white;

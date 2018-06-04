@@ -223,14 +223,21 @@ class DropDownChooser extends VBox {
         selectedYearProperty().addListener((observable, oldValue, newValue) -> {
             int selYear = 0;
 
-            if(newValue.equals("")){
-                selYear = today.get(Calendar.YEAR);
-            } else {
-                selYear = Integer.valueOf(newValue);
+            try {
+
+                if(newValue.equals("")){
+                    selYear = today.get(Calendar.YEAR);
+                } else {
+                    selYear = Integer.valueOf(newValue);
+                }
+
+                setButtonText(selYear);
+                hiddenYear = selYear;
+
+            } catch (Exception e) {
+
             }
 
-            setButtonText(selYear);
-            hiddenYear = selYear;
         });
     }
 
