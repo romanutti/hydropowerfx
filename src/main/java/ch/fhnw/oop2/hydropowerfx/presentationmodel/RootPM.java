@@ -352,13 +352,18 @@ public class RootPM {
                 Integer.parseInt(input);
             } else if (type.equalsIgnoreCase("double")) {
                 Double.parseDouble(input);
+            } else if (type.equalsIgnoreCase("String")) {
+                if (input.length() == 0) {
+                    // String field should not be empty
+                    throw new Exception();
+                }
             }
             setInvalidInputEntered(false);
-            return false ;
+            return false;
 
-        } catch(Exception e) {
+        } catch (Exception e) {
             setInvalidInputEntered(true);
-            return true ;
+            return true;
         }
 
     }

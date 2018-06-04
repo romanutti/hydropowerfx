@@ -165,6 +165,7 @@ public class EditorView extends GridPane implements ViewMixin {
     public void setupValueChangedListeners() {
         // type enum
         typeChoiceBox.setItems(FXCollections.observableArrayList(Type.values()));
+        typeChoiceBox.getSelectionModel().select(rootPM.getPowerStationProxy().getType());
         rootPM.getPowerStationProxy().typeProperty().addListener((observable, oldValue, newValue) -> typeChoiceBox.getSelectionModel().select(newValue));
 
         typeChoiceBox.setConverter(new StringConverter<Type>() {
@@ -226,6 +227,12 @@ public class EditorView extends GridPane implements ViewMixin {
         });
 
         // input validation
+        nameTextField.textProperty().addListener((ChangeListener<String>) (observable, oldValue, newValue) -> {
+            rootPM.isValidInput(newValue, "String");
+        });
+        siteTextField.textProperty().addListener((ChangeListener<String>) (observable, oldValue, newValue) -> {
+            rootPM.isValidInput(newValue, "String");
+        });
         maxPowerMwTextField.textProperty().addListener((ChangeListener<String>) (observable, oldValue, newValue) -> {
             rootPM.isValidInput(newValue, "double");
         });
@@ -239,10 +246,16 @@ public class EditorView extends GridPane implements ViewMixin {
             rootPM.isValidInput(newValue, "int");
         });
         longitudeTextField.textProperty().addListener((ChangeListener<String>) (observable, oldValue, newValue) -> {
-             rootPM.isValidInput(newValue, "double");
+            rootPM.isValidInput(newValue, "double");
         });
         latitudeTextField.textProperty().addListener((ChangeListener<String>) (observable, oldValue, newValue) -> {
             rootPM.isValidInput(newValue, "double");
+        });
+        waterbodiesTextField.textProperty().addListener((ChangeListener<String>) (observable, oldValue, newValue) -> {
+            rootPM.isValidInput(newValue, "String");
+        });
+        imageUrlTextField.textProperty().addListener((ChangeListener<String>) (observable, oldValue, newValue) -> {
+            rootPM.isValidInput(newValue, "String");
         });
 
     }
