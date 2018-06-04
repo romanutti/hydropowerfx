@@ -5,7 +5,7 @@ import java.text.DecimalFormatSymbols;
 import java.util.Locale;
 
 
-public class NumberFormatUtil {
+public abstract class NumberFormatUtil {
 
     public static final DecimalFormat YEAR_FORMAT;
 

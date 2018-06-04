@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static ch.fhnw.oop2.hydropowerfx.util.NumberUtil.*;
+
 public class RootPM {
     // constants
     private static final String FILE_NAME = "/data/HYDRO_POWERSTATION.csv";
@@ -366,11 +368,6 @@ public class RootPM {
             return true;
         }
 
-    }
-
-    private static double round(double value, int precision) {
-        int scale = (int) Math.pow(10, precision);
-        return (double) Math.round(value * scale) / scale;
     }
 
     // getters and setters
