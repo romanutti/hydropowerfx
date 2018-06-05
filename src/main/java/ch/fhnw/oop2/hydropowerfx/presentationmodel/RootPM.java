@@ -372,7 +372,6 @@ public class RootPM {
             setInvalidInputEntered(true);
             return true;
         }
-
     }
 
     // getters and setters

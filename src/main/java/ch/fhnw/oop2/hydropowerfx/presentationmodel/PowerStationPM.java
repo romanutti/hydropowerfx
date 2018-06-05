@@ -2,9 +2,6 @@ package ch.fhnw.oop2.hydropowerfx.presentationmodel;
 
 import javafx.beans.property.*;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-
 public class PowerStationPM {
 
     public enum Type {L, P, S, U}
@@ -195,7 +192,6 @@ public class PowerStationPM {
 
     public IntegerProperty startOfOperationFirstProperty() {
         return startOfOperationFirst;
-
     }
 
     public void setStartOfOperationFirst(Integer startOfOperationFirst) {

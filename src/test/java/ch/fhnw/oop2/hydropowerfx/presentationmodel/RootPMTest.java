@@ -1,5 +1,6 @@
 package ch.fhnw.oop2.hydropowerfx.presentationmodel;
 
+import ch.fhnw.oop2.hydropowerfx.view.HeaderView;
 import javafx.collections.ObservableList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,13 +28,13 @@ class RootPMTest {
     @Test
     void testSave() {
         //when
-        sut.getAllPowerStations().get(0).setName("NNN");
+        sut.getPowerStation(500100).setName("NNN");
         sut.save();
         RootPM secondPM = new RootPM();
 
         //then
         assertEquals(sut.getAllPowerStations().size(), secondPM.getAllPowerStations().size());
-        assertEquals("NNN", secondPM.getAllPowerStations().get(0).getName());
+        assertEquals("NNN", secondPM.getPowerStation(500100).getName());
         for (int i = 0; i < sut.getAllPowerStations().size(); i++) {
             assertEquals(sut.getAllPowerStations().get(i).getName(),
                     secondPM.getAllPowerStations().get(i).getName());
@@ -51,7 +52,7 @@ class RootPMTest {
 
         //then
         assertTrue(allPowerStations.size() > 1);
-        assertEquals(203000, allPowerStations.get(0).getId());
+        assertEquals(700800, allPowerStations.get(0).getId());
         assertEquals(301250, allPowerStations.get(allPowerStations.size() - 1).getId());
     }
 
@@ -95,9 +96,7 @@ class RootPMTest {
 
         //then
         assertEquals(index, sut.getSelectedId());
-
-        //TODO: Nicht-vorhandene ID setzen
-    }
+        }
 
     @Test
     void addPowerStation() {
@@ -287,6 +286,7 @@ class RootPMTest {
     @Test
     void testSearch() {
         //given
+        //sut.getFilteredPowerStations().setPredicate();
 
         //when
 

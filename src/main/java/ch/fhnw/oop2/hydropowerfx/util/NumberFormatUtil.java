@@ -1,9 +1,6 @@
 package ch.fhnw.oop2.hydropowerfx.util;
 
 import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.util.Locale;
-
 
 public abstract class NumberFormatUtil {
 

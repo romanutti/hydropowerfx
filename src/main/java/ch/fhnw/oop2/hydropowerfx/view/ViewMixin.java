@@ -2,9 +2,6 @@ package ch.fhnw.oop2.hydropowerfx.view;
 
 import java.util.List;
 
-/**
- * @author Dieter Holz
- */
 public interface ViewMixin {
 
 	default void init() {

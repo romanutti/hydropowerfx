@@ -1,25 +1,21 @@
 package ch.fhnw.oop2.hydropowerfx.view;
 
-import ch.fhnw.oop2.hydropowerfx.presentationmodel.PowerStationPM;
-import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 import ch.fhnw.oop2.hydropowerfx.control.watercontrol.demo.DemoPane;
 import ch.fhnw.oop2.hydropowerfx.control.watercontrol.demo.PresentationModel;
+import ch.fhnw.oop2.hydropowerfx.presentationmodel.PowerStationPM;
+import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.util.converter.NumberStringConverter;
 
-import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
-
-import static ch.fhnw.oop2.hydropowerfx.util.NumberFormatUtil.*;
+import static ch.fhnw.oop2.hydropowerfx.util.NumberFormatUtil.YEAR_FORMAT;
 
 public class HeaderView extends HBox implements ViewMixin {
 

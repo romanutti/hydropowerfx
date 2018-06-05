@@ -3,9 +3,8 @@ package ch.fhnw.oop2.hydropowerfx.presentationmodel;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-import java.util.Arrays;
-
-import static ch.fhnw.oop2.hydropowerfx.presentationmodel.LanguageSwitcherPM.Lang.*;
+import static ch.fhnw.oop2.hydropowerfx.presentationmodel.LanguageSwitcherPM.Lang.DE;
+import static ch.fhnw.oop2.hydropowerfx.presentationmodel.LanguageSwitcherPM.Lang.EN;
 import static ch.fhnw.oop2.hydropowerfx.presentationmodel.LanguageSwitcherPM.MultiLanguageText.*;
 
 public class LanguageSwitcherPM {

@@ -2,9 +2,6 @@ package ch.fhnw.oop2.hydropowerfx.presentationmodel;
 
 import javafx.beans.property.Property;
 
-/**
- * @author Dieter Holz
- */
 public class ValueChangeCommand<T> implements Command {
     private final RootPM    rootPM;
     private final Property<T> property;
