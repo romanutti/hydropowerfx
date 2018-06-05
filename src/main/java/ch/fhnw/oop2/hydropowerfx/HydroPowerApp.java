@@ -25,6 +25,9 @@ public class HydroPowerApp extends Application {
 		primaryStage.setMinHeight(480);
 
 		primaryStage.show();
+
+        // set selected id
+		model.setSelectedId(model.getFirstPowerStation());
 	}
 
 	public static void main(String[] args) {

@@ -1,6 +1,5 @@
 package ch.fhnw.oop2.hydropowerfx.presentationmodel;
 
-import javafx.application.Platform;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
@@ -23,7 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static ch.fhnw.oop2.hydropowerfx.util.NumberUtil.*;
+import static ch.fhnw.oop2.hydropowerfx.util.NumberUtil.round;
 
 public class RootPM {
     // constants
@@ -156,8 +155,6 @@ public class RootPM {
         // add canton list
         allCantons.addAll(getCantons());
 
-        // set selected id
-        Platform.runLater(() -> setSelectedId(getFirstPowerStation()));
         invalidInputEntered.setValue(false);
     }
 
