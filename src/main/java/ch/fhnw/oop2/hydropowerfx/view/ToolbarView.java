@@ -11,7 +11,6 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import static ch.fhnw.oop2.hydropowerfx.util.LevenshteinUtil.*;
 
 public class ToolbarView extends BorderPane implements ViewMixin {
 
@@ -158,7 +157,7 @@ public class ToolbarView extends BorderPane implements ViewMixin {
 
         /********************************************************************************
          MULTILANGUAGE support functionality
-        *******************************************************************************/
+         *******************************************************************************/
         languageChoiceBox.setItems(FXCollections.observableArrayList(Lang.values()));
         languageChoiceBox.getSelectionModel().select(rootPM.getLanguageSwitcherPM().getCurrentLanguage());
 
@@ -172,64 +171,24 @@ public class ToolbarView extends BorderPane implements ViewMixin {
     public void setupEventHandlers() {
         /********************************************************************************
          ADD/DELETE functionality
-        *******************************************************************************/
+         *******************************************************************************/
         deleteButton.setOnAction(event -> rootPM.removePowerStation());
         createButton.setOnAction(event -> rootPM.addPowerStation());
 
         /********************************************************************************
          UNDO/REDO functionality
-        *******************************************************************************/
+         *******************************************************************************/
         undoButton.setOnAction(event -> rootPM.undo());
         redoButton.setOnAction(event -> rootPM.redo());
     }
 
     @Override
     public void setupValueChangedListeners() {
-        // search functionality
+        /********************************************************************************
+         SEARCH functionality
+         *******************************************************************************/
         searchField.textProperty().addListener((observable, oldValue, newValue) -> {
-            rootPM.getFilteredPowerStations().setPredicate(powerStationPM -> {
-
-                // If filter text is empty, display all powerstations.
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
-                }
-
-                // Check if input value is number
-                try {
-                    Double numberFilter = Double.parseDouble(newValue);
-
-                    if (powerStationPM.getId() == numberFilter) {
-                        return true; // Filter matches id.
-                    }
-
-                } catch (NumberFormatException e) {
-                    // Compare entered value with different attributes
-                    String lowerCaseFilter = newValue.toLowerCase();
-
-                    // compare attributes
-                    if (powerStationPM.getName().toLowerCase().contains(lowerCaseFilter) ||
-                            levenshteinDistance(powerStationPM.getName().toLowerCase(), lowerCaseFilter) <= MAX_LEVENSHTEIN_DISTANCE) {
-                        return true; // Filter matches name.
-                    } else if (powerStationPM.getType().toString().toLowerCase().contains(lowerCaseFilter) ||
-                            levenshteinDistance(powerStationPM.getType().toString().toLowerCase(), lowerCaseFilter) <= MAX_LEVENSHTEIN_DISTANCE) {
-                        return true; // Filter matches type.
-                    } else if (powerStationPM.getCanton().getName().toLowerCase().contains(lowerCaseFilter) ||
-                            levenshteinDistance(powerStationPM.getCanton().getName().toLowerCase(), lowerCaseFilter) <= MAX_LEVENSHTEIN_DISTANCE) {
-                        return true; // Filter matches canton.
-                    } else if (powerStationPM.getStatus().getName().toLowerCase().contains(lowerCaseFilter) ||
-                            levenshteinDistance(powerStationPM.getStatus().getName().toLowerCase(), lowerCaseFilter) <= MAX_LEVENSHTEIN_DISTANCE) {
-                        return true; // Filter matches status.
-                    } else if (powerStationPM.getWaterbodies().toLowerCase().contains(lowerCaseFilter) ||
-                            levenshteinDistance(powerStationPM.getWaterbodies().toLowerCase(), lowerCaseFilter) <= MAX_LEVENSHTEIN_DISTANCE) {
-                        return true; // Filter matches waterbodies.
-                    } else if (powerStationPM.getImageUrl().toLowerCase().contains(lowerCaseFilter) ||
-                            levenshteinDistance(powerStationPM.getImageUrl().toLowerCase(), lowerCaseFilter) <= MAX_LEVENSHTEIN_DISTANCE) {
-                        return true; // Filter matches image url.
-                    }
-                }
-
-                return false; // Does not match.
-            });
+            rootPM.filterMatches(newValue);
         });
 
         /********************************************************************************

@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static ch.fhnw.oop2.hydropowerfx.util.LevenshteinUtil.MAX_LEVENSHTEIN_DISTANCE;
+import static ch.fhnw.oop2.hydropowerfx.util.LevenshteinUtil.levenshteinDistance;
 import static ch.fhnw.oop2.hydropowerfx.util.NumberUtil.round;
 
 public class RootPM {
@@ -360,7 +362,7 @@ public class RootPM {
                     throw new Exception();
                 }
             } else if (type.equalsIgnoreCase("url")) {
-                if (input.length() > 0){
+                if (input.length() > 0) {
                     // Test if url contains image
                     Image testImage = new Image(input);
                 }
@@ -372,6 +374,53 @@ public class RootPM {
             setInvalidInputEntered(true);
             return true;
         }
+    }
+
+    public void filterMatches(String newValue) {
+        getFilteredPowerStations().setPredicate(powerStationPM -> {
+
+            // If filter text is empty, display all powerstations.
+            if (newValue == null || newValue.isEmpty()) {
+                return true;
+            }
+
+            // Check if input value is number
+            try {
+                Double numberFilter = Double.parseDouble(newValue);
+
+                if (powerStationPM.getId() == numberFilter) {
+                    return true; // Filter matches id.
+                }
+
+            } catch (NumberFormatException e) {
+                // Compare entered value with different attributes
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                // compare attributes
+                if (powerStationPM.getName().toLowerCase().contains(lowerCaseFilter) ||
+                        levenshteinDistance(powerStationPM.getName().toLowerCase(), lowerCaseFilter) <= MAX_LEVENSHTEIN_DISTANCE) {
+                    return true; // Filter matches name.
+                } else if (powerStationPM.getType().toString().toLowerCase().contains(lowerCaseFilter) ||
+                        levenshteinDistance(powerStationPM.getType().toString().toLowerCase(), lowerCaseFilter) <= MAX_LEVENSHTEIN_DISTANCE) {
+                    return true; // Filter matches type.
+                } else if (powerStationPM.getCanton().getName().toLowerCase().contains(lowerCaseFilter) ||
+                        levenshteinDistance(powerStationPM.getCanton().getName().toLowerCase(), lowerCaseFilter) <= MAX_LEVENSHTEIN_DISTANCE) {
+                    return true; // Filter matches canton.
+                } else if (powerStationPM.getStatus().getName().toLowerCase().contains(lowerCaseFilter) ||
+                        levenshteinDistance(powerStationPM.getStatus().getName().toLowerCase(), lowerCaseFilter) <= MAX_LEVENSHTEIN_DISTANCE) {
+                    return true; // Filter matches status.
+                } else if (powerStationPM.getWaterbodies().toLowerCase().contains(lowerCaseFilter) ||
+                        levenshteinDistance(powerStationPM.getWaterbodies().toLowerCase(), lowerCaseFilter) <= MAX_LEVENSHTEIN_DISTANCE) {
+                    return true; // Filter matches waterbodies.
+                } else if (powerStationPM.getImageUrl().toLowerCase().contains(lowerCaseFilter) ||
+                        levenshteinDistance(powerStationPM.getImageUrl().toLowerCase(), lowerCaseFilter) <= MAX_LEVENSHTEIN_DISTANCE) {
+                    return true; // Filter matches image url.
+                }
+            }
+
+            return false; // Does not match.
+        });
+
     }
 
     // getters and setters

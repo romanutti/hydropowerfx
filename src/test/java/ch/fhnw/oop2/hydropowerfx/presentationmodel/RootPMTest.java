@@ -281,14 +281,28 @@ class RootPMTest {
         assertEquals((maxPowerGRNew + 10), sut.getTotalPower(Canton.GR));
     }
 
-    //TODO Test for search
     @Test
     void testSearch() {
-        //given
-        //sut.getFilteredPowerStations().setPredicate();
+        // given
+        String dist1 = "Aarberg";
+        String dist2 = "Arbrg";
+        String dist3 = "Aarbitk";
+        String ignoreCase = "aarburg" ;
 
         //when
+        sut.filterMatches(dist1);
+        int size1 = sut.getFilteredPowerStations().size();
+        sut.filterMatches(dist2);
+        int size2 = sut.getFilteredPowerStations().size();
+        sut.filterMatches(dist3);
+        int size3 = sut.getFilteredPowerStations().size();
+        sut.filterMatches(ignoreCase);
+        int size4 = sut.getFilteredPowerStations().size();
 
         //then
+        assertEquals(1, size1);
+        assertEquals(1, size2);
+        assertEquals(0, size3);
+        assertEquals(1, size4);
     }
 }
