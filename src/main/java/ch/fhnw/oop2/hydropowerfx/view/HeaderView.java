@@ -5,14 +5,20 @@ import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 import ch.fhnw.oop2.hydropowerfx.control.watercontrol.demo.DemoPane;
 import ch.fhnw.oop2.hydropowerfx.control.watercontrol.demo.PresentationModel;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.util.converter.NumberStringConverter;
+
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import static ch.fhnw.oop2.hydropowerfx.util.NumberFormatUtil.*;
 
 public class HeaderView extends HBox implements ViewMixin {
@@ -30,6 +36,7 @@ public class HeaderView extends HBox implements ViewMixin {
     private DemoPane waterControl;
     private PresentationModel waterControlPM;
 
+    private Pane spacer;
 
 
     public HeaderView(RootPM rootPM) {
@@ -54,22 +61,19 @@ public class HeaderView extends HBox implements ViewMixin {
         titleLabel.setId("titleLabel");
         startOfOperationFirstLabel = new Label();
 
+        spacer = new Pane();
+
         // image area
         imageArea = new ImageView();
-        Image image = new Image("/images/metrics_icon.png");
-        imageArea.setImage(image);
-
     }
 
     @Override
     public void layoutControls() {
-
         // sizing
         setPadding(new Insets(5));
         setSpacing(5);
 
-        imageArea.setFitHeight(14);
-        imageArea.setFitWidth(14);
+        imageArea.setFitHeight(70);
         imageArea.setPreserveRatio(true);
 
         labelArea.setPrefHeight(70);
@@ -81,7 +85,9 @@ public class HeaderView extends HBox implements ViewMixin {
 
         labelArea.getChildren().addAll(titleLabel, nameLabel, powerLabel, startOfOperationFirstLabel);
 
-        getChildren().addAll(labelArea, imageArea, waterControl);
+        HBox.setHgrow(spacer, Priority.ALWAYS);
+
+        getChildren().addAll(labelArea, spacer, imageArea, waterControl);
 
     }
 
@@ -103,7 +109,31 @@ public class HeaderView extends HBox implements ViewMixin {
         // operationfirst
         startOfOperationFirstLabel.textProperty().bindBidirectional(proxy.startOfOperationFirstProperty(), new NumberStringConverter(YEAR_FORMAT));
 
+        // image area
+        imageArea.visibleProperty().bind(rootPM.photoIconEnabledProperty());
+
+        // custom control
         waterControlPM.waterAmountProperty().bindBidirectional(proxy.maxWaterVolumeProperty());
 
+    }
+
+    public void setupValueChangedListeners() {
+        PowerStationPM proxy = rootPM.getPowerStationProxy();
+        // refresh Image
+        proxy.imageUrlProperty().addListener((observable, oldValue, newValue) -> {
+            imageArea.setImage(getImage(newValue));
+
+        });
+    }
+
+    private Image getImage(String url) {
+        Image image;
+
+        try {
+            image = new Image(url);
+        } catch (Exception e) {
+            image = new Image("images/invalid_icon.png");
+        }
+        return image;
     }
 }

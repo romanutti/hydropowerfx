@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.scene.image.Image;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -360,6 +361,11 @@ public class RootPM {
                 if (input.length() == 0) {
                     // String field should not be empty
                     throw new Exception();
+                }
+            } else if (type.equalsIgnoreCase("url")) {
+                if (input.length() > 0){
+                    // Test if url contains image
+                    Image testImage = new Image(input);
                 }
             }
             setInvalidInputEntered(false);

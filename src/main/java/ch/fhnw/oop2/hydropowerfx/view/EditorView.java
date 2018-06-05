@@ -260,12 +260,9 @@ public class EditorView extends GridPane implements ViewMixin {
         waterbodiesTextField.textProperty().addListener((ChangeListener<String>) (observable, oldValue, newValue) -> {
             rootPM.isValidInput(newValue, "String");
         });
-        /* MR: Removed, as input url is not mandatory
         imageUrlTextField.textProperty().addListener((ChangeListener<String>) (observable, oldValue, newValue) -> {
-            rootPM.isValidInput(newValue, "String");
-
+            rootPM.isValidInput(newValue, "url");
         });
-        */
     }
 
     @Override
