@@ -35,6 +35,7 @@ class RootPMTest {
         assertEquals(sut.getAllPowerStations().size(), secondPM.getAllPowerStations().size());
         assertEquals("NNN", secondPM.getPowerStation(500100).getName());
         for (int i = 0; i < sut.getAllPowerStations().size(); i++) {
+            //TODO test fail on different devices
             assertEquals(sut.getAllPowerStations().get(i).getName(),
                     secondPM.getAllPowerStations().get(i).getName());
         }
@@ -46,6 +47,7 @@ class RootPMTest {
 
     @Test
     void testGetAllPowerStations() {
+        //TODO test fail on different devices
         //given
         ObservableList<PowerStationPM> allPowerStations = sut.getAllPowerStations();
 
