@@ -140,6 +140,18 @@
     -fx-padding: 5 0 0 0;
 }
 
+.editor #imageButton{
+    -fx-background-image: url("/images/photo_icon.png");
+    -fx-background-size: 15px;
+    -fx-background-repeat: no-repeat;
+}
+
+.editor #imageButton:hover{
+    -fx-background-image: url("/images/photo_icon_hover.png");
+    -fx-background-size: 15px;
+    -fx-background-repeat: no-repeat;
+}
+
 /* ======================= footer settings ==================================================== */
 .footer {
     -fx-background-color: #EBF5F1;

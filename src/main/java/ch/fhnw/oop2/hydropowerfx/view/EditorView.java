@@ -9,12 +9,11 @@ import ch.fhnw.oop2.hydropowerfx.presentationmodel.Status;
 import javafx.beans.value.ChangeListener;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
+import javafx.scene.layout.*;
 import javafx.util.StringConverter;
 import javafx.util.converter.NumberStringConverter;
 import static ch.fhnw.oop2.hydropowerfx.util.NumberFormatUtil.*;
@@ -24,6 +23,9 @@ public class EditorView extends GridPane implements ViewMixin {
     private final RootPM rootPM;
 
     // gui elements
+    private HBox imageUrlArea;
+    private Button imageButton;
+
     private Label nameLabel;
     private Label typeLabel;
     private Label siteLabel;
@@ -66,6 +68,10 @@ public class EditorView extends GridPane implements ViewMixin {
 
     @Override
     public void initializeControls() {
+        imageUrlArea = new HBox();
+        imageButton = new Button();
+        nameLabel = new Label();
+
         // labels
         nameLabel = new Label();
         typeLabel = new Label();
@@ -99,6 +105,9 @@ public class EditorView extends GridPane implements ViewMixin {
         waterbodiesTextField = new TextField();
         imageUrlTextField = new TextField();
 
+        // image area
+        imageButton.setId("imageButton");
+
     }
 
     @Override
@@ -111,6 +120,11 @@ public class EditorView extends GridPane implements ViewMixin {
         setVgap(3);
         // padding
         setPadding(new Insets(5, 5, 5, 5));
+
+        // photo icon
+        imageUrlLabel.setPadding(new Insets(0,5, 0, 0));
+        imageUrlArea.getChildren().addAll(imageUrlLabel, imageButton);
+
 
         // grid setup
         ColumnConstraints cc = new ColumnConstraints();
@@ -128,7 +142,7 @@ public class EditorView extends GridPane implements ViewMixin {
         add(latitudeLabel, 0, 4);
         add(statusLabel, 0, 5);
         add(waterbodiesLabel, 0, 6);
-        add(imageUrlLabel, 0, 7);
+        add(imageUrlArea, 0, 7);
         add(inputValidatorLabel, 0, 8, 4, 1);
 
         add(typeLabel, 2, 0);
@@ -246,10 +260,12 @@ public class EditorView extends GridPane implements ViewMixin {
         waterbodiesTextField.textProperty().addListener((ChangeListener<String>) (observable, oldValue, newValue) -> {
             rootPM.isValidInput(newValue, "String");
         });
+        /* MR: Removed, as input url is not mandatory
         imageUrlTextField.textProperty().addListener((ChangeListener<String>) (observable, oldValue, newValue) -> {
             rootPM.isValidInput(newValue, "String");
-        });
 
+        });
+        */
     }
 
     @Override
@@ -331,6 +347,9 @@ public class EditorView extends GridPane implements ViewMixin {
         imageUrlTextField.textProperty().bindBidirectional(proxy.imageUrlProperty());
         // disable on no selection
         imageUrlTextField.disableProperty().bind(rootPM.labelsEnabledProperty());
+        // disable image icon if no url entered
+        imageButton.visibleProperty().bind(rootPM.photoIconEnabledProperty());
+
 
         // input validation
         inputValidatorLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().inputValidationTextProperty());

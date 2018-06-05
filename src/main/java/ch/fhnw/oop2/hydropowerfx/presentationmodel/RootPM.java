@@ -55,6 +55,7 @@ public class RootPM {
     private final BooleanProperty redoDisabled = new SimpleBooleanProperty();
     private final BooleanProperty deleteEnabled = new SimpleBooleanProperty();
     private final BooleanProperty labelsEnabled = new SimpleBooleanProperty();
+    private final BooleanProperty photoIconEnabled = new SimpleBooleanProperty();
 
     private final ChangeListener propertyChangeListenerForUndoSupport = (observable, oldValue, newValue) -> {
         redoStack.clear();
@@ -132,6 +133,7 @@ public class RootPM {
         // enable components
         undoDisabled.bind(Bindings.isEmpty(undoStack));
         redoDisabled.bind(Bindings.isEmpty(redoStack));
+        photoIconEnabled.bind(Bindings.isNotEmpty(powerStationProxy.imageUrlProperty()));
 
         // setup proxy bindings
         selectedIdProperty().addListener((observable, oldValue, newValue) -> {
@@ -438,6 +440,18 @@ public class RootPM {
 
     public void setDeleteEnabled(boolean deleteEnabled) {
         this.deleteEnabled.set(deleteEnabled);
+    }
+
+    public boolean isPhotoIconEnabled() {
+        return photoIconEnabled.get();
+    }
+
+    public BooleanProperty photoIconEnabledProperty() {
+        return photoIconEnabled;
+    }
+
+    public void setPhotoIconEnabled(boolean photoIconEnabled) {
+        this.photoIconEnabled.set(photoIconEnabled);
     }
 
     public int getIndexOfPowerStation(int id) {
