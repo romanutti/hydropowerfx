@@ -2,9 +2,10 @@ package ch.fhnw.oop2.hydropowerfx.presentationmodel;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 class PowerStationPMTest {
+
+    //TODO Review
     private PowerStationPM ps;
 
     @BeforeEach
@@ -31,15 +32,6 @@ class PowerStationPMTest {
         Assertions.assertEquals(ps.getWaterbodies(),"Aua da Milez");
         Assertions.assertEquals(ps.getImageUrl(), "www.hydro.ch/images");
 
-    }
-
-    @Test
-    void infoAsLine() {
-        //before
-
-        //when
-
-        //then
     }
 
 

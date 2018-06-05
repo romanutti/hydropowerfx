@@ -1,8 +1,8 @@
 package ch.fhnw.oop2.hydropowerfx.presentationmodel;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class LanguageSwitcherPMTest {
 
