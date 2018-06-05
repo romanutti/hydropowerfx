@@ -1,13 +1,11 @@
 package ch.fhnw.oop2.hydropowerfx.presentationmodel;
 
-import ch.fhnw.oop2.hydropowerfx.HydroPowerApp;
 import javafx.collections.ObservableList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-//TODO: Disable RUN later for testing!!!
 
 class RootPMTest {
     private RootPM sut;
@@ -21,7 +19,7 @@ class RootPMTest {
 
         //then
 
-       //assertTrue(sut.getAllPowerStations().size() > 0);
+        assertTrue(sut.getAllPowerStations().size() > 0);
         assertEquals(sut.getSelectedId(), 0);
 
     }
@@ -75,19 +73,6 @@ class RootPMTest {
 
         //then
         assertEquals("HydroPowerFX Wasserkraftwerke der Schweiz", sut.getLanguageSwitcherPM().getApplicationTitle());
-    }
-
-
-    @Test
-    void setApplicationTitle() {
-        //given
-        String title = "TefalPower";
-
-        //when
-        //sut.setApplicationTitle(title);
-
-        //then
-        //assertEquals(title, sut.getApplicationTitle());
     }
 
     @Test
@@ -208,8 +193,8 @@ class RootPMTest {
         //when
 
         //then
-        //assertEquals(sumZh, sut.getTotalPower(Canton.ZH).doubleValue(), 0.01);
-        //assertEquals(sumAg, sut.getTotalPower(Canton.AG).doubleValue(), 0.01);
+        assertEquals(sumZh, sut.getTotalPower(Canton.ZH), 0.1);
+        assertEquals(sumAg, sut.getTotalPower(Canton.AG), 0.1);
     }
 
     @Test
@@ -244,15 +229,64 @@ class RootPMTest {
     @Test
     void undo() {
         //before
+        sut.setSelectedId(101300);
+        String name = sut.getPowerStationProxy().getName();
+        sut.getPowerStationProxy().setName("abc");
 
         //when
+        sut.undo();
 
         //then
+        assertEquals(name,sut.getPowerStationProxy().getName());
     }
 
     @Test
     void redo() {
         //before
+        sut.setSelectedId(101300);
+        String name = sut.getPowerStationProxy().getName();
+        sut.getPowerStationProxy().setName("abc");
+        sut.undo();
+
+        //when
+        sut.redo();
+
+        //then
+        assertEquals(name,sut.getPowerStationProxy().getName());
+    }
+
+    @Test
+    void testProxy() {
+        //given
+
+        //when
+        sut.setSelectedId(101300);
+
+        //then
+        assertEquals(sut.getPowerStation(101300).getId()  , sut.getPowerStationProxy().getId());
+        assertEquals(sut.getPowerStation(101300).getName(), sut.getPowerStationProxy().getName());
+        assertEquals(sut.getPowerStation(101300).getMaxWaterVolume(), sut.getPowerStationProxy().getMaxWaterVolume());
+    }
+
+    @Test
+    void testSummaryFunction() {
+        //given
+        sut.setSelectedId(101300);
+        double maxPowerGR = sut.getTotalPower(Canton.GR);
+        double maxPowerSelected = sut.getPowerStationProxy().getMaxPowerMw();
+        double maxPowerGRNew = maxPowerGR - maxPowerSelected;
+
+        //when
+        sut.getPowerStationProxy().setMaxPowerMw(10);
+
+        //then
+        assertEquals((maxPowerGRNew + 10), sut.getTotalPower(Canton.GR));
+    }
+
+    //TODO Test for search
+    @Test
+    void testSearch() {
+        //given
 
         //when
 
