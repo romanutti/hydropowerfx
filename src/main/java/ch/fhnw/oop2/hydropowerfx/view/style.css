@@ -88,6 +88,9 @@
 /* ======================= editor settings ==================================================== */
 .editor {
     -fx-background-color: #EBF5F1;
+    -fx-hgap: 10;
+    -fx-vgap: 3;
+    -fx-padding: 5,5,5,5;
 }
 
 .editor .label {
