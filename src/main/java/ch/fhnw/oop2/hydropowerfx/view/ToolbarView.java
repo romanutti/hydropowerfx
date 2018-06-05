@@ -62,6 +62,16 @@ public class ToolbarView extends BorderPane implements ViewMixin {
     @Override
     public void layoutControls() {
 
+        /********************************************************************************
+         LAYOUT
+         Layouting sources:
+         - View classes: via css
+         - Added items: via java
+         ********************************************************************************/
+
+        /********************************************************************************
+         TOOLBAR formattig
+         *******************************************************************************/
         //sizing
         setMargin(saveButton, new Insets(1));
         setMargin(createButton, new Insets(1));
@@ -73,7 +83,6 @@ public class ToolbarView extends BorderPane implements ViewMixin {
         setPadding(new Insets(5));
 
         searchField.setMaxWidth(170);
-
 
         // button images
         Image imageSave = new Image("/images/save_icon.png");
@@ -117,7 +126,6 @@ public class ToolbarView extends BorderPane implements ViewMixin {
         undoButton.setGraphic(imageUndoArea);
         redoButton.setGraphic(imageRedoArea);
 
-
         // control bar
         ColumnConstraints cc = new ColumnConstraints();
         ColumnConstraints ccFix = new ColumnConstraints();
@@ -136,7 +144,6 @@ public class ToolbarView extends BorderPane implements ViewMixin {
         controlBar.setPadding(new Insets(0, 18, 0, 17));
         controlBar.setHgap(5);
 
-
         // image area
         imageArea = new ImageView();
         Image image = new Image("/images/drop_icon.png");
@@ -149,8 +156,9 @@ public class ToolbarView extends BorderPane implements ViewMixin {
         titleArea.setAlignment(Pos.CENTER_LEFT);
         titleArea.setPadding(new Insets(10, 0, 50, 12));
 
-
-        // multilanguage-support
+        /********************************************************************************
+         MULTILANGUAGE support functionality
+        *******************************************************************************/
         languageChoiceBox.setItems(FXCollections.observableArrayList(Lang.values()));
         languageChoiceBox.getSelectionModel().select(rootPM.getLanguageSwitcherPM().getCurrentLanguage());
 
@@ -162,9 +170,15 @@ public class ToolbarView extends BorderPane implements ViewMixin {
 
     @Override
     public void setupEventHandlers() {
+        /********************************************************************************
+         ADD/DELETE functionality
+        *******************************************************************************/
         deleteButton.setOnAction(event -> rootPM.removePowerStation());
         createButton.setOnAction(event -> rootPM.addPowerStation());
 
+        /********************************************************************************
+         UNDO/REDO functionality
+        *******************************************************************************/
         undoButton.setOnAction(event -> rootPM.undo());
         redoButton.setOnAction(event -> rootPM.redo());
     }
@@ -218,7 +232,9 @@ public class ToolbarView extends BorderPane implements ViewMixin {
             });
         });
 
-        // multilanguage-support
+        /********************************************************************************
+         MULTILANGUAGE support functionality
+         *******************************************************************************/
         languageChoiceBox.getSelectionModel().selectedItemProperty().addListener((ChangeListener<Lang>) (observable, oldValue, newValue) -> {
             rootPM.getLanguageSwitcherPM().setLanguage(newValue);
         });
@@ -226,11 +242,15 @@ public class ToolbarView extends BorderPane implements ViewMixin {
 
     @Override
     public void setupBindings() {
-        // multilanguage support
+        /********************************************************************************
+         MULTILANGUAGE support functionality
+         *******************************************************************************/
         titleLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().applicationNameProperty());
         searchField.promptTextProperty().bind(rootPM.getLanguageSwitcherPM().searchTextfieldTextProperty());
 
-        // enable/disable buttons
+        /********************************************************************************
+         ENABLE/DISABLE buttons functionality
+         *******************************************************************************/
         deleteButton.disableProperty().bind(rootPM.deleteEnabledProperty());
         undoButton.disableProperty().bind(rootPM.undoDisabledProperty());
         redoButton.disableProperty().bind(rootPM.redoDisabledProperty());

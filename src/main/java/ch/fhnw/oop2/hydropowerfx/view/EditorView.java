@@ -113,18 +113,19 @@ public class EditorView extends GridPane implements ViewMixin {
     @Override
     public void layoutControls() {
 
-        /********************************************************************************
-         LAYOUT
-         Layouting sources:
-         - View classes: via css
-         - Added items: via java
-         ********************************************************************************/
+        // sizing
+        // horizontal gap
+        setHgap(10);
+        // vertical gap
+        setVgap(3);
+        // padding
+        setPadding(new Insets(5, 5, 5, 5));
 
         /********************************************************************************
          IMAGE label formatting
          ********************************************************************************/
         // photo icon
-        imageUrlLabel.setPadding(new Insets(0, 5, 0, 0));
+        imageUrlLabel.setPadding(new Insets(0,5, 0, 0));
         imageUrlArea.getChildren().addAll(imageUrlLabel, imageButton);
 
         /********************************************************************************

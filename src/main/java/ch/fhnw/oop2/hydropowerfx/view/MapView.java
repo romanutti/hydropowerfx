@@ -6,6 +6,7 @@ import javafx.geometry.Insets;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
@@ -14,7 +15,6 @@ import java.net.URLEncoder;
 
 public class MapView extends HBox implements ViewMixin {
 
-    // contants
     private static final String DEFAULT_CENTER_LOCATION_ = "Schweiz";
     private static final String GOOGLE_API_KEY = "AIzaSyAzMrORyFTTVCWFlAeKcSfhWr7lkq3VRnQ";
 
@@ -29,7 +29,6 @@ public class MapView extends HBox implements ViewMixin {
         this.rootPM = rootPM;
         init();
     }
-
 
     @Override
     public void initializeSelf() {
@@ -53,10 +52,10 @@ public class MapView extends HBox implements ViewMixin {
         setMaxHeight(215);
         //setHgrow(imageArea, Priority.ALWAYS);
 
-        // image area
+        /********************************************************************************
+         IMAGE area formatting
+         *******************************************************************************/
         imageArea.setFitHeight(210);
-        //imageArea.setPreserveRatio(true);
-        //imageArea.setSmooth(false);
 
         // padding
         setPadding(new Insets(5));
@@ -70,7 +69,9 @@ public class MapView extends HBox implements ViewMixin {
     public void setupValueChangedListeners() {
         PowerStationPM proxy = rootPM.getPowerStationProxy();
 
-        // refresh Image
+        /********************************************************************************
+         REFRESH IMAGE functionality
+        ********************************************************************************/
         // change of center
         proxy.siteProperty().addListener((observable, oldValue, newValue) -> {
             try {

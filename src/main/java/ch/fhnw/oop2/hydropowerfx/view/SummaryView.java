@@ -23,7 +23,7 @@ public class SummaryView extends VBox implements ViewMixin {
 
     @Override
     public void initializeSelf() {
-        getStyleClass().add("footer");
+        getStyleClass().add("summary");
     }
 
     @Override
@@ -34,18 +34,18 @@ public class SummaryView extends VBox implements ViewMixin {
     private TableView<CantonPM> initializeCantonTable() {
         TableView<CantonPM> tableView = new TableView<>(rootPM.getAllCantons());
 
+        /********************************************************************************
+         INITIALIZE table
+         ********************************************************************************/
         // name column
         TableColumn<CantonPM, String> nameColumn = new TableColumn<>("cantonColumn");
         nameColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getCanton().getName()));
-
         // totalpower column
         TableColumn<CantonPM, String> maxPowerColumn = new TableColumn<>("totalPowerColumn");
         maxPowerColumn.setCellValueFactory(cell -> cell.getValue().totalPowerMwProperty());
-
         // powerstationcount column
         TableColumn<CantonPM, Number> powerStationCountColumn = new TableColumn<>("powerStationCountColumn");
         powerStationCountColumn.setCellValueFactory(cell -> cell.getValue().powerStationCountProperty());
-
         tableView.getColumns().addAll(nameColumn, maxPowerColumn, powerStationCountColumn);
 
         return tableView;
@@ -63,7 +63,9 @@ public class SummaryView extends VBox implements ViewMixin {
 
         setVgrow(getItemTable(), Priority.ALWAYS);
 
-
+        /********************************************************************************
+         ITEM TABLE formatting
+         ********************************************************************************/
         // table element
         getTableColumnByName("cantonColumn").setPrefWidth(370);
         getTableColumnByName("cantonColumn").setMinWidth(100);
@@ -77,14 +79,18 @@ public class SummaryView extends VBox implements ViewMixin {
         getTableColumnByName("powerStationCountColumn").setMinWidth(50);
         getTableColumnByName("powerStationCountColumn").setMaxWidth(200);
 
-        itemTable.setMinWidth(USE_COMPUTED_SIZE);
+        itemTable.setMinWidth(650);
+        setVgrow(getItemTable(), Priority.ALWAYS);
+
         getChildren().addAll(getItemTable());
 
     }
 
     @Override
     public void setupBindings() {
-        // multilanguage support
+        /********************************************************************************
+         MULTILANGUAGE support functionality
+         ********************************************************************************/
         getTableColumnByName("cantonColumn").textProperty().bind(rootPM.getLanguageSwitcherPM().cantonColumnTextProperty());
         getTableColumnByName("totalPowerColumn").textProperty().bind(rootPM.getLanguageSwitcherPM().totalPowerMwColumnTextProperty());
         getTableColumnByName("powerStationCountColumn").textProperty().bind(rootPM.getLanguageSwitcherPM().powerStationCountColumnTextProperty());
@@ -93,6 +99,9 @@ public class SummaryView extends VBox implements ViewMixin {
 
     @Override
     public void setupValueChangedListeners() {
+        /********************************************************************************
+         SELECTED item functionality
+         ********************************************************************************/
         rootPM.selectedIdProperty().addListener((observable, oldValue, newValue) -> itemTable.getSelectionModel().select(((int) newValue)));
     }
 

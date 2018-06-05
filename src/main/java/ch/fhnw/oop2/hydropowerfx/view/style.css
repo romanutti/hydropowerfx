@@ -26,6 +26,7 @@
 /* ======================= selector bar settings ==================================================== */
 .button {
     -fx-background-color: #EBF5F1;
+    -fx-padding: 5 5 5 5;
 }
 
 .selectorbar .text-field {
@@ -156,9 +157,23 @@
     -fx-background-repeat: no-repeat;
 }
 
-/* ======================= footer settings ==================================================== */
-.footer {
+/* ======================= summary settings ==================================================== */
+.summary {
     -fx-background-color: #EBF5F1;
+    -fx-min-height: 200;
+    -fx-max-height: 220;
+    -fx-pref-height: 220;
+    -fx-pref-width: 650;
+}
+
+
+/* ======================= map settings ==================================================== */
+.map {
+    -fx-min-height: 150;
+    -fx-max-height: 220;
+    -fx-pref-height: 220;
+    -fx-padding: 5;
+    -fx-spacing: 5;
 }
 
 /* ======================= tables ==================================================== */

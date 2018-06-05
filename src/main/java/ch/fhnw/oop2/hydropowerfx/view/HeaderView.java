@@ -134,7 +134,7 @@ public class HeaderView extends HBox implements ViewMixin {
 
         /********************************************************************************
          REFRESH IMAGE functionality
-         ********************************************************************************/
+        ********************************************************************************/
         proxy.imageUrlProperty().addListener((observable, oldValue, newValue) -> {
             imageArea.setImage(getImage(newValue)); // refresh Image
 
