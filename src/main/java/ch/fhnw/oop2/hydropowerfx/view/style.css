@@ -75,7 +75,10 @@
 /* ======================= header settings ==================================================== */
 .header {
     -fx-background-color: #EBF5F1;
+    -fx-padding: 5;
+    -fx-spacing: 5;
 }
+
 .header .label {
     -fx-text-fill: #999999;
 }

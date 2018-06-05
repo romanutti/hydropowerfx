@@ -278,7 +278,7 @@ public class EditorView extends GridPane implements ViewMixin {
 
         /********************************************************************************
          BINDINGS
-         ********************************************************************************/
+        ********************************************************************************/
         // name
         nameLabel.textProperty().bind(rootPM.getLanguageSwitcherPM().nameLabelTextProperty());
         nameTextField.textProperty().bindBidirectional(proxy.nameProperty());
@@ -318,7 +318,7 @@ public class EditorView extends GridPane implements ViewMixin {
 
         /********************************************************************************
          DISABLE on no selection functionality
-         ********************************************************************************/
+        ********************************************************************************/
         nameTextField.disableProperty().bind(rootPM.labelsEnabledProperty());
         typeChoiceBox.disableProperty().bind(rootPM.labelsEnabledProperty());
         siteTextField.disableProperty().bind(rootPM.labelsEnabledProperty());

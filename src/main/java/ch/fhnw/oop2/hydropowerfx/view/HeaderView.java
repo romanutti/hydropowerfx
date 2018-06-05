@@ -5,15 +5,15 @@ import ch.fhnw.oop2.hydropowerfx.control.watercontrol.demo.PresentationModel;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.PowerStationPM;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 import javafx.beans.binding.Bindings;
-import javafx.geometry.Insets;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.converter.NumberStringConverter;
+
+import static ch.fhnw.oop2.hydropowerfx.util.ImageUtil.*;
 
 import static ch.fhnw.oop2.hydropowerfx.util.NumberFormatUtil.YEAR_FORMAT;
 
@@ -65,23 +65,33 @@ public class HeaderView extends HBox implements ViewMixin {
 
     @Override
     public void layoutControls() {
-        // sizing
-        setPadding(new Insets(5));
-        setSpacing(5);
 
+        /********************************************************************************
+         LAYOUT
+         Layouting sources:
+         - View classes: via css
+         - Added items: via java
+         ********************************************************************************/
+
+        /********************************************************************************
+         IMAGE area formatting
+         *******************************************************************************/
         imageArea.setFitHeight(70);
         imageArea.setPreserveRatio(true);
 
+        /********************************************************************************
+         LABEL area formatting
+         *******************************************************************************/
         labelArea.setPrefHeight(70);
         labelArea.setMinHeight(70);
         labelArea.setVgrow(nameLabel, Priority.ALWAYS);
         labelArea.setVgrow(powerLabel, Priority.ALWAYS);
         labelArea.setVgrow(titleLabel, Priority.ALWAYS);
-        labelArea.setVgrow(startOfOperationFirstLabel,Priority.ALWAYS);
+        labelArea.setVgrow(startOfOperationFirstLabel, Priority.ALWAYS);
 
         labelArea.getChildren().addAll(titleLabel, nameLabel, powerLabel, startOfOperationFirstLabel);
-
         HBox.setHgrow(spacer, Priority.ALWAYS);
+
 
         getChildren().addAll(labelArea, spacer, imageArea, waterControl);
 
@@ -91,23 +101,29 @@ public class HeaderView extends HBox implements ViewMixin {
     public void setupBindings() {
         PowerStationPM proxy = rootPM.getPowerStationProxy();
 
+        /********************************************************************************
+         BINDINGS
+         ********************************************************************************/
         // title
         titleLabel.textProperty().bind(proxy.nameProperty());
-
         // name
         nameLabel.textProperty().bind(Bindings.concat(proxy.nameProperty(), ", ", proxy.cantonProperty()));
-
         // power
         powerLabel.textProperty().bind(Bindings.concat(
                 Bindings.selectString(proxy.maxWaterVolumeProperty()), " MW") // add suffix "MW"
         );
-
         // operationfirst
         startOfOperationFirstLabel.textProperty().bindBidirectional(proxy.startOfOperationFirstProperty(), new NumberStringConverter(YEAR_FORMAT));
 
+        /********************************************************************************
+         HIDE image if no url entered
+         ********************************************************************************/
         // image area
         imageArea.visibleProperty().bind(rootPM.photoIconEnabledProperty());
 
+        /********************************************************************************
+         CUSTOM CONTROL functionality
+         ********************************************************************************/
         // custom control
         waterControlPM.waterAmountProperty().bindBidirectional(proxy.maxWaterVolumeProperty());
 
@@ -115,21 +131,15 @@ public class HeaderView extends HBox implements ViewMixin {
 
     public void setupValueChangedListeners() {
         PowerStationPM proxy = rootPM.getPowerStationProxy();
-        // refresh Image
+
+        /********************************************************************************
+         REFRESH IMAGE functionality
+         ********************************************************************************/
         proxy.imageUrlProperty().addListener((observable, oldValue, newValue) -> {
-            imageArea.setImage(getImage(newValue));
+            imageArea.setImage(getImage(newValue)); // refresh Image
 
         });
     }
 
-    private Image getImage(String url) {
-        Image image;
 
-        try {
-            image = new Image(url);
-        } catch (Exception e) {
-            image = new Image("images/invalid_icon.png");
-        }
-        return image;
-    }
 }
