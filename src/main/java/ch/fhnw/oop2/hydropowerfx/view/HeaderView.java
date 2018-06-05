@@ -82,7 +82,7 @@ public class HeaderView extends HBox implements ViewMixin {
         /********************************************************************************
          LABEL area formatting
          *******************************************************************************/
-        labelArea.setPrefHeight(70);
+        labelArea.setPrefHeight(100);
         labelArea.setMinHeight(70);
         labelArea.setVgrow(nameLabel, Priority.ALWAYS);
         labelArea.setVgrow(powerLabel, Priority.ALWAYS);
