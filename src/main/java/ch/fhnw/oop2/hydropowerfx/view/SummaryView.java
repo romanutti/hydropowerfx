@@ -23,7 +23,7 @@ public class SummaryView extends VBox implements ViewMixin {
 
     @Override
     public void initializeSelf() {
-        getStyleClass().add("overview");
+        getStyleClass().add("footer");
     }
 
     @Override
