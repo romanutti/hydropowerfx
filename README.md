@@ -3,9 +3,53 @@
 ## Bearbeitet von
 - Marco Romanutti
 - Malte Gerboth
+## Custom Control von
+- Fabio Strappazzon und Janis Angst
+- Fabian Bissig und Magdalena Marinkov
 ## Abgabe
 - Mittwoch, 6.6.2018, 18:00 Uhr
 - Die Abgabe erfolgt durch ein "Push" auf den Master-Branch in Ihrem GitHub-Repository.
+
+## Implementierte Features
+- Einhalten der Bewerten Programmstruktur
+	- Keine Abhängigkeiten zwischen UI's
+		§ Saubere Teilung in unabhängige Teile
+		§ Angemessene Datenstrukturen
+		§ Gute Erweiterung um weitere Feautres
+	- Klare Trennung von Was und Wie -> Beispiele
+	- Presentation Model Konzept
+- Undo / Redo
+- Custom Controls
+	- Jahresauswahl [Yearcontrol]
+	- Wasser Level Anzeige [Watervolume]
+- Überarbeitung des UI
+	- Komplexes Styling in CSS
+- Enums
+	- Type
+	- Canton
+	- Language
+	- Lang
+- UI Elements
+	- ChoiceBox Sprache
+	- ChoiceBox für Enums in Editor
+	- Grafisches Icon in Toolbar
+	- Grafische Anzeige für Zusatzfeatures bei Image Url: Bild Anzeige
+- Geografische Anzeige des Kraftwerks
+	- Reaktionen auf Canton
+	- Reaktionen auf Longitute and Latitute
+- Anzeige Wappen der Kantone in DetailView
+- Sinnvolles Resizing
+- Sprache
+	- Enum Multilanguage
+	- Mehrsprachigkeit
+- Input Validation
+	- Grafische anzeige bei Fehlereingabe
+	- Fehlerhafte Eingabe wird sauber gehandelt
+- Util
+	- Formatierung Util für Jahreszahl [Header und DetailTable]
+- Testfälle
+	- Für alle Presentation Models
+
 
 ## Aufgabe: HydroPowerFX
 
