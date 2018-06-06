@@ -196,7 +196,7 @@
     -fx-background-color: #EBF5F1;
     -fx-min-height: 150;
     -fx-max-height: 220;
-    -fx-pref-height: 220;
+    -fx-pref-height: 300;
     -fx-padding: 5 5 5 5;
 }
 
@@ -205,5 +205,5 @@
     -fx-min-height: 150;
     -fx-max-height: 220;
     -fx-max-width: 300;
-    -fx-pref-height: 220;
+    -fx-pref-height: 300;
 }
