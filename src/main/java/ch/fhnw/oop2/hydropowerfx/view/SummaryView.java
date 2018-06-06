@@ -69,7 +69,7 @@ public class SummaryView extends HBox implements ViewMixin {
          ITEM TABLE formatting
          ********************************************************************************/
         // table element
-        getTableColumnByName("cantonColumn").setPrefWidth(370);
+        getTableColumnByName("cantonColumn").setPrefWidth(320);
         getTableColumnByName("cantonColumn").setMinWidth(100);
         getTableColumnByName("cantonColumn").setMaxWidth(600);
 
@@ -77,7 +77,7 @@ public class SummaryView extends HBox implements ViewMixin {
         getTableColumnByName("totalPowerColumn").setMinWidth(50);
         getTableColumnByName("totalPowerColumn").setMaxWidth(200);
 
-        getTableColumnByName("powerStationCountColumn").setPrefWidth(120);
+        getTableColumnByName("powerStationCountColumn").setPrefWidth(130);
         getTableColumnByName("powerStationCountColumn").setMinWidth(50);
         getTableColumnByName("powerStationCountColumn").setMaxWidth(200);
 
