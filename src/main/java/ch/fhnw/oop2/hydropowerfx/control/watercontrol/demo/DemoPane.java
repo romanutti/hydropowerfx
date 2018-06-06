@@ -29,7 +29,7 @@ public class DemoPane extends BorderPane {
     }
 
     private void initializeControls() {
-        setPadding(new Insets(10));
+        setPadding(new Insets(10, 0,10, 10));
 
         waterLevelControl = new WaterLevelControl();
         waterLevelSlider = new WaterLevelSlider(presentationModel);

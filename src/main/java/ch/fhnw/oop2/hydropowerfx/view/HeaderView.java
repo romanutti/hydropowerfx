@@ -5,6 +5,7 @@ import ch.fhnw.oop2.hydropowerfx.control.watercontrol.demo.PresentationModel;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.PowerStationPM;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 import javafx.beans.binding.Bindings;
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -24,6 +25,7 @@ public class HeaderView extends HBox implements ViewMixin {
 
     // gui elements
     private VBox labelArea;
+    private VBox imageBox;
     private ImageView imageArea;
     private Label titleLabel;
     private Label nameLabel;
@@ -49,6 +51,7 @@ public class HeaderView extends HBox implements ViewMixin {
     public void initializeControls() {
         // label area
         labelArea = new VBox();
+        imageBox = new VBox();
         nameLabel = new Label();
         powerLabel = new Label();
         titleLabel = new Label();
@@ -76,7 +79,9 @@ public class HeaderView extends HBox implements ViewMixin {
         /********************************************************************************
          IMAGE area formatting
          *******************************************************************************/
-        imageArea.setFitHeight(70);
+        imageBox.setPadding(new Insets(50,0,10,0));
+        imageBox.getChildren().add(imageArea);
+        imageArea.setFitHeight(60);
         imageArea.setPreserveRatio(true);
 
         /********************************************************************************

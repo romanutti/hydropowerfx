@@ -5,10 +5,11 @@ import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
-public class SummaryView extends VBox implements ViewMixin {
+public class SummaryView extends HBox implements ViewMixin {
     // model
     private final RootPM rootPM;
 
@@ -62,7 +63,7 @@ public class SummaryView extends VBox implements ViewMixin {
          - Added items: via java
          ********************************************************************************/
 
-        setVgrow(getItemTable(), Priority.ALWAYS);
+        setHgrow(getItemTable(), Priority.ALWAYS);
 
         /********************************************************************************
          ITEM TABLE formatting
@@ -81,7 +82,7 @@ public class SummaryView extends VBox implements ViewMixin {
         getTableColumnByName("powerStationCountColumn").setMaxWidth(200);
 
         itemTable.setMinWidth(650);
-        setVgrow(getItemTable(), Priority.ALWAYS);
+        setHgrow(getItemTable(), Priority.ALWAYS);
 
         getChildren().addAll(getItemTable());
 

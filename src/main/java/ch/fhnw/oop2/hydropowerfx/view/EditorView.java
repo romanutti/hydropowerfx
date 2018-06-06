@@ -122,14 +122,14 @@ public class EditorView extends GridPane implements ViewMixin {
 
         /********************************************************************************
          IMAGE label formatting
-         ********************************************************************************/
+        ********************************************************************************/
         // photo icon
         imageUrlLabel.setPadding(new Insets(0,5, 0, 0));
         imageUrlArea.getChildren().addAll(imageUrlLabel, imageButton);
 
         /********************************************************************************
          GRID setup
-         ********************************************************************************/
+        ********************************************************************************/
         ColumnConstraints cc = new ColumnConstraints();
         ColumnConstraints ccFix = new ColumnConstraints();
         cc.setHgrow(Priority.ALWAYS);
@@ -174,7 +174,7 @@ public class EditorView extends GridPane implements ViewMixin {
     public void setupValueChangedListeners() {
         /********************************************************************************
          ENUM functionality
-         ********************************************************************************/
+        ********************************************************************************/
         // type enum
         typeChoiceBox.setItems(FXCollections.observableArrayList(Type.values()));
         typeChoiceBox.getSelectionModel().select(rootPM.getPowerStationProxy().getType());

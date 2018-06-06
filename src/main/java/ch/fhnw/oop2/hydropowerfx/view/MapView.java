@@ -54,11 +54,8 @@ public class MapView extends HBox implements ViewMixin {
         /********************************************************************************
          IMAGE area formatting
          *******************************************************************************/
-        imageArea.setFitHeight(210);
+        imageArea.setFitHeight(220);
 
-        // padding
-        setPadding(new Insets(5));
-        setSpacing(5);
 
         getChildren().addAll(imageArea);
 
