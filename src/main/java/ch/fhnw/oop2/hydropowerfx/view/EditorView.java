@@ -72,7 +72,6 @@ public class EditorView extends GridPane implements ViewMixin {
     public void initializeControls() {
         imageUrlArea = new HBox();
         imageButton = new Button();
-        nameLabel = new Label();
 
         // labels
         nameLabel = new Label();

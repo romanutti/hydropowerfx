@@ -187,7 +187,7 @@
 
 .editor #imageButton{
     -fx-background-image: url("/images/photo_icon.png");
-    -fx-background-size: 15px;
+    -fx-background-size: 10px;
     -fx-background-repeat: no-repeat;
 }
 
