@@ -1,5 +1,6 @@
 package ch.fhnw.oop2.hydropowerfx.control.watercontrol.demo;
 
+import ch.fhnw.oop2.hydropowerfx.control.watercontrol.custom.ImageControl;
 import ch.fhnw.oop2.hydropowerfx.control.watercontrol.custom.WaterAmount;
 import ch.fhnw.oop2.hydropowerfx.control.watercontrol.custom.WaterLevelControl;
 import ch.fhnw.oop2.hydropowerfx.control.watercontrol.custom.WaterLevelSlider;
@@ -14,6 +15,8 @@ public class DemoPane extends BorderPane {
 
     // Water level control that displays the water level
     private WaterLevelControl waterLevelControl;
+    // MR: Image control added
+    private ImageControl imageControl;
     // Water level slider that allows changing the water level
     private WaterLevelSlider waterLevelSlider;
     // all controls
@@ -32,6 +35,7 @@ public class DemoPane extends BorderPane {
         setPadding(new Insets(10, 0,10, 10));
 
         waterLevelControl = new WaterLevelControl();
+        imageControl = new ImageControl();
         waterLevelSlider = new WaterLevelSlider(presentationModel);
         waterLevelSlider.setOrientation(Orientation.VERTICAL);
         waterAmount = new WaterAmount(presentationModel);
@@ -40,7 +44,8 @@ public class DemoPane extends BorderPane {
     private void layoutControls() {
        // VBox controlPane = new VBox(new Label("Wasserpegel"), waterAmount); //Falls Slider gewünscht hier noch waterLevelSlider
 
-        setCenter(waterLevelControl);
+        setCenter(imageControl);
+        setRight(waterLevelControl);
        // setRight(controlPane);
 
     }
@@ -85,5 +90,13 @@ public class DemoPane extends BorderPane {
         waterLevelSlider.valueProperty().addListener((observable, oldValue, newValue) -> {
 
         });
+    }
+
+    public ImageControl getImageControl() {
+        return imageControl;
+    }
+
+    public void setImageControl(ImageControl imageControl) {
+        this.imageControl = imageControl;
     }
 }

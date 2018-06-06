@@ -5,17 +5,14 @@ import ch.fhnw.oop2.hydropowerfx.control.watercontrol.demo.PresentationModel;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.PowerStationPM;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 import javafx.beans.binding.Bindings;
-import javafx.geometry.Insets;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.converter.NumberStringConverter;
 
-import static ch.fhnw.oop2.hydropowerfx.util.ImageUtil.*;
-
+import static ch.fhnw.oop2.hydropowerfx.util.ImageUtil.getImage;
 import static ch.fhnw.oop2.hydropowerfx.util.NumberFormatUtil.YEAR_FORMAT;
 
 public class HeaderView extends HBox implements ViewMixin {
@@ -25,8 +22,6 @@ public class HeaderView extends HBox implements ViewMixin {
 
     // gui elements
     private VBox labelArea;
-    private VBox imageBox;
-    private ImageView imageArea;
     private Label titleLabel;
     private Label nameLabel;
     private Label powerLabel;
@@ -51,7 +46,6 @@ public class HeaderView extends HBox implements ViewMixin {
     public void initializeControls() {
         // label area
         labelArea = new VBox();
-        imageBox = new VBox();
         nameLabel = new Label();
         powerLabel = new Label();
         titleLabel = new Label();
@@ -61,9 +55,6 @@ public class HeaderView extends HBox implements ViewMixin {
         startOfOperationFirstLabel = new Label();
 
         spacer = new Pane();
-
-        // image area
-        imageArea = new ImageView();
     }
 
     @Override
@@ -75,14 +66,6 @@ public class HeaderView extends HBox implements ViewMixin {
          - View classes: via css
          - Added items: via java
          ********************************************************************************/
-
-        /********************************************************************************
-         IMAGE area formatting
-         *******************************************************************************/
-        imageBox.setPadding(new Insets(50,0,10,0));
-        imageBox.getChildren().add(imageArea);
-        imageArea.setFitHeight(60);
-        imageArea.setPreserveRatio(true);
 
         /********************************************************************************
          LABEL area formatting
@@ -98,7 +81,7 @@ public class HeaderView extends HBox implements ViewMixin {
         HBox.setHgrow(spacer, Priority.ALWAYS);
 
 
-        getChildren().addAll(labelArea, spacer, imageArea, waterControl);
+        getChildren().addAll(labelArea, spacer, waterControl);
 
     }
 
@@ -124,7 +107,8 @@ public class HeaderView extends HBox implements ViewMixin {
          HIDE image if no url entered
          ********************************************************************************/
         // image area
-        imageArea.visibleProperty().bind(rootPM.photoIconEnabledProperty());
+        waterControl.getImageControl().visibleProperty().bind(rootPM.photoIconEnabledProperty());
+
 
         /********************************************************************************
          CUSTOM CONTROL functionality
@@ -141,8 +125,7 @@ public class HeaderView extends HBox implements ViewMixin {
          REFRESH IMAGE functionality
         ********************************************************************************/
         proxy.imageUrlProperty().addListener((observable, oldValue, newValue) -> {
-            imageArea.setImage(getImage(newValue)); // refresh Image
-
+            waterControl.getImageControl().setImage(getImage(newValue)); // refresh Image
         });
     }
 
