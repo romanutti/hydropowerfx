@@ -1,7 +1,6 @@
 package ch.fhnw.oop2.hydropowerfx.presentationmodel;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class PowerStationPMTest {
