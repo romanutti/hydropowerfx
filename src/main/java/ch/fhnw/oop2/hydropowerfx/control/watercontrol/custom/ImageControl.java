@@ -16,8 +16,8 @@ import javafx.scene.text.TextBoundsType;
 
 public class ImageControl extends Region {
 
-    private static final double ARTBOARD_WIDTH = 200;
-    private static final double ARTBOARD_HEIGHT = 200;
+    private static final double ARTBOARD_WIDTH = 400;
+    private static final double ARTBOARD_HEIGHT = 400;
     private static final double ARTBOARD_WAVE_HEIGHT = 10;
     private static final double ASPECT_RATIO = ARTBOARD_WIDTH / ARTBOARD_HEIGHT;
     private static final double MINIMUM_WIDTH = 50;
@@ -55,8 +55,8 @@ public class ImageControl extends Region {
         waterImageView = new ImageView();
         waterImageView.setPreserveRatio(true);
         waterImageView.setImage(waterImage);
-        waterImageView.setFitWidth(ARTBOARD_WIDTH + ARTBOARD_WAVE_HEIGHT * 2);
-        waterImageView.setFitHeight(ARTBOARD_HEIGHT * 2 + ARTBOARD_WAVE_HEIGHT);
+        waterImageView.setFitWidth(400);
+        waterImageView.setFitHeight(400);
 
         // Um das Runde "Gauge" zu simulieren, clippen wir den Viewport auf einen Circle
         backgroundClipCircle = new Circle(ARTBOARD_WIDTH * 0.5 , ARTBOARD_HEIGHT * 0.5 , ARTBOARD_HEIGHT * 0.5);

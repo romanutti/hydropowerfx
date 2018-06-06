@@ -9,7 +9,7 @@ import javafx.geometry.Orientation;
 import javafx.scene.layout.*;
 
 
-public class DemoPane extends Pane {
+public class DemoPane extends StackPane {
 
     private final PresentationModel presentationModel;
 
@@ -33,8 +33,6 @@ public class DemoPane extends Pane {
     }
 
     private void initializeControls() {
-        //setPadding(new Insets(10, 0,10, 10));
-
         waterLevelControl = new WaterLevelControl();
         imageControl = new ImageControl();
         waterLevelSlider = new WaterLevelSlider(presentationModel);
@@ -44,15 +42,12 @@ public class DemoPane extends Pane {
     }
 
     private void layoutControls() {
-       // VBox controlPane = new VBox(new Label("Wasserpegel"), waterAmount); //Falls Slider gewünscht hier noch waterLevelSlider
+        setMaxWidth(100);
+        setPadding(new Insets(5,10,5,5));
 
-        setMaxWidth(10);
         controlArea.getChildren().addAll(imageControl, waterLevelControl);
-        setMaxHeight(10);
+        controlArea.setSpacing(10);
         getChildren().addAll(controlArea);
-        setPadding(new Insets(0,0,0,0));
-        //setRight(waterLevelControl);
-       // setRight(controlPane);
 
     }
 

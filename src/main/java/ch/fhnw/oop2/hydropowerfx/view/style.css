@@ -102,7 +102,7 @@
 .overview {
     -fx-background-color: #EBF5F1;
     -fx-min-width: 350;
-    -fx-max-width: 500;
+    -fx-max-width: 400;
     -fx-pref-width: 300;
     -fx-max-height: 1000 ;
     -fx-padding: 5 5 5 5;
