@@ -81,7 +81,6 @@ public class SummaryView extends HBox implements ViewMixin {
         getTableColumnByName("powerStationCountColumn").setMinWidth(50);
         getTableColumnByName("powerStationCountColumn").setMaxWidth(200);
 
-        itemTable.setMinWidth(650);
         setHgrow(getItemTable(), Priority.ALWAYS);
 
         getChildren().addAll(getItemTable());
