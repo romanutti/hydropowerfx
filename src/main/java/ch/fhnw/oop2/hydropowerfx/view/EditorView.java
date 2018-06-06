@@ -113,15 +113,6 @@ public class EditorView extends GridPane implements ViewMixin {
     @Override
     public void layoutControls() {
 
-        // TODO: In CSS übernehmen
-        // sizing
-        // horizontal gap
-        setHgap(10);
-        // vertical gap
-        setVgap(3);
-        // padding
-        setPadding(new Insets(5, 5, 5, 5));
-
         /********************************************************************************
          LAYOUT
          Layouting sources:

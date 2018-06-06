@@ -61,9 +61,6 @@ public class ToolbarView extends BorderPane implements ViewMixin {
     @Override
     public void layoutControls() {
 
-        //TODO: In CSS übernehmen
-        setPadding(new Insets(5));
-
         /********************************************************************************
          LAYOUT
          Layouting sources:

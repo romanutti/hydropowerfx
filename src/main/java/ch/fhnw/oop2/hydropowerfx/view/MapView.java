@@ -44,15 +44,6 @@ public class MapView extends HBox implements ViewMixin {
     @Override
     public void layoutControls() {
 
-        // TODO: In CSS übernehmen
-        // sizing
-        setMinHeight(150);
-        setPrefWidth(220);
-        setMaxWidth(220);
-        setPrefHeight(215);
-        setMaxHeight(215);
-        //setHgrow(imageArea, Priority.ALWAYS);
-
         /********************************************************************************
          LAYOUT
          Layouting sources:

@@ -59,6 +59,10 @@
     -fx-padding: 5 5 5 5;
 }
 
+.selectorbar {
+    -fx-padding: 5;
+}
+
 .selectorbar .text-field {
     -fx-text-fill: #ffffff;
     -fx-prompt-text-fill: #ffffff; /* colour of prompted default text */
@@ -190,16 +194,14 @@
 /* ======================= summary settings ==================================================== */
 .summary {
     -fx-background-color: #EBF5F1;
-    -fx-min-height: 200;
+    -fx-min-height: 210;
     -fx-max-height: 220;
     -fx-pref-height: 220;
-    -fx-pref-width: 650;
 }
-
 
 /* ======================= map settings ==================================================== */
 .map {
-    -fx-min-height: 150;
+    -fx-min-height: 210;
     -fx-max-height: 220;
     -fx-pref-height: 220;
     -fx-padding: 5;
