@@ -42,8 +42,8 @@ public class DemoPane extends StackPane {
     }
 
     private void layoutControls() {
-        setMaxWidth(100);
-        setPadding(new Insets(5,10,5,5));
+        setMaxWidth(30);
+        setPadding(new Insets(5,15,5,5));
 
         controlArea.getChildren().addAll(imageControl, waterLevelControl);
         controlArea.setSpacing(10);
