@@ -10,7 +10,7 @@ public abstract class ImageUtil {
         try {
             image = new Image(url);
         } catch (Exception e) {
-            image = new Image("images/invalid_icon.png");
+            image = new Image("images/empty_icon.png");
         }
         return image;
     }

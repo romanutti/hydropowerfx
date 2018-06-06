@@ -205,6 +205,6 @@
 .map {
     -fx-min-height: 210;
     -fx-max-height: 220;
+    -fx-max-width: 300;
     -fx-pref-height: 220;
-    -fx-padding: 5 5 5 5;
 }

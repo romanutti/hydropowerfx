@@ -62,7 +62,7 @@ public class ApplicationUI extends BorderPane implements ViewMixin {
 
         setTop(toolbarView);
         setCenter(verticalMainSP);
-        setMinWidth(USE_PREF_SIZE);
+        //setMinWidth(USE_PREF_SIZE);
     }
 
     @Override

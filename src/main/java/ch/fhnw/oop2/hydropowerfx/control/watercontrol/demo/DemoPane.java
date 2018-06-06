@@ -6,10 +6,10 @@ import ch.fhnw.oop2.hydropowerfx.control.watercontrol.custom.WaterLevelControl;
 import ch.fhnw.oop2.hydropowerfx.control.watercontrol.custom.WaterLevelSlider;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.*;
 
 
-public class DemoPane extends BorderPane {
+public class DemoPane extends Pane {
 
     private final PresentationModel presentationModel;
 
@@ -21,6 +21,7 @@ public class DemoPane extends BorderPane {
     private WaterLevelSlider waterLevelSlider;
     // all controls
     private WaterAmount waterAmount;
+    private HBox controlArea;
 
 
     public DemoPane(PresentationModel presentationModel) {
@@ -32,20 +33,25 @@ public class DemoPane extends BorderPane {
     }
 
     private void initializeControls() {
-        setPadding(new Insets(10, 0,10, 10));
+        //setPadding(new Insets(10, 0,10, 10));
 
         waterLevelControl = new WaterLevelControl();
         imageControl = new ImageControl();
         waterLevelSlider = new WaterLevelSlider(presentationModel);
         waterLevelSlider.setOrientation(Orientation.VERTICAL);
         waterAmount = new WaterAmount(presentationModel);
+        controlArea = new HBox();
     }
 
     private void layoutControls() {
        // VBox controlPane = new VBox(new Label("Wasserpegel"), waterAmount); //Falls Slider gewünscht hier noch waterLevelSlider
 
-        setCenter(imageControl);
-        setRight(waterLevelControl);
+        setMaxWidth(10);
+        controlArea.getChildren().addAll(imageControl, waterLevelControl);
+        setMaxHeight(10);
+        getChildren().addAll(controlArea);
+        setPadding(new Insets(0,0,0,0));
+        //setRight(waterLevelControl);
        // setRight(controlPane);
 
     }
