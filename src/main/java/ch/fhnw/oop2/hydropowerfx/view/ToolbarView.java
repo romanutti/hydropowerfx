@@ -61,6 +61,9 @@ public class ToolbarView extends BorderPane implements ViewMixin {
     @Override
     public void layoutControls() {
 
+        //TODO: In CSS übernehmen
+        setPadding(new Insets(5));
+
         /********************************************************************************
          LAYOUT
          Layouting sources:
@@ -78,8 +81,6 @@ public class ToolbarView extends BorderPane implements ViewMixin {
         setMargin(undoButton, new Insets(1));
         setMargin(redoButton, new Insets(1));
         setMargin(searchField, new Insets(1));
-
-        setPadding(new Insets(5));
 
         searchField.setMaxWidth(170);
 
@@ -143,7 +144,9 @@ public class ToolbarView extends BorderPane implements ViewMixin {
         controlBar.setPadding(new Insets(0, 18, 0, 17));
         controlBar.setHgap(5);
 
-        // image area
+        /********************************************************************************
+         TITLE formattig
+        *******************************************************************************/
         imageArea = new ImageView();
         Image image = new Image("/images/drop_icon.png");
         imageArea.setImage(image);

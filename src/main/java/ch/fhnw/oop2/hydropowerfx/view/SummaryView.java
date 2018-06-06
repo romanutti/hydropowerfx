@@ -55,11 +55,19 @@ public class SummaryView extends VBox implements ViewMixin {
     @Override
     public void layoutControls() {
 
+        // TODO: In CSS übernehmen
         // sizing
         setMinHeight(150);
         setMaxHeight(220);
         setPrefWidth(650);
         setPrefHeight(220);
+
+        /********************************************************************************
+         LAYOUT
+         Layouting sources:
+         - View classes: via css
+         - Added items: via java
+         ********************************************************************************/
 
         setVgrow(getItemTable(), Priority.ALWAYS);
 
