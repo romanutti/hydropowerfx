@@ -42,11 +42,11 @@ public class DemoPane extends StackPane {
     }
 
     private void layoutControls() {
-        setMaxWidth(30);
-        setPadding(new Insets(5,15,5,5));
+        setMaxWidth(40);
+        //setPadding(new Insets(5,15,5,5));
 
         controlArea.getChildren().addAll(imageControl, waterLevelControl);
-        controlArea.setSpacing(10);
+        //controlArea.setSpacing(10);
         getChildren().addAll(controlArea);
 
     }

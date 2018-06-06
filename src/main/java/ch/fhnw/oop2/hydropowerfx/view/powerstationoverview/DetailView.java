@@ -71,6 +71,7 @@ public class DetailView extends VBox implements ViewMixin {
 
         itemTable.setEditable(true); // enable cell editing
         itemTable.setMinWidth(USE_COMPUTED_SIZE); // set min size
+        itemTable.setPrefWidth(USE_COMPUTED_SIZE); // set min size
         setVgrow(itemTable, Priority.ALWAYS); // set vertical grow
 
 
