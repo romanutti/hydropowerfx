@@ -12,7 +12,6 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.util.converter.NumberStringConverter;
 
-import static ch.fhnw.oop2.hydropowerfx.util.ImageUtil.getImage;
 import static ch.fhnw.oop2.hydropowerfx.util.NumberFormatUtil.YEAR_FORMAT;
 
 public class HeaderView extends HBox implements ViewMixin {
@@ -104,30 +103,11 @@ public class HeaderView extends HBox implements ViewMixin {
         startOfOperationFirstLabel.textProperty().bindBidirectional(proxy.startOfOperationFirstProperty(), new NumberStringConverter(YEAR_FORMAT));
 
         /********************************************************************************
-         HIDE image if no url entered
-         ********************************************************************************/
-        // image area
-        waterControl.getImageControl().visibleProperty().bind(rootPM.photoIconEnabledProperty());
-
-
-        /********************************************************************************
          CUSTOM CONTROL functionality
          ********************************************************************************/
         // custom control
         waterControlPM.waterAmountProperty().bindBidirectional(proxy.maxWaterVolumeProperty());
 
     }
-
-    public void setupValueChangedListeners() {
-        PowerStationPM proxy = rootPM.getPowerStationProxy();
-
-        /********************************************************************************
-         REFRESH IMAGE functionality
-        ********************************************************************************/
-        proxy.imageUrlProperty().addListener((observable, oldValue, newValue) -> {
-            waterControl.getImageControl().setImage(getImage(newValue)); // refresh Image
-        });
-    }
-
 
 }
