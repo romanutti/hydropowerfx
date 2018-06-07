@@ -4,6 +4,8 @@ import javafx.collections.ObservableList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Comparator;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -35,14 +37,19 @@ class RootPMTest {
         //then
         assertEquals(sut.getAllPowerStations().size(), secondPM.getAllPowerStations().size());
         assertEquals("NNN", secondPM.getPowerStation(id).getName());
-        for (int i = 0; i < sut.getAllPowerStations().size(); i++) {
-            //TODO test fail on different devices due to different sorting in out\data\ressource\HYDRO_POWERSTATION.csv
-            assertEquals(sut.getAllPowerStations().get(i).getName(),
-                    secondPM.getAllPowerStations().get(i).getName());
+
+        // sort list for comparison, as list internally get sort in a different order
+        secondPM.getAllPowerStations().sort(Comparator.comparing(PowerStationPM::getId));
+        sut.getAllPowerStations().sort(Comparator.comparing(PowerStationPM::getId));
+
+        for (int i = 1; i < sut.getAllPowerStations().size(); i++) {
+                //TODO test fail on different devices due to different sorting in out\data\ressource\HYDRO_POWERSTATION.csv
+
+                assertEquals(sut.getAllPowerStations().get(i).getName(), secondPM.getAllPowerStations().get(i).getName());
         }
 
         //after
-        sut.getPowerStation(id).setName("1er Palier Isérables c. Arcay");
+        sut.getPowerStation(id).setName("Val Giuf");
         sut.save();
     }
 

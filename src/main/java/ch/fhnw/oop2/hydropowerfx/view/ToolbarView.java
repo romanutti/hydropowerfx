@@ -170,6 +170,11 @@ public class ToolbarView extends BorderPane implements ViewMixin {
     @Override
     public void setupEventHandlers() {
         /********************************************************************************
+         SAVE functionality
+         *******************************************************************************/
+        saveButton.setOnAction(event -> rootPM.save());
+
+        /********************************************************************************
          ADD/DELETE functionality
          *******************************************************************************/
         deleteButton.setOnAction(event -> rootPM.removePowerStation());

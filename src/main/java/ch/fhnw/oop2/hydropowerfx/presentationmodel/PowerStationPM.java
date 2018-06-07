@@ -71,14 +71,14 @@ public class PowerStationPM {
                 getName(),
                 getType().name(),
                 getSite(),
-                getCanton().name(),
+                (getCanton().equals(Canton.OTHER) ? "" : getCanton().name()),
                 Double.toString(getMaxWaterVolume()),
                 Double.toString(getMaxPowerMw()),
                 Integer.toString(getStartOfOperationFirst()),
                 Integer.toString(getStartOfOperationLast()),
                 Double.toString(getLatitude()),
                 Double.toString(getLongitude()),
-                getStatus().name(),
+                getStatus().getName(),
                 getWaterbodies(),
                 getImageUrl()
         );

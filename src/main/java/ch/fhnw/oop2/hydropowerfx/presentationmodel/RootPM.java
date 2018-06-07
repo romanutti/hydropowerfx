@@ -258,6 +258,7 @@ public class RootPM {
             writer.newLine();
             allPowerStations.stream()
                     .map(powerStation -> powerStation.infoAsLine(DELIMITER))
+                    .sorted()
                     .forEach(line -> {
                         try {
                             writer.write(line);
