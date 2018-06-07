@@ -26,7 +26,7 @@ class CantonTableCell extends TableCell<PowerStationPM, Canton> {
             Image img = WAPPEN.get(item);
 
             if (img == null) {
-                img = new Image(getClass().getResource("wappen_klein/" + Canton.getCanton(canton) + ".png")
+                img = new Image(getClass().getResource("/images/wappen_klein/" + Canton.getCanton(canton) + ".png")
                         .toExternalForm(), 18, 18, true, true, true);
                 WAPPEN.put(canton, img);
             }
