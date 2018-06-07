@@ -53,14 +53,14 @@ public class DemoPane extends StackPane {
         // Bindings for the water level Control
         waterLevelControl.valueProperty().bindBidirectional(presentationModel.waterLevelValueProperty());
         //Bindings for the water amount
-        waterAmount.amountWaterProperty().bindBidirectional(presentationModel.waterAmountProperty());//TODO: muss an die richtige Wassermenge vom oop2 projekt gebunden werden
+        waterAmount.amountWaterProperty().bindBidirectional(presentationModel.waterAmountProperty());
     }
 
     private void setupVelueChangeListener() {
         waterAmount.amountWaterProperty().addListener((observable, oldValue, newValue) -> {
             double max = 1500;
             double min = 0;
-            double value = waterAmount.getAmountWater(); //TODO: Beispiels wert, sollte später Amount of Kraftwerk sein
+            double value = waterAmount.getAmountWater();
 
             double range = waterAmount.percentageAmountOfAllWater(value, min, max);
             //je nach range wird der Slider angepasst

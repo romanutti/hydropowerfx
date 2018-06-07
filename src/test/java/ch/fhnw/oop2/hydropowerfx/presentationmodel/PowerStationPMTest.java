@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 
 class PowerStationPMTest {
 
-    //TODO Review
     private PowerStationPM ps;
 
     @Test

@@ -43,8 +43,6 @@ class RootPMTest {
         sut.getAllPowerStations().sort(Comparator.comparing(PowerStationPM::getId));
 
         for (int i = 1; i < sut.getAllPowerStations().size(); i++) {
-                //TODO test fail on different devices due to different sorting in out\data\ressource\HYDRO_POWERSTATION.csv
-
                 assertEquals(sut.getAllPowerStations().get(i).getName(), secondPM.getAllPowerStations().get(i).getName());
         }
 

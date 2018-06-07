@@ -5,7 +5,7 @@ import javafx.beans.property.*;
 public class PresentationModel {
     // All the properties waiting for being displayed
     private final StringProperty demoTitle = new SimpleStringProperty("Wasserpegel Applikation");
-    private final DoubleProperty waterAmount   = new SimpleDoubleProperty(50.0) ;//TODO: init value muss herausgenommen werden
+    private final DoubleProperty waterAmount   = new SimpleDoubleProperty(50.0) ;
     private final DoubleProperty waterLevelValue = new SimpleDoubleProperty();
     private final StringProperty waterLevelLabel = new SimpleStringProperty();
 

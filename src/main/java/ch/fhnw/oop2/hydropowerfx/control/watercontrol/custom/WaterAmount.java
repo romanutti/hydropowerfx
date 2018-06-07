@@ -11,7 +11,7 @@ public class WaterAmount extends Region {
 
     private PresentationModel presentationModel;
     private DoubleProperty amountWater = new SimpleDoubleProperty();
-    private TextField amountWaterLebel; //TODO: change to label
+    private TextField amountWaterLebel;
     Pane pane;
 
     public WaterAmount(PresentationModel presentationModel) {
@@ -33,7 +33,7 @@ public class WaterAmount extends Region {
 
     private void initializeParts() {
         pane = new Pane();
-        amountWaterLebel= new TextField();//TODO: change to label
+        amountWaterLebel= new TextField();
         setAmountWater(80);
         amountWaterLebel.setText(String.valueOf(getAmountWater()));
     }
