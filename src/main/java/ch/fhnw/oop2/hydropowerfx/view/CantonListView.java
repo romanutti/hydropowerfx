@@ -37,7 +37,7 @@ public class CantonListView extends HBox implements ViewMixin {
 
         /********************************************************************************
          INITIALIZE table
-         ********************************************************************************/
+        ********************************************************************************/
         // name column
         TableColumn<CantonPM, String> nameColumn = new TableColumn<>("cantonColumn");
         nameColumn.setCellValueFactory(cell -> new SimpleStringProperty(cell.getValue().getCanton().getName()));
@@ -61,13 +61,13 @@ public class CantonListView extends HBox implements ViewMixin {
          Layouting sources:
          - View classes: via css
          - Added items: via java
-         ********************************************************************************/
+        ********************************************************************************/
 
         setHgrow(getItemTable(), Priority.ALWAYS);
 
         /********************************************************************************
          ITEM TABLE formatting
-         ********************************************************************************/
+        ********************************************************************************/
         // table element
         getTableColumnByName("cantonColumn").setPrefWidth(320);
         getTableColumnByName("cantonColumn").setMinWidth(100);
@@ -91,7 +91,7 @@ public class CantonListView extends HBox implements ViewMixin {
     public void setupBindings() {
         /********************************************************************************
          MULTILANGUAGE support functionality
-         ********************************************************************************/
+        ********************************************************************************/
         getTableColumnByName("cantonColumn").textProperty().bind(rootPM.getLanguageSwitcherPM().cantonColumnTextProperty());
         getTableColumnByName("totalPowerColumn").textProperty().bind(rootPM.getLanguageSwitcherPM().totalPowerMwColumnTextProperty());
         getTableColumnByName("powerStationCountColumn").textProperty().bind(rootPM.getLanguageSwitcherPM().powerStationCountColumnTextProperty());
@@ -102,7 +102,7 @@ public class CantonListView extends HBox implements ViewMixin {
     public void setupValueChangedListeners() {
         /********************************************************************************
          SELECTED item functionality
-         ********************************************************************************/
+        ********************************************************************************/
         rootPM.selectedIdProperty().addListener((observable, oldValue, newValue) -> itemTable.getSelectionModel().select(((int) newValue)));
     }
 

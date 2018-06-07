@@ -6,11 +6,11 @@ import javafx.beans.property.Property;
 public class ValueChangeCommand<T> implements Command {
     private final RootPM rootPM;
     private final Property<T> property;
-    private final T           oldValue;
-    private final T           newValue;
+    private final T oldValue;
+    private final T newValue;
 
     public ValueChangeCommand(RootPM rootPM, Property<T> property, T oldValue, T newValue) {
-        this.rootPM   = rootPM;
+        this.rootPM = rootPM;
         this.property = property;
         this.oldValue = oldValue;
         this.newValue = newValue;

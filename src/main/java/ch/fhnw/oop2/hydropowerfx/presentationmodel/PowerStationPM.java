@@ -6,6 +6,8 @@ public class PowerStationPM {
 
     public enum Type {L, P, S, U}
 
+    private static final int DEFAULT_ID = 99;
+
     private final IntegerProperty id                            = new SimpleIntegerProperty();
     private final StringProperty name                           = new SimpleStringProperty();
     private final ObjectProperty<Type> type                     = new SimpleObjectProperty<>();
@@ -45,7 +47,7 @@ public class PowerStationPM {
         PowerStationPM defaultPowerStation = new PowerStationPM();
 
         // set default values
-        defaultPowerStation.setId(99);
+        defaultPowerStation.setId(DEFAULT_ID);
         defaultPowerStation.setName("");
         defaultPowerStation.setType(Type.L);
         defaultPowerStation.setSite("");
@@ -99,6 +101,16 @@ public class PowerStationPM {
                 break;
         }
         return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof PowerStationPM) {
+            if (((PowerStationPM) obj).getId() == this.getId()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     // getters and setters
@@ -268,15 +280,5 @@ public class PowerStationPM {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl.set(imageUrl);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (obj instanceof PowerStationPM) {
-            if (((PowerStationPM) obj).getId() == this.getId()) {
-                return true;
-            }
-        }
-        return false;
     }
 }

@@ -6,15 +6,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 
-import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLEncoder;
 
 public class MapView extends HBox implements ViewMixin {
-
-    private static final String DEFAULT_CENTER_LOCATION_ = "Schweiz";
-    private static final String GOOGLE_API_KEY = "AIzaSyAzMrORyFTTVCWFlAeKcSfhWr7lkq3VRnQ";
 
     // model
     private final RootPM rootPM;
@@ -65,11 +60,11 @@ public class MapView extends HBox implements ViewMixin {
 
         /********************************************************************************
          REFRESH IMAGE functionality
-        ********************************************************************************/
+         ********************************************************************************/
         // change of center
         proxy.siteProperty().addListener((observable, oldValue, newValue) -> {
             try {
-                URL url = new URL(getImageUrl(newValue, null, null));
+                URL url = new URL(rootPM.getImageUrl(newValue, null, null));
                 imageArea.setImage(new Image(url.toString()));
 
             } catch (MalformedURLException e) {
@@ -80,7 +75,7 @@ public class MapView extends HBox implements ViewMixin {
         // change of latitude
         proxy.latitudeProperty().addListener((observable, oldValue, newValue) -> {
             try {
-                URL url = new URL(getImageUrl(null, newValue.toString(), null));
+                URL url = new URL(rootPM.getImageUrl(null, newValue.toString(), null));
                 imageArea.setImage(new Image(url.toString()));
 
             } catch (MalformedURLException e) {
@@ -91,7 +86,7 @@ public class MapView extends HBox implements ViewMixin {
         // change of longitude
         proxy.longitudeProperty().addListener((observable, oldValue, newValue) -> {
             try {
-                URL url = new URL(getImageUrl(null, null, newValue.toString()));
+                URL url = new URL(rootPM.getImageUrl(null, null, newValue.toString()));
                 imageArea.setImage(new Image(url.toString()));
 
             } catch (MalformedURLException e) {
@@ -99,27 +94,6 @@ public class MapView extends HBox implements ViewMixin {
             }
 
         });
-
-    }
-
-    private String getImageUrl(String site, String latitude, String longitude) {
-        PowerStationPM proxy = rootPM.getPowerStationProxy();
-        String marker = "";
-
-        site = (site == null) ? proxy.getSite() : site;
-        latitude = (latitude == null) ? String.valueOf(proxy.getLatitude()) : latitude;
-        longitude = (longitude == null) ? String.valueOf(proxy.getLongitude()) : longitude;
-
-        try {
-            // replace malformed url components
-            site = URLEncoder.encode(site, "UTF-8");
-            latitude = latitude.replaceAll("\\.", "%2E");
-            longitude = longitude.replaceAll("\\.", "%2E");
-            marker = latitude + "," + longitude;
-        } catch (UnsupportedEncodingException e) {
-            site = DEFAULT_CENTER_LOCATION_;
-        }
-        return "http://maps.googleapis.com/maps/api/staticmap?center=" + site + "&scale=1&size=300x200&maptype=roadmap&format=png&visual_refresh=true&markers=size:mid%7Ccolor:0xff0000%7Clabel:%7C" + marker + "&key=" + GOOGLE_API_KEY;
 
     }
 }

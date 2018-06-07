@@ -70,7 +70,7 @@ public class ToolbarView extends BorderPane implements ViewMixin {
 
         /********************************************************************************
          TOOLBAR formattig
-         *******************************************************************************/
+        *******************************************************************************/
         //sizing
         setMargin(saveButton, new Insets(1));
         setMargin(createButton, new Insets(1));
