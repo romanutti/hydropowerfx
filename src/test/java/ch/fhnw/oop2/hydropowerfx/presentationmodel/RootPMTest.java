@@ -27,21 +27,22 @@ class RootPMTest {
     @Test
     void testSave() {
         //when
-        sut.getPowerStation(500100).setName("NNN");
+        int id = 100100;
+        sut.getPowerStation(id).setName("NNN");
         sut.save();
         RootPM secondPM = new RootPM();
 
         //then
         assertEquals(sut.getAllPowerStations().size(), secondPM.getAllPowerStations().size());
-        assertEquals("NNN", secondPM.getPowerStation(500100).getName());
+        assertEquals("NNN", secondPM.getPowerStation(id).getName());
         for (int i = 0; i < sut.getAllPowerStations().size(); i++) {
-            //TODO test fail on different devices due to different sorting in out dir
+            //TODO test fail on different devices due to different sorting in out\data\ressource\HYDRO_POWERSTATION.csv
             assertEquals(sut.getAllPowerStations().get(i).getName(),
                     secondPM.getAllPowerStations().get(i).getName());
         }
 
         //after
-        sut.getAllPowerStations().get(0).setName("Val Giuf");
+        sut.getPowerStation(id).setName("1er Palier Isérables c. Arcay");
         sut.save();
     }
 
