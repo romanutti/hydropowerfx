@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>ch.fhnw.oop2.hydropowerfx</OriginalElement>
+  <nodes>
+    <node x="468.5" y="0.0">ch.fhnw.oop2.hydropowerfx.view.ViewMixin</node>
+    <node x="0.0" y="89.0">ch.fhnw.oop2.hydropowerfx.view.CantonListView</node>
+    <node x="858.0" y="89.0">ch.fhnw.oop2.hydropowerfx.view.MapView</node>
+    <node x="719.0" y="89.0">ch.fhnw.oop2.hydropowerfx.view.ApplicationUI</node>
+    <node x="0.0" y="163.0">ch.fhnw.oop2.hydropowerfx.presentationmodel</node>
+    <node x="331.0" y="89.0">ch.fhnw.oop2.hydropowerfx.view.ToolbarView</node>
+    <node x="402.0" y="163.0">ch.fhnw.oop2.hydropowerfx.control</node>
+    <node x="223.0" y="163.0">ch.fhnw.oop2.hydropowerfx.HydroPowerApp</node>
+    <node x="149.0" y="89.0">ch.fhnw.oop2.hydropowerfx.view.powerstationlist</node>
+    <node x="563.0" y="163.0">ch.fhnw.oop2.hydropowerfx.util</node>
+    <node x="464.0" y="89.0">ch.fhnw.oop2.hydropowerfx.view.HeaderView</node>
+    <node x="595.0" y="89.0">ch.fhnw.oop2.hydropowerfx.view.EditorView</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="ch.fhnw.oop2.hydropowerfx.view.ToolbarView" target="ch.fhnw.oop2.hydropowerfx.view.ViewMixin">
+      <point x="0.0" y="-14.5" />
+      <point x="387.5" y="69.0" />
+      <point x="504.92857142857144" y="69.0" />
+      <point x="-14.571428571428555" y="14.5" />
+    </edge>
+    <edge source="ch.fhnw.oop2.hydropowerfx.view.MapView" target="ch.fhnw.oop2.hydropowerfx.view.ViewMixin">
+      <point x="0.0" y="-14.5" />
+      <point x="906.5" y="49.0" />
+      <point x="563.2142857142858" y="49.0" />
+      <point x="43.71428571428572" y="14.5" />
+    </edge>
+    <edge source="ch.fhnw.oop2.hydropowerfx.view.HeaderView" target="ch.fhnw.oop2.hydropowerfx.view.ViewMixin">
+      <point x="0.0" y="-14.5" />
+      <point x="0.0" y="14.5" />
+    </edge>
+    <edge source="ch.fhnw.oop2.hydropowerfx.view.powerstationlist" target="ch.fhnw.oop2.hydropowerfx.view.ViewMixin">
+      <point x="0.0" y="-14.5" />
+      <point x="230.0" y="59.0" />
+      <point x="490.3571428571429" y="59.0" />
+      <point x="-29.14285714285711" y="14.5" />
+    </edge>
+    <edge source="ch.fhnw.oop2.hydropowerfx.view.ApplicationUI" target="ch.fhnw.oop2.hydropowerfx.view.ViewMixin">
+      <point x="0.0" y="-14.5" />
+      <point x="778.5" y="59.0" />
+      <point x="548.6428571428571" y="59.0" />
+      <point x="29.142857142857167" y="14.5" />
+    </edge>
+    <edge source="ch.fhnw.oop2.hydropowerfx.view.CantonListView" target="ch.fhnw.oop2.hydropowerfx.view.ViewMixin">
+      <point x="0.0" y="-14.5" />
+      <point x="64.5" y="49.0" />
+      <point x="475.7857142857143" y="49.0" />
+      <point x="-43.71428571428572" y="14.5" />
+    </edge>
+    <edge source="ch.fhnw.oop2.hydropowerfx.view.EditorView" target="ch.fhnw.oop2.hydropowerfx.view.ViewMixin">
+      <point x="0.0" y="-14.5" />
+      <point x="647.0" y="69.0" />
+      <point x="534.0714285714286" y="69.0" />
+      <point x="14.571428571428555" y="14.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Group" zoom="0.8754010695187167" x="456.68247787477355" y="309.637126375805" />
+  <SelectedNodes />
+  <Categories />
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>public</VISIBILITY>
+</Diagram>
+
