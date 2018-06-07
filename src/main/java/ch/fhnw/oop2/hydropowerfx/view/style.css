@@ -115,7 +115,7 @@
 
 .header .label {
     -fx-text-fill: #999999;
-    -fx-font-size: 14;
+    -fx-font-size: 13;
 }
 .header #titleLabel{
     -fx-font-size: 18;
