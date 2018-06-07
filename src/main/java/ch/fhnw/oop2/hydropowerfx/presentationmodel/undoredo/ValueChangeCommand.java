@@ -1,9 +1,10 @@
-package ch.fhnw.oop2.hydropowerfx.presentationmodel;
+package ch.fhnw.oop2.hydropowerfx.presentationmodel.undoredo;
 
+import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
 import javafx.beans.property.Property;
 
 public class ValueChangeCommand<T> implements Command {
-    private final RootPM    rootPM;
+    private final RootPM rootPM;
     private final Property<T> property;
     private final T           oldValue;
     private final T           newValue;

@@ -37,7 +37,7 @@
 - Geografische Anzeige des Kraftwerks
 	- Reaktionen auf Canton
 	- Reaktionen auf Longitute and Latitute
-- Anzeige Wappen der Kantone in DetailView
+- Anzeige Wappen der Kantone in PowerstationListView
 - Sinnvolles Resizing
 - Sprache
 	- Enum Multilanguage

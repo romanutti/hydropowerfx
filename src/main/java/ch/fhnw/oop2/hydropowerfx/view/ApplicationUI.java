@@ -1,7 +1,7 @@
 package ch.fhnw.oop2.hydropowerfx.view;
 
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.RootPM;
-import ch.fhnw.oop2.hydropowerfx.view.powerstationoverview.DetailView;
+import ch.fhnw.oop2.hydropowerfx.view.powerstationlist.PowerstationListView;
 import javafx.geometry.Orientation;
 import javafx.scene.control.SplitPane;
 import javafx.scene.layout.*;
@@ -14,14 +14,14 @@ public class ApplicationUI extends BorderPane implements ViewMixin {
     private SplitPane verticalMainSP;
     private SplitPane horizontalMainCenterSP;
     private ToolbarView toolbarView;
-    private DetailView detailView;
+    private PowerstationListView powerstationListView;
     private StackPane centerResizingView;
     private VBox verticalCenterResizingView;
     private HeaderView headerView;
     private EditorView editorView;
     private SplitPane horizontalMainBottomSP;
     private MapView mapView;
-    private SummaryView summaryView;
+    private CantonListView cantonListView;
 
 
     public ApplicationUI(RootPM model) {
@@ -41,13 +41,13 @@ public class ApplicationUI extends BorderPane implements ViewMixin {
         horizontalMainCenterSP = new SplitPane();
         horizontalMainBottomSP = new SplitPane();
         toolbarView = new ToolbarView(model);
-        detailView = new DetailView(model);
+        powerstationListView = new PowerstationListView(model);
         centerResizingView = new StackPane();
         verticalCenterResizingView = new VBox();
         headerView = new HeaderView(model);
         editorView = new EditorView(model);
         mapView = new MapView(model);
-        summaryView = new SummaryView(model);
+        cantonListView = new CantonListView(model);
     }
 
     @Override
@@ -55,8 +55,8 @@ public class ApplicationUI extends BorderPane implements ViewMixin {
         verticalCenterResizingView.getChildren().addAll(headerView,editorView);
         centerResizingView.getChildren().addAll(verticalCenterResizingView);
         verticalCenterResizingView.setVgrow(headerView,Priority.ALWAYS);
-        horizontalMainCenterSP.getItems().addAll(detailView, centerResizingView);
-        horizontalMainBottomSP.getItems().addAll(summaryView, mapView);
+        horizontalMainCenterSP.getItems().addAll(powerstationListView, centerResizingView);
+        horizontalMainBottomSP.getItems().addAll(cantonListView, mapView);
         verticalMainSP.getItems().addAll(horizontalMainCenterSP, horizontalMainBottomSP);
         verticalMainSP.setOrientation(Orientation.VERTICAL);
 

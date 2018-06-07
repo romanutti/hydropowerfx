@@ -1,4 +1,4 @@
-package ch.fhnw.oop2.hydropowerfx.view.powerstationoverview;
+package ch.fhnw.oop2.hydropowerfx.view.powerstationlist;
 
 import java.util.HashMap;
 import java.util.Map;

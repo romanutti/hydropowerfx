@@ -1,4 +1,4 @@
-package ch.fhnw.oop2.hydropowerfx.view.powerstationoverview;
+package ch.fhnw.oop2.hydropowerfx.view.powerstationlist;
 
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.Canton;
 import ch.fhnw.oop2.hydropowerfx.presentationmodel.PowerStationPM;
@@ -18,7 +18,7 @@ import javafx.util.converter.NumberStringConverter;
 import static ch.fhnw.oop2.hydropowerfx.util.NumberFormatUtil.*;
 
 
-public class DetailView extends VBox implements ViewMixin {
+public class PowerstationListView extends VBox implements ViewMixin {
     // model
     private final RootPM rootPM;
 
@@ -27,7 +27,7 @@ public class DetailView extends VBox implements ViewMixin {
     private Label resultCountLabel;
 
 
-    public DetailView(RootPM rootPM) {
+    public PowerstationListView(RootPM rootPM) {
         this.rootPM = rootPM;
         init();
     }

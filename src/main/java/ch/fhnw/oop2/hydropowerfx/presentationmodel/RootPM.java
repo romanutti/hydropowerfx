@@ -1,5 +1,7 @@
 package ch.fhnw.oop2.hydropowerfx.presentationmodel;
 
+import ch.fhnw.oop2.hydropowerfx.presentationmodel.undoredo.Command;
+import ch.fhnw.oop2.hydropowerfx.presentationmodel.undoredo.ValueChangeCommand;
 import javafx.beans.Observable;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.*;
@@ -261,7 +263,7 @@ public class RootPM {
 
     }
 
-    <T> void setPropertyValueWithoutUndoSupport(Property<T> property, T newValue) {
+    public <T> void setPropertyValueWithoutUndoSupport(Property<T> property, T newValue) {
         property.removeListener(propertyChangeListenerForUndoSupport);
         property.setValue(newValue);
         property.addListener(propertyChangeListenerForUndoSupport);

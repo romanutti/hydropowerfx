@@ -9,7 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 
-public class SummaryView extends HBox implements ViewMixin {
+public class CantonListView extends HBox implements ViewMixin {
     // model
     private final RootPM rootPM;
 
@@ -17,7 +17,7 @@ public class SummaryView extends HBox implements ViewMixin {
     private TableView<CantonPM> itemTable;
 
 
-    public SummaryView(RootPM rootPM) {
+    public CantonListView(RootPM rootPM) {
         this.rootPM = rootPM;
         init();
     }

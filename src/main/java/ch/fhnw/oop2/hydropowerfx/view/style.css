@@ -98,7 +98,7 @@
     -fx-text-fill: #ffff;
 }
 
-/* ======================= detailview settings ==================================================== */
+/* ======================= powerstationlist settings ==================================================== */
 .overview {
     -fx-background-color: #EBF5F1;
     -fx-min-width: 350;
@@ -191,7 +191,7 @@
     -fx-background-repeat: no-repeat;
 }
 
-/* ======================= summary settings ==================================================== */
+/* ======================= cantonlist settings ==================================================== */
 .summary {
     -fx-background-color: #EBF5F1;
     -fx-min-height: 220;
