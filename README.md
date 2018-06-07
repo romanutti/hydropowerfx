@@ -32,8 +32,8 @@
 - UI Elements
 	- ChoiceBox Sprache
 	- ChoiceBox für Enums in Editor
-	- Grafisches Icon in Toolbar
-	- Grafische Anzeige für Zusatzfeatures bei Image Url: Bild Anzeige
+	- Grafische Icons in Toolbar
+	- Grafisches Icon falls Bild vorhanden
 - Geografische Anzeige des Kraftwerks
 	- Reaktionen auf Canton
 	- Reaktionen auf Longitute and Latitute
