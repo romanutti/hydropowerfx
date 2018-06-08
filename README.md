@@ -14,22 +14,31 @@
 - Basisfeatures
 - Einhalten der bewährten Programmstruktur
 	- Keine Abhängigkeiten zwischen UI's (s. Klassendiagramm unter /resources/uml)
-		§ Saubere Teilung in unabhängige Teile
-		§ Angemessene Datenstrukturen
-		§ Gute Erweiterung um weitere Feautres
-	- Klare Trennung von Was und Wie -> Beispiele
-	- Presentation Model-Konzept
-- Undo / Redo
+    - Saubere Teilung in unabhängige Teile
+	- Angemessene Datenstrukturen
+	- Gute Erweiterung um weitere Feautres
+	- Klare Trennung von Was und Wie
+	- PresentationModel-Konzept
+- Undo/Redo
 - Filter-Suche
     - Anzeige der Anzahl Treffer
     - Levenshtein-Distanzsuche
+- Geografische Anzeige des Kraftwerks mit Static Map API von Google
+ 	- Reaktionen auf Canton
+ 	- Reaktionen auf Longitude and Latitude
+- Anzeige Wappen der Kantone in PowerStation-Tabelle
+- Änderungen in PowerStation-Tabelle führen zu Update im Editor-Bereich
+- Mehrsprachigkeit DE/EN mittels Enum implementiert
+- Enabling und Disabling von Buttons und Labels, wenn keine PowerStation ausgewählt ist (z.B. nach Löschen)
+- Input Validation
+	- Grafische Anzeige bei Fehlereingabe
+	- Fehlerhafte Eingabe wird sauber gehandelt
 - Custom Controls
-	- Jahresauswahl [Yearcontrol]
+	- Jahresauswahl [Yearcontrol] (inkl. angepasstem Styling)
 	- Wasser Level Anzeige [Watervolume]
-	- Styling der Custom Controls angepasst
 - Überarbeitung des UI
 	- Komplexes Styling in CSS
-- Enums
+- Enums, wo sinnvoll eingesetzt:
 	- Type
 	- Canton
 	- Language
@@ -39,19 +48,7 @@
 	- ChoiceBox für Enums in Editor
 	- Grafische Icons in Toolbar
 	- Grafisches Icon falls Bild vorhanden
-- Geografische Anzeige des Kraftwerks mit Static Map API von Google
-	- Reaktionen auf Canton
-	- Reaktionen auf Longitute and Latitute
-- Anzeige Wappen der Kantone in PowerStation-Tabelle
-- Änderungen in PowerStation-Tabelle führen zu Update im Editor-Bereich
 - Sinnvolles Resizing
-- Enabling und Disabling von Buttons und Labels, wenn keine PowerStation ausgewählt ist (z.B. nach Löschen)
-- Sprache
-	- Enum Multilanguage
-	- Mehrsprachigkeit
-- Input Validation
-	- Grafische Anzeige bei Fehlereingabe
-	- Fehlerhafte Eingabe wird sauber gehandelt
 - Util
 	- Allgemeine Funktionalitäten in Utils ausgelagert [Header und DetailTable]
 - Testfälle
