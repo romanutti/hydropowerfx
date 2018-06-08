@@ -12,7 +12,7 @@
 
 ## Implementierte Features
 - Basisfeatures
-- Einhalten der Bewerten Programmstruktur
+- Einhalten der bewährten Programmstruktur
 	- Keine Abhängigkeiten zwischen UI's (s. Klassendiagramm unter /resources/uml)
 		§ Saubere Teilung in unabhängige Teile
 		§ Angemessene Datenstrukturen
@@ -33,7 +33,7 @@
 	- Type
 	- Canton
 	- Language
-	- Lang
+	- Status
 - UI Elements
 	- ChoiceBox Sprache
 	- ChoiceBox für Enums in Editor
@@ -42,7 +42,7 @@
 - Geografische Anzeige des Kraftwerks mit Static Map API von Google
 	- Reaktionen auf Canton
 	- Reaktionen auf Longitute and Latitute
-- Anzeige Wappen der Kantone in PowerstationListView
+- Anzeige Wappen der Kantone in PowerStation-Tabelle
 - Änderungen in PowerStation-Tabelle führen zu Update im Editor-Bereich
 - Sinnvolles Resizing
 - Enabling und Disabling von Buttons und Labels, wenn keine PowerStation ausgewählt ist (z.B. nach Löschen)
@@ -50,12 +50,12 @@
 	- Enum Multilanguage
 	- Mehrsprachigkeit
 - Input Validation
-	- Grafische anzeige bei Fehlereingabe
+	- Grafische Anzeige bei Fehlereingabe
 	- Fehlerhafte Eingabe wird sauber gehandelt
 - Util
-	- Formatierung Util für Jahreszahl [Header und DetailTable]
+	- Allgemeine Funktionalitäten in Utils ausgelagert [Header und DetailTable]
 - Testfälle
-	- Für alle Presentation Models
+	- Unit-Tests für die relevanten Methoden in den Presentation Models
 
 ## Aufgabe: HydroPowerFX
 
