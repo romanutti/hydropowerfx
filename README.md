@@ -11,17 +11,22 @@
 - Die Abgabe erfolgt durch ein "Push" auf den Master-Branch in Ihrem GitHub-Repository.
 
 ## Implementierte Features
+- Basisfeatures
 - Einhalten der Bewerten Programmstruktur
-	- Keine Abhängigkeiten zwischen UI's
+	- Keine Abhängigkeiten zwischen UI's (s. Klassendiagramm unter /resources/uml)
 		§ Saubere Teilung in unabhängige Teile
 		§ Angemessene Datenstrukturen
 		§ Gute Erweiterung um weitere Feautres
 	- Klare Trennung von Was und Wie -> Beispiele
-	- Presentation Model Konzept
+	- Presentation Model-Konzept
 - Undo / Redo
+- Filter-Suche
+    - Anzeige der Anzahl Treffer
+    - Levenshtein-Distanzsuche
 - Custom Controls
 	- Jahresauswahl [Yearcontrol]
 	- Wasser Level Anzeige [Watervolume]
+	- Styling der Custom Controls angepasst
 - Überarbeitung des UI
 	- Komplexes Styling in CSS
 - Enums
@@ -34,11 +39,13 @@
 	- ChoiceBox für Enums in Editor
 	- Grafische Icons in Toolbar
 	- Grafisches Icon falls Bild vorhanden
-- Geografische Anzeige des Kraftwerks
+- Geografische Anzeige des Kraftwerks mit Static Map API von Google
 	- Reaktionen auf Canton
 	- Reaktionen auf Longitute and Latitute
 - Anzeige Wappen der Kantone in PowerstationListView
+- Änderungen in PowerStation-Tabelle führen zu Update im Editor-Bereich
 - Sinnvolles Resizing
+- Enabling und Disabling von Buttons und Labels, wenn keine PowerStation ausgewählt ist (z.B. nach Löschen)
 - Sprache
 	- Enum Multilanguage
 	- Mehrsprachigkeit
@@ -49,7 +56,6 @@
 	- Formatierung Util für Jahreszahl [Header und DetailTable]
 - Testfälle
 	- Für alle Presentation Models
-
 
 ## Aufgabe: HydroPowerFX
 
