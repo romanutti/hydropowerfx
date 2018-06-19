@@ -53,6 +53,7 @@
 	- Allgemeine Funktionalitäten in Utils ausgelagert [Header und DetailTable]
 - Testfälle
 	- Unit-Tests für die relevanten Methoden in den Presentation Models
+- Präsentation: https://docs.google.com/presentation/d/1HrcvqMDhvQ_L-tic8szZPCTrwJmCMkJnrnA4d2ZTci8/edit?usp=sharing
 
 ## Aufgabe: HydroPowerFX
 
